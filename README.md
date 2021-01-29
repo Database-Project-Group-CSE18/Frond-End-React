@@ -20,9 +20,10 @@
       - git push origin <your_name>
       
 
-## Pages
+# Pages
+After finishing each part put a tik on front of it by editing readme file.
 
-### Chalindu
+# Chalindu
 
 - [ ] Home page (Landing Page)
    - [ ] Navigation bar
@@ -34,7 +35,7 @@
 - [ ] Seller Home page (Different from the landing page) - (This includes summary of the seller. Read the page detail below) 
    - [ ] All orders page
 
-### Chandima
+# Chandima
 
 - [ ] Specific product page
    - [ ] Photos
@@ -44,7 +45,7 @@
 - [ ] Category page (Search Page)
 - [ ] Cart Page
 
-### Pasan
+# Pasan
 - [ ] All Orders page
    - [ ] Include options - Track an order, Confirm received item, cancel if the item is in pay success stage
 - [ ] Add bank card details page
@@ -54,7 +55,7 @@
    - [ ] Change other details page
 - [ ] Track an order page	
 
-### Rahal
+# Rahal
 
 - [ ] Seller footer
 - [ ] Awaiting shipment orders page
@@ -64,7 +65,7 @@
 - [ ] List new item page
 - [ ] Successfully listed new item page
 
-### Shehan
+# Shehan
 - [ ] Money back guarantee page
 - [ ] Help center page
 - [ ] Feedback page
