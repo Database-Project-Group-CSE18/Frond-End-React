@@ -25,9 +25,9 @@
       - git commit -m "Message"
       - git push origin <your_name>
 9. After pushing to your branch go to the github using browser.
-10. It will ask you to create a pull request master. 
-11. Create a pull request with some comments.
-12. If there is no confilcts you also can merge it to branch. Otherwise leave it to me to resovle coflicts.
+10. It will ask you to create a pull request to master branch. 
+11. Create a pull request with some comments about the new features that you added to the code.
+12. If there is no confilcts you also can merge it to master branch. Otherwise leave it to me as a pull request to resovle coflicts.
  
 
 # Pages
