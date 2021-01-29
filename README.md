@@ -17,6 +17,8 @@
       - git checkout <your_name>
       - git push origin <your_name>    
 6. Start coding and commit changes and push to your branch using
+      - git add .
+      - git commit -m "Message"
       - git push origin <your_name>
       
 
