@@ -16,11 +16,15 @@
       - git branch <your_name>
       - git checkout <your_name>
       - git push origin <your_name>    
-6. Start coding and commit changes and push to your branch using
+6. Install the react app using
+      - npm install
+7. Start the react app using
+      - npm start
+8. Start coding, commit changes and push to your branch using
       - git add .
       - git commit -m "Message"
       - git push origin <your_name>
-      
+ 
 
 # Pages
 After finishing each part put a tik on front of it by editing readme file.
