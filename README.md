@@ -35,7 +35,7 @@ After finishing each part put a tik on front of it by editing readme file.
 
 # Chalindu
 
-- [X] Home page (Landing Page)
+- [ ] Home page (Landing Page)
    - [ ] Navigation bar
    - [ ] Footer
    - [ ] Sign in
@@ -47,11 +47,11 @@ After finishing each part put a tik on front of it by editing readme file.
 
 # Chandima
 
-- [ ] Specific product page
-   - [ ] Photos
-   - [ ] Item description
-   - [ ] Item specification
-   - [ ] Reviews
+- [X] Specific product page
+   - [X] Photos
+   - [X] Item description
+   - [X] Item specification
+   - [x] Reviews
 - [ ] Category page (Search Page)
 - [ ] Cart Page
 
