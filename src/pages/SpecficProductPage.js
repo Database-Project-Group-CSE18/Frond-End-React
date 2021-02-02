@@ -51,8 +51,8 @@ function SpecificProductPage() {
         customer_name: "jof hagi",
         customer_dp: "jof hagi",
         comment: "asdasds asdasd sad",
-        rating: 5,
-        reply: ["sfsdfsd", "adasdasd asdasdasfasc sadasdas"],
+        rating: 4,
+        reply: ["sfsdfsd", "Thank you"],
       },
       {
         customer_name: "den kali",
