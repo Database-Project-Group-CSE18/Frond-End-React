@@ -35,9 +35,9 @@ After finishing each part put a tik on front of it by editing readme file.
 
 # Chalindu
 
-- [ ] Home page (Landing Page)
+- [X] Home page (Landing Page)
    - [X] Navigation bar
-   - [ ] Footer
+   - [X] Footer
    - [ ] Sign in
    - [ ] Sign up
 - [ ] Placing an order page
