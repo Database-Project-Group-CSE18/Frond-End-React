@@ -6,7 +6,6 @@ import {
   HStack,
   IconButton,
   Image,
-  Progress,
   SimpleGrid,
   Tab,
   TabList,
@@ -19,10 +18,11 @@ import {
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 
-import ImageLoader from "react-image-file";
-import { AddIcon, MinusIcon, SearchIcon, StarIcon } from "@chakra-ui/icons";
+
+import { AddIcon, MinusIcon, StarIcon } from "@chakra-ui/icons";
 import CategorizedReviewPreview from "../components/CategorizedReviewPreview";
 import ReviewCountPreview from "../components/ReviewCountPreview";
+import SearchBar from "../components/SearchBar";
 
 function SpecificProductPage() {
   let { id } = useParams();
@@ -124,17 +124,24 @@ function SpecificProductPage() {
 
   return (
     <Box
-      pt="200px"
+      pt="150px"
       pl={{ base: "10px", sm: "100px" }}
       pr={{ base: "10px", sm: "100px" }}
+
     >
-      <SimpleGrid columns={2} spacing={5} minChildWidth="400px">
+    <Center mb='20px'>
+      <SearchBar text="I'm shopping for" />
+    </Center>
+    <Box>
+      
+    </Box>
+      <SimpleGrid columns={2} spacing={5} minChildWidth="400px"       
+          borderWidth="2px"
+          borderRadius="lg"
+          borderColor="gray.300">
         <Box
           width="auto"
           h="auto"
-          borderWidth="2px"
-          borderRadius="lg"
-          borderColor="gray.300"
           overflow="hidden"
           p="5px"
         >
@@ -149,9 +156,6 @@ function SpecificProductPage() {
         <Box
           width="auto"
           h="auto"
-          borderWidth="2px"
-          borderRadius="lg"
-          borderColor="gray.300"
           overflow="hidden"
           p={{ base: "5px", sm: "20px" }}
         >
@@ -207,12 +211,6 @@ function SpecificProductPage() {
             </Button>
           </HStack>
 
-          <Heading as="h4" size="md" mt="20px">
-            Description
-          </Heading>
-          <Text fontSize="md" ml="3px" mt="5px">
-            {data.description}
-          </Text>
         </Box>
       </SimpleGrid>
       <Box
@@ -220,7 +218,26 @@ function SpecificProductPage() {
         h="auto"
         borderWidth="2px"
         borderRadius="lg"
-        borderColor="black"
+        borderColor="gray.300"
+        overflow="hidden"
+        p={{ base: "5px", sm: "20px" }}
+        mt="20px"
+        mb="10px"
+
+      >
+        <Heading as="h2" size="2xl" mb='20px'>
+          Description
+        </Heading>
+        <Text fontSize="md" ml="3px" mt="5px">
+            {data.description}
+          </Text>
+      </Box>  
+      <Box
+        width="auto"
+        h="auto"
+        borderWidth="2px"
+        borderRadius="lg"
+        borderColor="gray.300"
         overflow="hidden"
         p={{ base: "5px", sm: "20px" }}
         mt="20px"
