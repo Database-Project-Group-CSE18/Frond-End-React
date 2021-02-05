@@ -13,7 +13,8 @@ import {
     ModalOverlay,
     ModalCloseButton,
     ModalHeader,
-    useToast
+    useToast,
+    background
   } from "@chakra-ui/react";
 
 import React, { useState } from "react";
@@ -117,15 +118,16 @@ const CustomerAddress = () => {
     return (
         <Box
         
-        pt="200px"
-        pl={{ base: "10px", sm: "100px" }}
-        pr={{ base: "10px", sm: "100px" }} >
+        pt="100px"
+        // pl={{ base: "10px", sm: "100px" }}
+        // pr={{ base: "10px", sm: "100px" }} 
+        >
             
             <Grid
             
                 templateColumns="repeat(5, 1fr)"
                 templateRows="repeat(1, 1fr)"
-                gap={4}
+                
             >        
                 <GridItem  colSpan={1} rowSpan={2} >
                     <CustomerDashSideBar page="customeraddress" />
@@ -141,16 +143,16 @@ const CustomerAddress = () => {
                         
                       </Box>
 
-                        <Grid templateColumns="repeat(3, 1fr)" gap={4}>
+                        <Grid templateColumns="repeat(3, 1fr)" >
 
-                            <GridItem colSpan={3} bg='gray.600' p='10px'>
+                            <GridItem colSpan={3} bg='cyan.800' p='10px'>
                                 <Flex> 
-                                    <Box p="2" >
-                                    <Heading as='h4' size='lg' color='gray.100'> My Shipping Address </Heading> 
-                                        </Box>
+                                    <Box  p="3">
+                                    <Heading as='h3' size='md' color='white'> My Shipping Address </Heading> 
+                                    </Box>
                                     <Spacer />
-                                    <Box p="2">
-                                        <Button onClick={onOpen} colorScheme="teal" size="md">
+                                    <Box p="1">
+                                        <Button onClick={onOpen} colorScheme="teal.600" border='2px' borderColor='cyan.50' size="md">
                                             Add Shipping Address
                                         </Button>
                     

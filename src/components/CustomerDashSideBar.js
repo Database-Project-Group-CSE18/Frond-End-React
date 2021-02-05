@@ -5,58 +5,41 @@ import {
     Heading,
     Text,
     Divider,
-    Link
+    Link,
+    Button
   } from "@chakra-ui/react";
 
 
 
 const CustomerDashSideBar = ({page}) => {
 
-    const activeColor = ()=>{
-
+    const sidebarButton = {
+        width:'80%',   
+        marginTop:'7px',
+        marginBottom:'7px',
+        marginLeft:'10%',
+        marginRight:'10%'
     }
 
     return (
         <Box
             width="auto"
-            h="auto"
-            borderWidth="2px"
-            borderColor="gray.300"
+            height={window.innerHeight-100}
             overflow="hidden"
-            p="10px"
-            pb="20px"
-                        
-        >
-                        
-            <Heading textAlign="center" as="h4" size="md" p="10px"> 
-                Shortcuts
-            </Heading>
-            <Divider orientation="horizontal" />
-                        
-            <Box >     
-                <Text fontSize="l" ml="3px" mt="7px" pl="8px" > <Link href='/customerdashboard'>Dashboard</Link>     
-                </Text>
-            </Box>
-            <Box > 
-                <Text fontSize="l" ml="3px" mt="7px" pl="8px">
-                    My Orders
-                </Text>
-            </Box>
-            <Box bg="red"> 
-                <Text fontSize="l" ml="3px" mt="7px" pl="8px">
-                    Card & Bank Details
-                </Text>
-            </Box>
-            <Box bg="red"> 
-                <Text fontSize="l" ml="3px" mt="5px" pl="8px">
-                  <Link href='/shippingaddress'>  Shipping Address </Link>
-                </Text>
-            </Box>
-            <Box bg="red"> 
-                <Text fontSize="l" ml="3px" mt="7px" pl="8px">
-                    <Link href='/changepersonaldet'> Change Personal Details </Link>
-                </Text>
-             </Box>
+            bg='cyan.50'
+            pt='5'    
+                    
+        >                   
+                <Link href='/customerdashboard'> <Button colorScheme="teal" size="md" style={sidebarButton}>Dashboard </Button> </Link>     
+          
+                <Link href> <Button colorScheme="teal" size="md" style={sidebarButton}> My Orders  </Button> </Link>     
+         
+                <Link href=''> <Button colorScheme="teal" size="md" style={sidebarButton}> Card & Bank Details  </Button></Link>     
+            
+                <Link href='/shippingaddress'><Button colorScheme="teal" size="md" style={sidebarButton}> Shipping Address </Button></Link>     
+         
+                <Link href='/changepersonaldet'><Button colorScheme="teal" size="md" style={sidebarButton}>Change Personal Details </Button></Link>     
+           
         </Box>
     )
 }

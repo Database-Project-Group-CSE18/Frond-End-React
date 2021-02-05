@@ -63,18 +63,20 @@ const ShipAddress = ({address,deleteAddress,updateAddress}) => {
     return(
         <GridItem>
         <Box  
-            bg='gray.100'
+            bg='cyan.50'
             borderRadius='md'
             border='1px'
-            borderColor='gray.500'
+            borderColor='cyan.600'
             p='6'
+            m='4'
             pb='3'
+           
             >
 
                 <Box d="flex" alignItems="baseline" m='2'>
                     <ImUser />
                     <Box
-                        color="gray.500" 
+                        color="cyan.900" 
                         letterSpacing="wide"
                         fontSize="lg"       
                         ml="2"
@@ -84,9 +86,9 @@ const ShipAddress = ({address,deleteAddress,updateAddress}) => {
                 </Box> 
                 <Box d="flex" alignItems="baseline" m='2'>
                 
-                    <ImPhone />
+                    <ImPhone color='cyan.600'/>
                     <Box
-                        color="gray.500" 
+                        color="cyan.900" 
                         letterSpacing="wide"
                         fontSize="md"       
                         ml="2"
@@ -99,7 +101,7 @@ const ShipAddress = ({address,deleteAddress,updateAddress}) => {
                 
                     <ImLocation m='3'/>
                     <Box
-                        color="gray.500" 
+                        color="cyan.900" 
                         letterSpacing="wide"
                         fontSize="md"       
                         ml="2"

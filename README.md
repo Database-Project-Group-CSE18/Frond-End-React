@@ -35,9 +35,9 @@ After finishing each part put a tik on front of it by editing readme file.
 
 # Chalindu
 
-- [ ] Home page (Landing Page)
-   - [ ] Navigation bar
-   - [ ] Footer
+- [X] Home page (Landing Page)
+   - [X] Navigation bar
+   - [X] Footer
    - [ ] Sign in
    - [ ] Sign up
 - [ ] Placing an order page
@@ -52,7 +52,7 @@ After finishing each part put a tik on front of it by editing readme file.
    - [X] Item description
    - [X] Item specification
    - [x] Reviews
-- [ ] Category page (Search Page)
+- [X] Category page (Search Page)
 - [ ] Cart Page
 
 # Pasan
