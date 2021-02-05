@@ -6,12 +6,15 @@ import {
     Text,
     Divider,
     Link,
-    Button
+    Button,
+    useColorMode
   } from "@chakra-ui/react";
 
 
 
 const CustomerDashSideBar = ({page}) => {
+
+    const { colorMode, toggleColorMode } = useColorMode();
 
     const sidebarButton = {
         width:'80%',   
@@ -26,19 +29,19 @@ const CustomerDashSideBar = ({page}) => {
             width="auto"
             height={window.innerHeight-100}
             overflow="hidden"
-            bg='cyan.50'
+            bg={colorMode === "light" ? "cyan.50" : "cyan.900"}
             pt='5'    
                     
         >                   
-                <Link href='/customerdashboard'> <Button colorScheme="teal" size="md" style={sidebarButton}>Dashboard </Button> </Link>     
+                <Link href='/customerdashboard'> <Button colorScheme="teal" bg={colorMode === "light" ? "cyan.900" : "cyan.50"} size="md" style={sidebarButton}>Dashboard </Button> </Link>     
           
-                <Link href> <Button colorScheme="teal" size="md" style={sidebarButton}> My Orders  </Button> </Link>     
+                <Link href> <Button colorScheme="teal" bg={colorMode === "light" ? "cyan.900" : "cyan.50"} size="md" style={sidebarButton}> My Orders  </Button> </Link>     
          
-                <Link href=''> <Button colorScheme="teal" size="md" style={sidebarButton}> Card & Bank Details  </Button></Link>     
+                <Link href=''> <Button colorScheme="teal" bg={colorMode === "light" ? "cyan.900" : "cyan.50"} size="md" style={sidebarButton}> Card & Bank Details  </Button></Link>     
             
-                <Link href='/shippingaddress'><Button colorScheme="teal" size="md" style={sidebarButton}> Shipping Address </Button></Link>     
+                <Link href='/shippingaddress'><Button colorScheme="teal" bg={colorMode === "light" ? "cyan.900" : "cyan.50"} size="md" style={sidebarButton}> Shipping Address </Button></Link>     
          
-                <Link href='/changepersonaldet'><Button colorScheme="teal" size="md" style={sidebarButton}>Change Personal Details </Button></Link>     
+                <Link href='/changepersonaldet'><Button colorScheme="teal" bg={colorMode === "light" ? "cyan.900" : "cyan.50"} size="md" style={sidebarButton}>Change Account Details </Button></Link>     
            
         </Box>
     )

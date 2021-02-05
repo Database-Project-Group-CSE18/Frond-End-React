@@ -14,7 +14,7 @@ import {
     ModalCloseButton,
     ModalHeader,
     useToast,
-    background
+    useColorMode
   } from "@chakra-ui/react";
 
 import React, { useState } from "react";
@@ -113,6 +113,9 @@ const CustomerAddress = () => {
 
 
     }
+
+    const { colorMode, toggleColorMode } = useColorMode();
+
     
 
     return (
@@ -145,14 +148,14 @@ const CustomerAddress = () => {
 
                         <Grid templateColumns="repeat(3, 1fr)" >
 
-                            <GridItem colSpan={3} bg='cyan.800' p='10px'>
+                            <GridItem colSpan={3} bg='cyan.900' p='10px'>
                                 <Flex> 
                                     <Box  p="3">
                                     <Heading as='h3' size='md' color='white'> My Shipping Address </Heading> 
                                     </Box>
                                     <Spacer />
                                     <Box p="1">
-                                        <Button onClick={onOpen} colorScheme="teal.600" border='2px' borderColor='cyan.50' size="md">
+                                        <Button onClick={onOpen} colorScheme="teal" bg={colorMode === "light" ? "cyan.900" : "cyan.50"} border='2px' borderColor='cyan.50' size="md">
                                             Add Shipping Address
                                         </Button>
                     

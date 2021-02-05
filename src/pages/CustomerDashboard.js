@@ -7,8 +7,7 @@ import {
     Heading,
     SimpleGrid,
     Text,
-    Square,
-    Center
+    useColorMode
   } from "@chakra-ui/react";
 
 import React, { useState } from "react";
@@ -33,26 +32,30 @@ const CustomerDashboard = () => {
             }
         }
     )
+    
+    const { colorMode, toggleColorMode } = useColorMode();
 
 
     return (
         <Box
         
-        pt="200px"
-        pl={{ base: "10px", sm: "100px" }}
-        pr={{ base: "10px", sm: "100px" }} >
+        pt="100px"
+        // pl={{ base: "10px", sm: "100px" }}
+        // pr={{ base: "10px", sm: "100px" }} 
+        >
             
             <Grid
             
                 templateColumns="repeat(5, 1fr)"
                 templateRows="repeat(2, 1fr)"
-                gap={4}
+                
+                
             >        
                 <GridItem  colSpan={1} rowSpan={2} >
                     <CustomerDashSideBar page="dashboard" />
                 </GridItem>
             
-                <GridItem colSpan={4} >
+                <GridItem colSpan={4} m={5} mt={8}>
                     <Box 
                         width="auto"
                         h="auto"
@@ -60,7 +63,8 @@ const CustomerDashboard = () => {
                         overflow="hidden"
                         p="10px"
                         pb="5px"
-                        bg="gray.100"
+                        bg={colorMode === "light" ? "cyan.50" : "cyan.900"}
+                        borderRadius='10px'
                         >
                         
                         <Grid 
@@ -86,7 +90,7 @@ const CustomerDashboard = () => {
                             
                             <GridItem >
                                        <Box 
-                                        bg="gray.600"
+                                        bg={colorMode === "light" ? "cyan.900" : "cyan.50"}
                                         borderRadius='md'
                                        
                                         color='white'
@@ -95,26 +99,26 @@ const CustomerDashboard = () => {
 
                                                 <Box textAlign='center' >
                                                     
-                                                    <Heading as='h4' size='lg'> {userdata.orders.all} </Heading>
+                                                    <Heading as='h4' size='lg' textColor={colorMode === "light" ? "cyan.50" : "cyan.900"}> {userdata.orders.all} </Heading>
                                                     
-                                                    <Text textColor='cyan.100'>All orders</Text>
+                                                    <Text  textColor={colorMode === "light" ? "cyan.50" : "cyan.900"}>All orders</Text>
                                                 </Box> 
                                                 <Box textAlign='center'>
-                                                    <Heading as='h4' size='lg'> {userdata.orders.await_pay} </Heading>
-                                                    <Text textColor='cyan.100'>Awaiting Payment</Text>
+                                                    <Heading textColor={colorMode === "light" ? "cyan.50" : "cyan.900"} as='h4' size='lg'> {userdata.orders.await_pay} </Heading>
+                                                    <Text textColor={colorMode === "light" ? "cyan.50" : "cyan.900"}>Awaiting Payment</Text>
                                                 </Box>
                                                 <Box textAlign='center'>
-                                                    <Heading as='h4' size='lg'> {userdata.orders.await_ship} </Heading>
-                                                    <Text textColor='cyan.100'>Awaiting Shipment</Text>
+                                                    <Heading as='h4' size='lg' textColor={colorMode === "light" ? "cyan.50" : "cyan.900"}> {userdata.orders.await_ship} </Heading>
+                                                    <Text textColor={colorMode === "light" ? "cyan.50" : "cyan.900"}>Awaiting Shipment</Text>
                                                 </Box>
                                                 <Box textAlign='center'>
-                                                   <Heading as='h4' size='lg'> {userdata.orders.await_del} </Heading>
+                                                   <Heading as='h4' size='lg' textColor={colorMode === "light" ? "cyan.50" : "cyan.900"}> {userdata.orders.await_del} </Heading>
                                                     
-                                                    <Text textColor='cyan.100'>Awaiting Delivery</Text>
+                                                    <Text textColor={colorMode === "light" ? "cyan.50" : "cyan.900"}>Awaiting Delivery</Text>
                                                 </Box>
                                                 <Box textAlign='center'>
-                                                    <Heading as='h4' size='lg'> {userdata.orders.delivered} </Heading>
-                                                    <Text textColor='cyan.100'>  Delivered</Text>
+                                                    <Heading textColor={colorMode === "light" ? "cyan.50" : "cyan.900"} as='h4' size='lg'> {userdata.orders.delivered} </Heading>
+                                                    <Text textColor={colorMode === "light" ? "cyan.50" : "cyan.900"}>  Delivered</Text>
                                                 </Box>
                                             </SimpleGrid> 
 
