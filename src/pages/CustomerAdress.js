@@ -21,7 +21,7 @@ import CustomerDashSideBar from "../components/CustomerDashSideBar";
 import ShipAddressses from "../components/ShipAddressses";
 import AddAddress from "../components/AddAddress"
 
-const CustomerDashboard = () => {
+const CustomerAddress = () => {
 
     const [address,setAddress] = useState([
         {
@@ -128,7 +128,7 @@ const CustomerDashboard = () => {
                 gap={4}
             >        
                 <GridItem  colSpan={1} rowSpan={2} >
-                    <CustomerDashSideBar page="dashboard" />
+                    <CustomerDashSideBar page="customeraddress" />
                 </GridItem>
             
                 <GridItem colSpan={4} >
@@ -185,4 +185,4 @@ const CustomerDashboard = () => {
     )
 }
 
-export default CustomerDashboard
+export default CustomerAddress

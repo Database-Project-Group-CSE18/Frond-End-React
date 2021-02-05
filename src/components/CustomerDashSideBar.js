@@ -54,7 +54,7 @@ const CustomerDashSideBar = ({page}) => {
             </Box>
             <Box bg="red"> 
                 <Text fontSize="l" ml="3px" mt="7px" pl="8px">
-                    Change Personal Details
+                    <Link href='/changepersonaldet'> Change Personal Details </Link>
                 </Text>
              </Box>
         </Box>
