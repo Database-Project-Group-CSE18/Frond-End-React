@@ -5,6 +5,7 @@ import {
   Grid,
   GridItem,
   Heading,
+  useColorMode,
   VStack,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
@@ -21,6 +22,8 @@ function CategoryPage() {
     "Headphones",
     "Chargers",
   ]);
+
+  const { colorMode, toggleColorMode } = useColorMode();
   const [activeCategory, setActiveCategory] = useState(categories[0]);
   const [activeCategoryProducts, setActiveCategoryProducts] = useState([
     {
@@ -117,8 +120,8 @@ function CategoryPage() {
         gap={0}
         pb='200px'
       >
-        <GridItem rowSpan={1} colSpan={1} bg="gray.300" p="10px">
-          <Heading as="h3" size="lg" color="gray.600" mb="20px">
+        <GridItem rowSpan={1} colSpan={1} bg={colorMode === "light" ? "gray.200" : "gray.600"} p="10px">
+          <Heading as="h3" size="lg" mb="20px">
             Categories
           </Heading>
           <VStack>
@@ -155,7 +158,7 @@ function CategoryPage() {
           borderColor="gray.300"
           p="20px"
         >
-          <Heading as="h2" size="2xl" color="gray.600" mb="20px">
+          <Heading as="h2" size="2xl" mb="20px">
             {activeCategory}
           </Heading>
           <Grid h="auto" templateColumns="repeat(4, 1fr)" gap={2}>

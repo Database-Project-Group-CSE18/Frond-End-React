@@ -34,7 +34,7 @@ function SpecificProductPage() {
     setCurrentOrder({ ...currentOrder, quantity: currentOrder.quantity + 1 });
   };
   const quantity_dec = () => {
-    setCurrentOrder({ ...currentOrder, quantity: currentOrder.quantity - 1 });
+    if(currentOrder.quantity>0)setCurrentOrder({ ...currentOrder, quantity: currentOrder.quantity - 1 });
   };
 
   const [data, setData] = useState({
