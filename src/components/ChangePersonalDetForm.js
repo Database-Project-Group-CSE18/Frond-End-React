@@ -10,7 +10,7 @@ const ChangePersonalDetForm = ({data}) => {
     return (
         <Box>
             <form>
-                <FormControl id="firstname" >
+                <FormControl id="firstname" mb='8'>
                     <FormLabel>First Name</FormLabel>
                                 
                         <Input   
@@ -21,7 +21,7 @@ const ChangePersonalDetForm = ({data}) => {
                         />
                 </FormControl>
 
-                <FormControl id="lastname" >
+                <FormControl id="lastname" mb='8'>
                     <FormLabel>Last Name</FormLabel>
                                 
                         <Input   
@@ -32,7 +32,7 @@ const ChangePersonalDetForm = ({data}) => {
                         />
                 </FormControl>
 
-                <FormControl id="tel" >
+                <FormControl id="tel" mb='8'>
                     <FormLabel>Telephone Number</FormLabel>
                                 
                         <Input   

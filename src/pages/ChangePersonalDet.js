@@ -14,13 +14,15 @@ import {
     ModalCloseButton,
     ModalHeader,
     useDisclosure,
-    Center
+    Center,
+    Square
   } from "@chakra-ui/react";
 
 import React, { useState } from "react";
 import CustomerDashSideBar from "../components/CustomerDashSideBar";
 import ChangePasswordForm from "../components/ChangePasswordForm";
 import ChangePersonalDetails from "../components/ChangePersonalDetForm";
+import { ImUpload2 } from "react-icons/im";
 
 
 const ChangePersonalDet = () => { 
@@ -96,15 +98,17 @@ const ChangePersonalDet = () => {
                         </GridItem>
 
                         <GridItem colSpan={2}>
-                              <Box bg='teal.50'  p='10' m='5' borderRadius='15px'>         
+                              <Box bg={colorMode === "light" ? "cyan.50" : "cyan.900"}  p='10' m='5' border='2px' borderColor='teal.600' borderRadius='15px'>         
                             <ChangePersonalDetails data={personaldet}/>   
                             </Box>
                        </GridItem>
 
                        <GridItem >
-                              <Box bg='teal.50'  p='10' m='5' borderRadius='15px'>         
-                                  
-                            </Box>
+                           
+                       <Square bg={colorMode === "light" ? "cyan.50" : "cyan.900"}  p='10' m='5' border='2px dotted' height='50%' borderColor='teal.600' borderRadius='15px'>                              
+                        <ImUpload2 /> 
+                               <Center>  Upload new profile image</Center>
+                        </Square>
                        </GridItem>
 
                     </Grid>
