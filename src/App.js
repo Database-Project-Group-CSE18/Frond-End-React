@@ -9,6 +9,7 @@ import CustomerAddress from "./pages/CustomerAdress";
 import ChangePersonalDet from "./pages/ChangePersonalDet";
 import CategoryPage from "./pages/CategoryPage";
 import Navbar from "./components/Navbar";
+import CardDetails from "./pages/CardDetails";
 
 function App() {
   return (
@@ -22,6 +23,8 @@ function App() {
           <Route path="/shippingaddress" component={CustomerAddress} />
           <Route path="/changepersonaldet" component={ChangePersonalDet} />
           <Route path="/categorypage" component={CategoryPage} />
+          <Route path="/carddetails" component={CardDetails} />
+
         </Switch>
       </Router>
     </ChakraProvider>

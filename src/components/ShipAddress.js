@@ -10,6 +10,7 @@ import {
     ModalFooter,
     ModalBody,
     ModalCloseButton,
+    useColorMode,
     useDisclosure,
     Popover,
     PopoverTrigger,
@@ -31,6 +32,8 @@ import { ImUser,ImPhone, ImLocation } from "react-icons/im";
 const ShipAddress = ({address,deleteAddress,updateAddress}) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure()
+
+    const { colorMode, toggleColorMode } = useColorMode();
 
     const [data, setData] = useState({
         id: address.id,
@@ -63,7 +66,7 @@ const ShipAddress = ({address,deleteAddress,updateAddress}) => {
     return(
         <GridItem>
         <Box  
-            bg='cyan.50'
+            bg={colorMode === "light" ? "cyan.50" : "cyan.900"}
             borderRadius='md'
             border='1px'
             borderColor='cyan.600'
@@ -76,7 +79,7 @@ const ShipAddress = ({address,deleteAddress,updateAddress}) => {
                 <Box d="flex" alignItems="baseline" m='2'>
                     <ImUser />
                     <Box
-                        color="cyan.900" 
+                        color={colorMode === "light" ? "cyan.900" : "cyan.50"}
                         letterSpacing="wide"
                         fontSize="lg"       
                         ml="2"
@@ -88,7 +91,7 @@ const ShipAddress = ({address,deleteAddress,updateAddress}) => {
                 
                     <ImPhone color='cyan.600'/>
                     <Box
-                        color="cyan.900" 
+                        color={colorMode === "light" ? "cyan.900" : "cyan.50"}
                         letterSpacing="wide"
                         fontSize="md"       
                         ml="2"
@@ -101,7 +104,7 @@ const ShipAddress = ({address,deleteAddress,updateAddress}) => {
                 
                     <ImLocation m='3'/>
                     <Box
-                        color="cyan.900" 
+                        color={colorMode === "light" ? "cyan.900" : "cyan.50"}
                         letterSpacing="wide"
                         fontSize="md"       
                         ml="2"
@@ -114,83 +117,6 @@ const ShipAddress = ({address,deleteAddress,updateAddress}) => {
                 </Box> 
                
                 <Box d="flex" alignItems="baseline" m='2'>
-
-                    {/* Edit Address  */}
-
-                     <Button colorScheme="teal" size="xs" mr='2' onClick={onOpen} >
-                        Edit
-                    </Button> 
-                    {/* Edit modal */}
-                    <Modal onClose={onClose} isOpen={isOpen} isCentered>
-                        <ModalOverlay />
-                        <ModalContent>
-                            <ModalHeader>Edit shipping address</ModalHeader>
-                                <ModalCloseButton />
-                           
-                        <form onSubmit={handleSubmit}>
-                            <ModalBody>
-                            
-                            <FormControl id="name" >
-                                <FormLabel>Name</FormLabel>
-                                
-                                <Input   
-                                placeholder='Name'       
-                                value={data.name}
-                                name='name'
-                                onChange={(event) => handleChange(event)}
-                                />
-                            </FormControl>
-
-                            <FormControl id="tp" >
-                                <FormLabel>Telephone</FormLabel>
-                                <Input 
-                                placeholder="Telephone" 
-                                value={data.tp}
-                                name='tp'
-                                onChange={(event) => handleChange(event)}  />
-                            </FormControl>
-
-                            <FormControl id="street" >
-                                <FormLabel>Street</FormLabel>
-                                <Input 
-                                placeholder="street" 
-                                value={data.street}
-                                name='street'
-                                onChange={(event) => handleChange(event)} />
-                            </FormControl>
-                            <FormControl id="city" >
-                                <FormLabel>City</FormLabel>
-                                <Input placeholder="city" 
-                                value={data.city}
-                                name='city'
-                                onChange={(event) => handleChange(event)} />
-                            </FormControl>
-                            <FormControl id="state" >
-                                <FormLabel>State</FormLabel>
-                                <Input placeholder="state" 
-                                value={data.state}
-                                name='state'
-                                onChange={(event) => handleChange(event)}
-                                />
-                            </FormControl>
-                            <FormControl id="zip" >
-                                <FormLabel>Zip</FormLabel>
-                                <Input placeholder="zip" 
-                                value={data.zip}
-                                name='zip'
-                                onChange={(event) => handleChange(event)}
-                                />
-                            </FormControl>
-                           
-                               
-                            </ModalBody>
-                            <ModalFooter>
-                            <Input mt='2' mb='2'  type="submit" value='Update' className='btn btn-block' bg="teal.400" color='white' onClick={onClose} />
-                                {/* <Button colorScheme="green"  onClick={trigger} >Update</Button>                               */}
-                            </ModalFooter>
-                        </form>
-                        </ModalContent>
-                    </Modal>
 
                     {/* Delete Address */}
                 
@@ -222,5 +148,85 @@ const ShipAddress = ({address,deleteAddress,updateAddress}) => {
 export default ShipAddress
 
 
+
+
+
+
+                    {/* {/* Edit Address 
+
+                     <Button colorScheme="teal" size="xs" mr='2' onClick={onOpen} >
+                        Edit
+                    </Button> 
+                    {/* Edit modal */}
+                    // <Modal onClose={onClose} isOpen={isOpen} isCentered>
+                    //     <ModalOverlay />
+                    //     <ModalContent>
+                    //         <ModalHeader>Edit shipping address</ModalHeader>
+                    //             <ModalCloseButton />
+                           
+                        // <form onSubmit={handleSubmit}>
+                        //     <ModalBody>
+                            
+                        //     <FormControl id="name" > */}
+                        //         <FormLabel>Name</FormLabel>
+                                
+                        //         <Input   
+                        //         placeholder='Name'       
+                        //         value={data.name}
+                        //         name='name'
+                        //         onChange={(event) => handleChange(event)}
+                        //         />
+                        //     </FormControl>
+
+                        //     <FormControl id="tp" >
+                        //         <FormLabel>Telephone</FormLabel>
+                        //         <Input 
+                        //         placeholder="Telephone" 
+                            //     value={data.tp}
+                            //     name='tp'
+                            //     onChange={(event) => handleChange(event)}  />
+                            // </FormControl>
+
+                            // <FormControl id="street" >
+                            //     <FormLabel>Street</FormLabel>
+                            //     <Input 
+                            //     placeholder="street" 
+                            //     value={data.street}
+                            //     name='street'
+                            //     onChange={(event) => handleChange(event)} />
+                            // </FormControl>
+                            // <FormControl id="city" >
+                            //     <FormLabel>City</FormLabel>
+                            //     <Input placeholder="city" 
+                            //     value={data.city}
+                            //     name='city'
+                            //     onChange={(event) => handleChange(event)} />
+                            // </FormControl>
+                            // <FormControl id="state" >
+                            //     <FormLabel>State</FormLabel>
+                    //             <Input placeholder="state" 
+                    //             value={data.state}
+                    //             name='state'
+                    //             onChange={(event) => handleChange(event)}
+                    //             />
+                    //         </FormControl>
+                    //         <FormControl id="zip" >
+                    //             <FormLabel>Zip</FormLabel>
+                    //             <Input placeholder="zip" 
+                    //             value={data.zip}
+                    //             name='zip'
+                    //             onChange={(event) => handleChange(event)}
+                    //             />
+                    //         </FormControl>
+                           
+                               
+                    //         </ModalBody>
+                    //         <ModalFooter>
+                    //         <Input mt='2' mb='2'  type="submit" value='Update' className='btn btn-block' bg="teal.400" color='white' onClick={onClose} />
+                    //             {/* <Button colorScheme="green"  onClick={trigger} >Update</Button>                               */}
+                    //         </ModalFooter>
+                    //     </form>
+                    //     </ModalContent>
+                    // </Modal> */}
 
     

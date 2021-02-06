@@ -37,7 +37,7 @@ const CustomerDashSideBar = ({page}) => {
           
                 <Link href> <Button colorScheme="teal" bg={colorMode === "light" ? "cyan.900" : "cyan.50"} size="md" style={sidebarButton}> My Orders  </Button> </Link>     
          
-                <Link href=''> <Button colorScheme="teal" bg={colorMode === "light" ? "cyan.900" : "cyan.50"} size="md" style={sidebarButton}> Card & Bank Details  </Button></Link>     
+                <Link href='/carddetails'> <Button colorScheme="teal" bg={colorMode === "light" ? "cyan.900" : "cyan.50"} size="md" style={sidebarButton}> Card & Bank Details  </Button></Link>     
             
                 <Link href='/shippingaddress'><Button colorScheme="teal" bg={colorMode === "light" ? "cyan.900" : "cyan.50"} size="md" style={sidebarButton}> Shipping Address </Button></Link>     
          
