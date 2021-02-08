@@ -14,7 +14,7 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 
 
-import { AddIcon, MinusIcon,ArrowForwardIcon, StarIcon } from "@chakra-ui/icons";
+import { AddIcon, MinusIcon, ArrowForwardIcon, StarIcon } from "@chakra-ui/icons";
 import CategorizedReviewPreview from "../components/CategorizedReviewPreview";
 import ReviewCountPreview from "../components/ReviewCountPreview";
 import SearchBar from "../components/SearchBar";
@@ -134,7 +134,10 @@ function FeedbackPage(props) {
                     overflow="hidden"
                     p={{ base: "5px", sm: "20px" }}
                 >
-                    <Heading as="h2" size="2xl">
+                    <Heading as="h2" size="3xl">
+                        Submit your feedback...
+                    </Heading>
+                    <Heading as="h2" size="xl">
                         {data.item_name}
                     </Heading>
 
@@ -152,7 +155,9 @@ function FeedbackPage(props) {
                             ))}
                         <Box as="span" ml="2" fontSize="sm">
                             {data.feedbacks.length} reviews &bull; {data.orders} orders
+
               </Box>
+
                     </Box>
                     <Box d="flex" mt="10" alignItems="center">
                         {Array(5)
@@ -166,12 +171,15 @@ function FeedbackPage(props) {
                                 />
                             ))}
                     </Box>
-                    <Textarea mt="30px" placeholder="Type your comment here..." />
-                    <Stack direction="row" spacing={4} mt="20px">
-                        <Button type="submit" rightIcon={<ArrowForwardIcon />} colorScheme="teal" variant="outline">
-                            Submit
+                    <form>
+                        <Textarea mt="30px" placeholder="Type your comment here..." />
+                        <Stack direction="row" spacing={4} mt="20px">
+                            <Button
+                                loadingText="Submitting" type="submit" rightIcon={<ArrowForwardIcon />} colorScheme="teal" variant="outline">
+                                Leave Feedback
   </Button>
-                    </Stack>
+                        </Stack>
+                    </form>
                 </Box>
             </SimpleGrid>
         </Box >
