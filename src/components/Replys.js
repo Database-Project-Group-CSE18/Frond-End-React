@@ -3,12 +3,11 @@ import {
   Text,
   useColorMode,
   Avatar,
-  AvatarBadge,
   HStack,
   VStack,
   Heading,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React from "react";
 
 function Replys(props) {
   const { colorMode, toggleColorMode } = useColorMode();

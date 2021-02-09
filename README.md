@@ -78,11 +78,11 @@ After finishing each part put a tik on front of it by editing readme file.
 # Shehan
 - [ ] Money back guarantee page
 - [ ] Help center page
-- [ ] Feedback page
-   - [ ] Feedback successful page
-- [ ] Seller Dashboard
-   - [ ] Change password
-   - [ ] Change Details
+- [X] Feedback page
+   - [X] Feedback successful page
+- [X] Seller Dashboard
+   - [X] Change password
+   - [X] Change Details
 
 
 

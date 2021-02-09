@@ -2,20 +2,15 @@ import React from "react";
 import {
   Flex,
   Box,
-  Heading,
   Button,
   useColorMode,
   IconButton,
-  useDisclosure,
-  Modal,
-  ModalOverlay,
-  ModalContent,
   ReactRouterLink,
   Img,
   Icon,
 } from "@chakra-ui/react";
 import { HamburgerIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { FiShoppingCart } from "react-icons/fi";
 
@@ -56,9 +51,14 @@ function Navbar(props) {
         <Img ml="1.5rem" src="../logo.png" alt="logo" h="80px" w="80px" />
       </Flex>
 
-      <Box display={{ base: "block", md: "none" }} onClick={handleToggle}>
-        <HamburgerIcon />
-      </Box>
+      <IconButton
+      display={{base:'block', md:'none'}}
+        variant="outline"
+        colorScheme="cyan"
+        icon={<HamburgerIcon />}
+        onClick={handleToggle}
+        mr='20px'
+      />
 
       <Box
         display={{ base: show ? "block" : "none", md: "flex" }}
@@ -96,7 +96,7 @@ function Navbar(props) {
         <IconButton
           aria-label="Call Segun"
           size="lg"
-          icon={<Icon as={FiShoppingCart} w={8} h={8}  />}
+          icon={<Icon as={FiShoppingCart} w={8} h={8} />}
           mr={{ base: "5px", md: "20px" }}
           variant="ghost"
           color={colorMode === "light" ? "cyan.800" : "cyan.100"}
