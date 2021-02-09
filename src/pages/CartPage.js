@@ -1,25 +1,22 @@
 import {
   Box,
-  Button,
-  Center,
-  Grid,
-  GridItem,
+  Divider,
   Heading,
   Icon,
   Img,
   Table,
-  TableCaption,
   Tbody,
   Td,
+  Text,
   Tfoot,
   Th,
   Thead,
   Tr,
-  useColorMode,
   VStack,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { FiShoppingCart } from "react-icons/fi";
+import { useParams } from "react-router-dom";
 
 function CartPage() {
   const [cartItems, setCartItems] = useState([
@@ -57,10 +54,20 @@ function CartPage() {
     },
   ]);
 
+  const [shippingAddress, setShippingAddress] = useState({
+    customer_name: 'Rahal Athukorala',
+    street:'No.231, Dutugamunu mv',
+    city:'Peliyagoda',
+    state:'western',
+    zip:'11830'
+  });
+
   var TotalPrice = 0;
   cartItems.forEach(element => {
       TotalPrice = TotalPrice + (element.quantity * element.price)
   });
+
+  let { customer_id } = useParams();
 
 
   return (
@@ -113,6 +120,13 @@ function CartPage() {
             </Tr>
           </Tfoot>
         </Table>
+        <Divider/>
+        <Heading as="h2" size="xl" mb="20px" mt='50px'>
+          Shipping address
+        </Heading>
+        <VStack>
+          <Text></Text>
+        </VStack>
       </Box>
     </Box>
   );

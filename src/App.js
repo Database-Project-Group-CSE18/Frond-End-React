@@ -17,7 +17,7 @@ function App() {
           <Route path="/" exact component={Home} />
           <Route path="/productpage/:id" component={SpecificProductPage} />
           <Route path="/categorypage" component={CategoryPage} />
-          <Route path="/cart" component={CartPage} />
+          <Route path="/cart/:customer_id" component={CartPage} />
         </Switch>
       </Router>
     </ChakraProvider>
