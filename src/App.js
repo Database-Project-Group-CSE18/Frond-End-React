@@ -10,6 +10,8 @@ import ChangePersonalDet from "./pages/ChangePersonalDet";
 import CategoryPage from "./pages/CategoryPage";
 import Navbar from "./components/Navbar";
 import CardDetails from "./pages/CardDetails";
+import TrackOrder from "./pages/TrackOrder";
+import AllOrders from "./pages/AllOrders";
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
           <Route path="/changepersonaldet" component={ChangePersonalDet} />
           <Route path="/categorypage" component={CategoryPage} />
           <Route path="/carddetails" component={CardDetails} />
+          <Route path="/trackorder/:id" component={TrackOrder} />
+          <Route path="/allorders" component={AllOrders} />
 
         </Switch>
       </Router>

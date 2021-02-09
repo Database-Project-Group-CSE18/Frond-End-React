@@ -33,21 +33,21 @@ const CardDetails = () => {
                   
         },
         {
-            cardNumber:634545345,
+            cardNumber:323446453435,
             owner:'vimukthi madushan',
             cvv:'123',
             expDate:'10/12',
                   
         },
         {
-            cardNumber:342443564,
+            cardNumber:323446453436,
             owner:'chalindu malshika',
             cvv:'123',
             expDate:'10/12',
                   
         },
         {
-            cardNumber:67867564,
+            cardNumber:323446453437,
             owner:'chandima prabath',
             cvv:'123',
             expDate:'10/12',

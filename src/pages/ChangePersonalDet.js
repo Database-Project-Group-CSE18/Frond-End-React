@@ -5,31 +5,19 @@ import {
     useColorMode,
     Flex,
     Heading,
-    Spacer,
-    Button,
-    Modal,
-    ModalBody,
-    ModalContent,
-    ModalOverlay,
-    ModalCloseButton,
-    ModalHeader,
     useDisclosure,
-    Center,
-    Square
   } from "@chakra-ui/react";
 
 import React, { useState } from "react";
 import CustomerDashSideBar from "../components/CustomerDashSideBar";
 import ChangePasswordForm from "../components/ChangePasswordForm";
 import ChangePersonalDetails from "../components/ChangePersonalDetForm";
-import { ImUpload2 } from "react-icons/im";
+
 
 
 const ChangePersonalDet = () => { 
 
     const { colorMode, toggleColorMode } = useColorMode();
-
-    const { isOpen, onOpen, onClose } = useDisclosure()
 
     const [personaldet,setPersonaldet] = useState(
         {
@@ -39,6 +27,12 @@ const ChangePersonalDet = () => {
             tp:'07704543436',                               
         },)
 
+    //implement change password
+
+    const updateDetails = (data)=>{
+        setPersonaldet(data)
+        console.log(personaldet)
+    }
 
 
         return (
@@ -76,39 +70,21 @@ const ChangePersonalDet = () => {
                                 <Box  p="3">
                                 <Heading as='h3' size='md' color='white'> Change Account Details </Heading> 
                                 </Box>
-                                <Spacer />
-                                <Box p="1">
-                                    <Button onClick={onOpen} colorScheme="teal" bg={colorMode === "light" ? "cyan.900" : "cyan.50"} border='2px' borderColor='cyan.50' size="md">
-                                        Change Password
-                                    </Button>
-                
-                                        <Modal onClose={onClose} isOpen={isOpen} isCentered>
-                                        <ModalOverlay />
-                                            <ModalContent>
-                                                <ModalHeader>Change Password</ModalHeader>
-                                                <ModalCloseButton />
-                                                <ModalBody pb='5'>
-                                                    <ChangePasswordForm trigger={onClose} />
-                                                 </ModalBody>
-                                                
-                                            </ModalContent>
-                                        </Modal>
-                                </Box>                
+                                                   
                              </Flex>
                         </GridItem>
 
                         <GridItem colSpan={2}>
                               <Box bg={colorMode === "light" ? "cyan.50" : "cyan.900"}  p='10' m='5' border='2px' borderColor='teal.600' borderRadius='15px'>         
-                            <ChangePersonalDetails data={personaldet}/>   
+                            <ChangePersonalDetails data={personaldet} updateDetails={updateDetails}/>   
                             </Box>
                        </GridItem>
 
                        <GridItem >
-                           
-                       <Square bg={colorMode === "light" ? "cyan.50" : "cyan.900"}  p='10' m='5' border='2px dotted' height='50%' borderColor='teal.600' borderRadius='15px'>                              
-                        <ImUpload2 /> 
-                               <Center>  Upload new profile image</Center>
-                        </Square>
+                       <Box bg={colorMode === "light" ? "cyan.50" : "cyan.900"}  p='10' m='5' border='2px' borderColor='teal.600' borderRadius='15px'> 
+                       <ChangePasswordForm />
+                       
+                       </Box>
                        </GridItem>
 
                     </Grid>

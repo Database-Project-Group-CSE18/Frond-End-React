@@ -24,6 +24,25 @@ const AddBankCard = ({addBankCard,trigger}) => {
             alert('Empty Field')
             return
         }
+
+        if(cardNumber.toString().length!==12){
+            alert('Invalid Card Number')
+            return
+        }
+    
+        var givenDate = new Date(expDate);
+        var today = new Date();
+        if (givenDate.getFullYear() < today.getFullYear()) {
+            alert('card is expired')
+            return
+        }
+        else if (givenDate.getFullYear() == today.getFullYear()){
+            if(givenDate.getMonth() < today.getMonth()){
+                alert('card is expired')
+                return
+            }
+        }
+    
         
         addBankCard({cardNumber,owner,cvv,expDate})
 
@@ -45,7 +64,7 @@ const AddBankCard = ({addBankCard,trigger}) => {
         <form  onSubmit={onSubmit} >
             <FormControl>
                 <FormLabel>Card Number</FormLabel>
-                <Input type="text" placeholder='Card Number' value={cardNumber} onChange={(e)=>setCardNumber(e.target.value)} />
+                <Input type="number" placeholder='Card Number' value={cardNumber} onChange={(e)=>setCardNumber(e.target.value)} />
             </FormControl>
             <FormControl>
                 <FormLabel>Owner</FormLabel>
@@ -53,11 +72,11 @@ const AddBankCard = ({addBankCard,trigger}) => {
             </FormControl>
             <FormControl>
                 <FormLabel>CVV</FormLabel>
-                <Input type="text" placeholder='CVV' value={cvv} onChange={(e)=>setCvv(e.target.value)} />
+                <Input type="number" placeholder='CVV' value={cvv} onChange={(e)=>setCvv(e.target.value)} />
             </FormControl>
             <FormControl>
                 <FormLabel>Exp Date</FormLabel>
-                <Input type="text" placeholder='Exp Date' value={expDate} onChange={(e)=>setExpDate(e.target.value)} />
+                <Input type="month" placeholder='Exp Date' value={expDate} onChange={(e)=>setExpDate(e.target.value)} />
             </FormControl>
             <Input mt='5' mb='5'  type="submit" value='Save Card Details' className='btn btn-block' bg="teal.400" color='white' onClick={trigger} />
             

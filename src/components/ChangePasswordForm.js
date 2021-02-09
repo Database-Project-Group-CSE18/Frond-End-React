@@ -3,6 +3,7 @@ import {
     Input,
     FormControl,
     FormLabel,
+    Heading,
 
   } from "@chakra-ui/react";
 
@@ -10,6 +11,7 @@ import {
 const ChangePasswordForm = ({trigger}) => {
     return (
         <Box>
+            <Heading size='lg' mb='5'>Change Password</Heading>
               <form>
                 <FormControl id="oldpword" mb='5'>
                     <FormLabel>Old Password</FormLabel>        

@@ -2,22 +2,62 @@ import {
     Box,
     FormControl,
     FormLabel,
+    Heading,
     Input,
+    useToast
   } from "@chakra-ui/react";
 
+import { useState } from 'react';
 
-const ChangePersonalDetForm = ({data}) => {
+const ChangePersonalDetForm = ({data,updateDetails}) => {
+
+    const [firstname,setFirstName] = useState(data.firstName)
+    const [lastname,setLastName] = useState(data.lastName)
+    const [telephone,setTelephone] = useState(data.tp)
+
+    const toast = useToast()
+
+    const onSubmit = (e)=>{
+        e.preventDefault()
+
+        if(!firstname || !lastname || !telephone){
+            alert('Empty Fields')
+            return
+        }
+
+        if(firstname === data.firstName && lastname === data.lastName && telephone ===data.tp){
+            alert("Non changes made")
+            return
+        }
+
+        updateDetails({id:data.id,firstname,lastname,telephone})
+
+        setFirstName(data.firstName)
+        setLastName(data.lastName)
+        setTelephone(data.telephone)
+
+        toast({
+            position: "bottom-right",    
+            description: "Account details updated succesfully",
+            status: "success",
+            duration: 5000,
+            isClosable: true,
+          })
+    }
+
+
     return (
         <Box>
-            <form>
+            <Heading size='lg' mb='5'>Change Personal Details</Heading>
+            <form onSubmit={onSubmit} >
                 <FormControl id="firstname" mb='8'>
                     <FormLabel>First Name</FormLabel>
                                 
                         <Input   
                             placeholder='First Name'       
-                            value={data.firstName}
+                            defaultValue={data.firstName}
                             name='firstname'
-                            // onChange={(event) => handleChange(event)}
+                            onChange={(e)=>setFirstName(e.target.value)}
                         />
                 </FormControl>
 
@@ -25,10 +65,10 @@ const ChangePersonalDetForm = ({data}) => {
                     <FormLabel>Last Name</FormLabel>
                                 
                         <Input   
-                            placeholder='Last Name'       
-                            value={data.lastName}
+                            placeholder='Last Name'  
+                            defaultValue={data.lastName} 
                             name='lastname'
-                            // onChange={(event) => handleChange(event)}
+                            onChange={(e)=>setLastName(e.target.value)}
                         />
                 </FormControl>
 
@@ -37,9 +77,9 @@ const ChangePersonalDetForm = ({data}) => {
                                 
                         <Input   
                             placeholder='Telephone Number'       
-                            value={data.tp}
+                            defaultValue={data.tp}
                             name='telephone'
-                            // onChange={(event) => handleChange(event)}
+                            onChange={(e)=>setTelephone(e.target.value)}
                         />
                 </FormControl>
 

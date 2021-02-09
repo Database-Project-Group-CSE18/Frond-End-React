@@ -3,13 +3,6 @@ import {
     Box,
     Button,
     GridItem,
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalFooter,
-    ModalBody,
-    ModalCloseButton,
     useColorMode,
     useDisclosure,
     Popover,
@@ -21,9 +14,10 @@ import {
     PopoverArrow,
     PopoverCloseButton,
     ButtonGroup,
-    FormControl,
-    FormLabel,
-    Input
+    Heading,
+    HStack,
+    Spacer,
+    Image
   } from "@chakra-ui/react";
 
 import { ImUser,ImPhone, ImLocation } from "react-icons/im";
@@ -34,6 +28,8 @@ const BankCard = ({bankcard,deleteBankCard}) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
 
     const { colorMode, toggleColorMode } = useColorMode();
+
+    
 
     const [data, setData] = useState({
         cardNumber:bankcard.card_number,
@@ -66,45 +62,33 @@ const BankCard = ({bankcard,deleteBankCard}) => {
             >
 
                 <Box d="flex" alignItems="baseline" m='2'>
-                    <ImUser />
+                    
                     <Box
                         color={colorMode === "light" ? "cyan.900" : "cyan.50"}
                         letterSpacing="wide"
                         fontSize="lg"       
                         ml="2"
                     >
-                        { bankcard.cardNumber }
+                       <Heading size='lg'> x x x x  x x x x {bankcard.cardNumber.toString().substr(8,13)} </Heading>
                     </Box>
                 </Box> 
                 <Box d="flex" alignItems="baseline" m='2'>
                 
-                    <ImPhone color='cyan.600'/>
+                   
                     <Box
                         color={colorMode === "light" ? "cyan.900" : "cyan.50"}
                         letterSpacing="wide"
                         fontSize="md"       
                         ml="2"
+                       
                     >
                         { bankcard.owner }
                     </Box>
                 </Box> 
-
-                <Box d="flex" alignItems="baseline" mt='2' mb='5'>
-                
-                    <ImLocation m='3'/>
-                    <Box
-                        color={colorMode === "light" ? "cyan.900" : "cyan.50"}
-                        letterSpacing="wide"
-                        fontSize="md"       
-                        ml="2"
-                    >
-                        {bankcard.cvv}
-                    </Box>
-                </Box> 
                
-                <Box d="flex" alignItems="baseline" mt='2' mb='5'>
+               <HStack mb='4'>
+                <Box d="flex" alignItems="baseline" m='2'>
                 
-                    <ImLocation m='3'/>
                     <Box
                         color={colorMode === "light" ? "cyan.900" : "cyan.50"}
                         letterSpacing="wide"
@@ -114,6 +98,14 @@ const BankCard = ({bankcard,deleteBankCard}) => {
                         {bankcard.expDate}
                     </Box>
                 </Box> 
+                <Spacer />
+                <Box d="flex" alignItems="baseline" m='2'>
+                <Image
+                    width='70px'
+                    src="../visa.png"
+                    />
+                </Box> 
+                </HStack>
 
                 <Box d="flex" alignItems="baseline" m='2'>
 

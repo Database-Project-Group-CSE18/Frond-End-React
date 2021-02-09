@@ -28,14 +28,16 @@ const CustomerDashSideBar = ({page}) => {
         <Box
             width="auto"
             height={window.innerHeight-100}
+            // height="100%"
             overflow="hidden"
             bg={colorMode === "light" ? "cyan.50" : "cyan.900"}
-            pt='5'    
+            pt='5'  
+           
                     
         >                   
                 <Link href='/customerdashboard'> <Button colorScheme="teal" bg={colorMode === "light" ? "cyan.900" : "cyan.50"} size="md" style={sidebarButton}>Dashboard </Button> </Link>     
           
-                <Link href> <Button colorScheme="teal" bg={colorMode === "light" ? "cyan.900" : "cyan.50"} size="md" style={sidebarButton}> My Orders  </Button> </Link>     
+                <Link href='/allorders'> <Button colorScheme="teal" bg={colorMode === "light" ? "cyan.900" : "cyan.50"} size="md" style={sidebarButton}> My Orders  </Button> </Link>     
          
                 <Link href='/carddetails'> <Button colorScheme="teal" bg={colorMode === "light" ? "cyan.900" : "cyan.50"} size="md" style={sidebarButton}> Card & Bank Details  </Button></Link>     
             
