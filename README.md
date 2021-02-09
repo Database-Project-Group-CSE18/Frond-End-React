@@ -16,18 +16,28 @@
       - git branch <your_name>
       - git checkout <your_name>
       - git push origin <your_name>    
-6. Start coding and commit changes and push to your branch using
+6. Install the react app using
+      - npm install
+7. Start the react app using
+      - npm start
+8. Start coding, commit changes and push to your branch using
+      - git add .
+      - git commit -m "Message"
       - git push origin <your_name>
-      
+9. After pushing to your branch go to the github using browser.
+10. It will ask you to create a pull request to master branch. 
+11. Create a pull request with some comments about the new features that you added to the code.
+12. If there is no confilcts you also can merge it to master branch. Otherwise leave it to me as a pull request to resovle coflicts.
+ 
 
 # Pages
 After finishing each part put a tik on front of it by editing readme file.
 
 # Chalindu
 
-- [ ] Home page (Landing Page)
-   - [ ] Navigation bar
-   - [ ] Footer
+- [X] Home page (Landing Page)
+   - [X] Navigation bar
+   - [X] Footer
    - [ ] Sign in
    - [ ] Sign up
 - [ ] Placing an order page
@@ -37,12 +47,12 @@ After finishing each part put a tik on front of it by editing readme file.
 
 # Chandima
 
-- [ ] Specific product page
-   - [ ] Photos
-   - [ ] Item description
-   - [ ] Item specification
-   - [ ] Reviews
-- [ ] Category page (Search Page)
+- [X] Specific product page
+   - [X] Photos
+   - [X] Item description
+   - [X] Item specification
+   - [x] Reviews
+- [X] Category page (Search Page)
 - [ ] Cart Page
 
 # Pasan
@@ -68,11 +78,11 @@ After finishing each part put a tik on front of it by editing readme file.
 # Shehan
 - [ ] Money back guarantee page
 - [ ] Help center page
-- [ ] Feedback page
-   - [ ] Feedback successful page
-- [ ] Seller Dashboard
-   - [ ] Change password
-   - [ ] Change Details
+- [X] Feedback page
+   - [X] Feedback successful page
+- [X] Seller Dashboard
+   - [X] Change password
+   - [X] Change Details
 
 
 
