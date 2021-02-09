@@ -53,7 +53,7 @@ After finishing each part put a tik on front of it by editing readme file.
    - [X] Item specification
    - [x] Reviews
 - [X] Category page (Search Page)
-- [ ] Cart Page
+- [X] Cart Page
 
 # Pasan
 - [X] All Orders page
