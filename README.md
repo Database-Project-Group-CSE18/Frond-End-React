@@ -56,13 +56,13 @@ After finishing each part put a tik on front of it by editing readme file.
 - [ ] Cart Page
 
 # Pasan
-- [ ] All Orders page
-   - [ ] Include options - Track an order, Confirm received item, cancel if the item is in pay success stage
-- [ ] Add bank card details page
-- [ ] Shipping address page
-- [ ] Customer Dashboard page
-   - [ ] Change password page
-   - [ ] Change other details page
+- [X] All Orders page
+   - [X] Include options - Track an order, Confirm received item, cancel if the item is in pay success stage
+- [X] Add bank card details page
+- [X] Shipping address page
+- [X] Customer Dashboard page
+   - [X] Change password page
+   - [X] Change other details page
 - [ ] Track an order page	
 
 # Rahal
