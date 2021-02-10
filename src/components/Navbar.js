@@ -10,12 +10,15 @@ import {
   Modal,
   ModalOverlay,
   ModalContent,
+  Button,
+  useColorMode,
+  IconButton,
   ReactRouterLink,
   Img,
   Icon,
 } from "@chakra-ui/react";
 import { HamburgerIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { FiShoppingCart } from "react-icons/fi";
 
@@ -56,9 +59,14 @@ function Navbar(props) {
         <Img ml="1.5rem" src="../logo.png" alt="logo" h="80px" w="80px" />
       </Flex>
 
-      <Box display={{ base: "block", md: "none" }} onClick={handleToggle}>
-        <HamburgerIcon />
-      </Box>
+      <IconButton
+      display={{base:'block', md:'none'}}
+        variant="outline"
+        colorScheme="cyan"
+        icon={<HamburgerIcon />}
+        onClick={handleToggle}
+        mr='20px'
+      />
 
       <Box
         display={{ base: show ? "block" : "none", md: "flex" }}
