@@ -152,7 +152,7 @@ function CartPage() {
               Shipping address
             </Heading>
 
-            <Box pl="10px">
+            <Box p="10px" borderWidth='1px' bg='gray.50'>
               <Heading as="h5" size="sm">
                 {shippingAddress[currentShippingAddress].customer_name}
               </Heading>
@@ -171,7 +171,8 @@ function CartPage() {
                     .fill("")
                     .map((_, i) => (
                       <MenuItem onClick={() => setCurrentShippingAddress(i)}>
-                        {shippingAddress[i].customer_name +
+                        {"Address No. "+ (i+1) +" - "+
+                          shippingAddress[i].customer_name +
                           ", " +
                           shippingAddress[i].street +
                           ", " +
