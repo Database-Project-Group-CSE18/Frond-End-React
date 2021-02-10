@@ -2,6 +2,7 @@ import React from "react";
 import BottomFooter from "../../components/Footer/BottomFooter";
 import BottomItems from "../../components/Footer/BottomItems";
 import Footer from "../../components/Footer/Footer";
+import SearchBarHome from "../../components/SearchBarHome";
 import Middle from "../../components/Seller/Middle";
 import Card from "../../components/Seller/Card";
 import { Box, Flex, Skeleton, Stack } from "@chakra-ui/react";
@@ -10,7 +11,7 @@ import { AiFillExperiment } from "react-icons/ai";
 function SellerHome() {
   return (
     <>
-    
+    <SearchBarHome />
       <Middle />
       <Stack mb='25px' p='10px'>
                 <Skeleton height="40px" />

@@ -26,11 +26,11 @@ function Middle() {
           borderStyle="solid"
           borderColor="gray.800"
           boarderRadius="200px"
-          mt="40px"
+          mt="0px"
           pl="20px"
           pr="20px"
           pt="150px"
-          h="800px"
+          h="700px"
           mb="20px"
           bg="linear-gradient( blue -80%, white 100%);"
         >
@@ -40,7 +40,7 @@ function Middle() {
             borderWidth="2px"
             p="10px"
             pt="30px"
-            mt="-20px"
+            mt="-120px"
             borderRadius="20px"
           >
             <Center mb="5px" mt="10px">
