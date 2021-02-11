@@ -62,14 +62,7 @@ function CartPage() {
       varient: "64GB",
       image: "../images/iphone.jpg",
     },
-    {
-      item_ID: "234d",
-      item_name: "Electric tooth brush",
-      price: 2000.0,
-      quantity: 5,
-      varient: "white",
-      image: "../images/White.jpg",
-    },
+   
     {
       item_ID: "233d",
       item_name: "Electric tooth brush",
@@ -108,7 +101,7 @@ function CartPage() {
     {
       name: "P A C P Amarasena",
       card_no: "1234234123452341",
-      card_type: "visa",
+      card_type: "mastercard",
     },
     {
       name: "R M Athukorala",
@@ -342,7 +335,7 @@ function CartPage() {
                     </Menu>
                   </Box>
                 ) : (
-                  <Text>Add a card</Text>
+                  <Text>Please Add a card</Text>
                 )}
               </Box>
             ) : null}
