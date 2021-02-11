@@ -1,6 +1,5 @@
 import React from "react";
 import "./App.css";
-import Home from "./pages/Home";
 import SpecificProductPage from "./pages/SpecficProductPage";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
@@ -46,7 +45,6 @@ function App() {
           <Route path="/feedbackpage/:id" component={FeedbackPage} />
           <Route path="/SellerDashboard/:id" component={SellerDashboard} />
 
-          <Route path="/" exact component={Home} />
           <Route path="/signUp" component={SignUp} />
           <Route path="/signin" component={SignIn} />
           <Route path="/sellerHome" component={SellerHome} />
