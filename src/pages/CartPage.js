@@ -20,17 +20,32 @@ import {
   Th,
   Thead,
   Tr,
+  useColorMode,
   VStack,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { FiShoppingCart } from "react-icons/fi";
 import { FaMoneyBillAlt, FaRegCreditCard } from "react-icons/fa";
 import { SiPaypal } from "react-icons/si";
+import { RiVisaLine } from "react-icons/ri";
+
+import visa from "payment-icons/min/flat/visa.svg";
+import mastercard from "payment-icons/min/flat/mastercard-old.svg";
 
 import { useParams } from "react-router-dom";
 
 function CartPage() {
+  const { colorMode, toggleColorMode } = useColorMode();
+
   const [cartItems, setCartItems] = useState([
+    {
+      item_ID: "213d",
+      item_name: "Electric tooth brush",
+      price: 2000.0,
+      quantity: 2,
+      varient: "pink",
+      image: "../images/pink.jpg",
+    },
     {
       item_ID: "213d",
       item_name: "Electric tooth brush",
@@ -47,14 +62,7 @@ function CartPage() {
       varient: "64GB",
       image: "../images/iphone.jpg",
     },
-    {
-      item_ID: "234d",
-      item_name: "Electric tooth brush",
-      price: 2000.0,
-      quantity: 5,
-      varient: "white",
-      image: "../images/White.jpg",
-    },
+   
     {
       item_ID: "233d",
       item_name: "Electric tooth brush",
@@ -80,13 +88,44 @@ function CartPage() {
       state: "western",
       zip: "11810",
     },
+    {
+      customer_name: "Rahal Athukorala",
+      street: "No.345, Parakrma Mv",
+      city: "Kelaniya",
+      state: "western",
+      zip: "11810",
+    },
   ]);
+
+  const [card, setCard] = useState([
+    {
+      name: "P A C P Amarasena",
+      card_no: "1234234123452341",
+      card_type: "mastercard",
+    },
+    {
+      name: "R M Athukorala",
+      card_no: "2334234123457894",
+      card_type: "mastercard",
+    },
+  ]);
+
+  const [currentCard, setCurrentCard] = useState("none");
 
   const [currentShippingAddress, setCurrentShippingAddress] = useState(0);
 
   const [paymentMethod, setPaymentMethod] = useState(0);
 
   var TotalPrice = 0;
+
+  var cardIcon = (type) => {
+    if (type === "visa") {
+      return <Img src={visa} w={12} h={12} />;
+    } else if (type === "mastercard") {
+      return <Img src={mastercard} w={12} h={12} />;
+    }
+  };
+
   cartItems.forEach((element) => {
     TotalPrice = TotalPrice + element.quantity * element.price;
   });
@@ -152,7 +191,11 @@ function CartPage() {
               Shipping address
             </Heading>
 
-            <Box pl="10px">
+            <Box
+              p="10px"
+              borderWidth="1px"
+              bg={colorMode === "light" ? "gray.50" : "gray.700"}
+            >
               <Heading as="h5" size="sm">
                 {shippingAddress[currentShippingAddress].customer_name}
               </Heading>
@@ -171,7 +214,10 @@ function CartPage() {
                     .fill("")
                     .map((_, i) => (
                       <MenuItem onClick={() => setCurrentShippingAddress(i)}>
-                        {shippingAddress[i].customer_name +
+                        {"Address No. " +
+                          (i + 1) +
+                          " - " +
+                          shippingAddress[i].customer_name +
                           ", " +
                           shippingAddress[i].street +
                           ", " +
@@ -186,7 +232,26 @@ function CartPage() {
             <Heading as="h2" size="xl" mb="20px" mt="50px">
               Payment method
             </Heading>
-            <HStack>
+
+            {currentCard !== "none" && paymentMethod === 2 ? (
+              <Box
+                p="10px"
+                borderWidth="1px"
+                bg={colorMode === "light" ? "gray.50" : "gray.700"}
+              >
+                <HStack>
+                  {cardIcon(card[currentCard].card_type)}
+                  <Box>
+                    <Text>{card[currentCard].name}</Text>
+                    <Text>
+                      XXXX XXXX XXXX {card[currentCard].card_no.substr(12, 15)}
+                    </Text>
+                  </Box>
+                </HStack>
+              </Box>
+            ) : null}
+
+            <HStack pt='10px'>
               <Box pl="10px">
                 <Menu>
                   <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
@@ -197,19 +262,33 @@ function CartPage() {
                   </MenuButton>
                   <MenuList>
                     <MenuItem
-                      icon={<FaMoneyBillAlt />}
+                      icon={
+                        <Icon
+                          as={FaMoneyBillAlt}
+                          w={6}
+                          h={6}
+                          color="green.500"
+                        />
+                      }
                       onClick={() => setPaymentMethod(1)}
                     >
                       Cash on delivery
                     </MenuItem>
                     <MenuItem
-                      icon={<FaRegCreditCard />}
+                      icon={
+                        <Icon
+                          as={FaRegCreditCard}
+                          w={6}
+                          h={6}
+                          color="cyan.500"
+                        />
+                      }
                       onClick={() => setPaymentMethod(2)}
                     >
                       Card
                     </MenuItem>
                     <MenuItem
-                      icon={<SiPaypal />}
+                      icon={<Icon as={SiPaypal} w={6} h={6} color="blue.500" />}
                       onClick={() => setPaymentMethod(3)}
                     >
                       paypal
@@ -219,16 +298,47 @@ function CartPage() {
               </Box>
               <Box pl="10px">
                 {paymentMethod === 1 ? (
-                  <Icon as={FaMoneyBillAlt} w={8} h={8} />
+                  <Icon as={FaMoneyBillAlt} w={8} h={8} color="green.500" />
                 ) : null}
                 {paymentMethod === 2 ? (
-                  <Icon as={FaRegCreditCard} w={8} h={8} />
+                  <Icon as={FaRegCreditCard} w={8} h={8} color="cyan.500" />
                 ) : null}
                 {paymentMethod === 3 ? (
-                  <Icon as={SiPaypal} w={8} h={8} />
+                  <Icon as={SiPaypal} w={8} h={8} color="blue.500" />
                 ) : null}
               </Box>
             </HStack>
+
+            {paymentMethod === 2 ? (
+              <Box pl="10px" pt="10px">
+                {card.length !== 0 ? (
+                  <Box>
+                    <Menu>
+                      <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+                        Select a card
+                      </MenuButton>
+                      <MenuList>
+                        {Array(card.length)
+                          .fill("")
+                          .map((_, i) => (
+                            <MenuItem
+                              icon={cardIcon(card[i].card_type)}
+                              onClick={() => setCurrentCard(i)}
+                            >
+                              <Text>{card[i].name}</Text>
+                              <Text>
+                                XXXX XXXX XXXX {card[i].card_no.substr(12, 15)}
+                              </Text>
+                            </MenuItem>
+                          ))}
+                      </MenuList>
+                    </Menu>
+                  </Box>
+                ) : (
+                  <Text>Please Add a card</Text>
+                )}
+              </Box>
+            ) : null}
           </Box>
           <Box mr="0px" ml="auto">
             <Box w="400px" borderWidth="1px" p="10px">
