@@ -24,23 +24,28 @@ import {
  <Heading as="h3" size="xl" color="gray.600" mb="10px" bg="gray.300" p="10px">
               Order Details
             </Heading>
-<Box>
+<Box width="100%">
     <HStack>
         <Box>
     <Box>
     <Heading as="h3" size="lg" color="gray.600" mb="10px" bg="gray.300" p="10px">
               Purchase Details
             </Heading>
+            <Box>
+                
+            </Box>
+
+
     </Box>
 
 
-    <Box><Heading as="h3" size="lg" color="gray.600" mb="10px" bg="gray.300" p="10px">
+    <Box width="100%"><Heading as="h3" size="lg" color="gray.600" mb="10px" bg="gray.300" p="10px">
               Shipping Details
             </Heading></Box>
         </Box>
     </HStack>
 
-    <Box>
+    <Box width="100%">
     <Heading as="h3" size="lg" color="gray.600" mb="10px" bg="gray.300" p="10px">
               Items
             </Heading></Box>

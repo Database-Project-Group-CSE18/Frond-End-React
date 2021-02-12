@@ -27,14 +27,14 @@ import React, { useState } from "react";
 function Deliverycard(props) {
   return (
  
-    <Box maxW="parent"  borderRadius="lg" overflow="hidden" mb="5px" borderWidth="1px">
+    <Box maxW="parent"  _hover={{ bg: "yellow.100" ,transform: "scale(1.01)" }}  borderRadius="lg" overflow="hidden" mb="5px" borderWidth="1px">
         < HStack>  
-        <Box width="200px" fontWeight="semibold"  height="110px"    > 
+        <Box width="50%" fontWeight="semibold"  height="110px"    > 
         
         <Box><Img src={props.imageUrl} alt={props.imageAlt} w='100px' h='100px' /></Box>
         </Box>
 
-        <Box width="600px" fontWeight="semibold"  height="110px"   > 
+        <Box width="100%" fontWeight="semibold"  height="110px"   > 
         <Box fontWeight="bold"><Text color="red.600"   fontSize="xl">
             {props.Order_ID}
           </Text></Box>
@@ -46,7 +46,7 @@ function Deliverycard(props) {
           </Text></Box>
         </Box>
         
-        <Box width="300px" fontWeight="semibold"  height="110px"   > 
+        <Box width="80%" fontWeight="semibold"  height="110px"   > 
         <Box><Text color="gray.600" fontSize="xl">
         Quantity: <b>{props.Quantity}</b>
           </Text></Box>
@@ -55,13 +55,13 @@ function Deliverycard(props) {
           </Text></Box>
         </Box>
        
-        <Box  width="300px" height="110px"  fontWeight="semibold" textAlign="center"  > 
+        <Box  width="50%" height="110px"  fontWeight="semibold" textAlign="center"  > 
         <Text color="blue.700" fontSize="2xl">
             Rs. {props.payment}
           </Text>
         </Box>
 
-        <Box width="300px" fontWeight="semibold"   height="110px"   >
+        <Box width="80%" fontWeight="semibold"   height="110px"   >
             <Box>
         <Text color="gray.600" fontSize="xl">
            Paid On: {props.Date_paid}

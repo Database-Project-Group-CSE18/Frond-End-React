@@ -27,7 +27,7 @@ import React, { useState } from "react";
 function ShipmentCard(props) {
   return (
  
-    <Box w="100%"  borderRadius="lg" overflow="hidden" mb="5px" borderWidth="1px">
+    <Box w="100%"   _hover={{ bg: "yellow.100" ,transform: "scale(1.01)" }} borderRadius="lg" overflow="hidden" mb="5px" borderWidth="1px">
         < HStack>  
         <Box width="50%" fontWeight="semibold"  height="110px"    > 
         
