@@ -5,6 +5,8 @@ import Pricing from "../../components/Pricing/Pricing";
 import BottomFooter from "../../components/Footer/BottomFooter";
 import BottomItems from "../../components/Footer/BottomItems";
 import SearchBarHome from "../../components/SearchBarHome";
+import ImageSlider from "../../components/Slider/ImageSlider";
+import { SliderData } from "../../components/Slider/SliderData";
 
 function Home() {
   return (
@@ -12,6 +14,8 @@ function Home() {
     <SearchBarHome />
     <ShopNow />
     
+      
+      <ImageSlider slides={SliderData} />;
       <Pricing heading=''/>
       <BottomItems />
       <Footer />
