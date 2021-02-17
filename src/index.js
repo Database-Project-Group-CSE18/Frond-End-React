@@ -6,7 +6,7 @@ import { ColorModeScript } from '@chakra-ui/react';
 
 ReactDOM.render(
   <React.StrictMode>
-  <ColorModeScript initialColorMode="light"/>
+  <ColorModeScript initialColorMode="white"/>
 
     <App />
   </React.StrictMode>,
