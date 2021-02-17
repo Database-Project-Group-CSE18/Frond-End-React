@@ -18,7 +18,6 @@ import {
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 
-
 import { AddIcon, MinusIcon, StarIcon } from "@chakra-ui/icons";
 import CategorizedReviewPreview from "../components/CategorizedReviewPreview";
 import ReviewCountPreview from "../components/ReviewCountPreview";
@@ -27,14 +26,15 @@ import SearchBar from "../components/SearchBar";
 function SpecificProductPage() {
   let { id } = useParams();
   const { colorMode, toggleColorMode } = useColorMode();
-  
+
   const [currentOrder, setCurrentOrder] = useState({ varient: 0, quantity: 0 });
 
   const quantity_inc = () => {
     setCurrentOrder({ ...currentOrder, quantity: currentOrder.quantity + 1 });
   };
   const quantity_dec = () => {
-    setCurrentOrder({ ...currentOrder, quantity: currentOrder.quantity - 1 });
+    if (currentOrder.quantity > 0)
+      setCurrentOrder({ ...currentOrder, quantity: currentOrder.quantity - 1 });
   };
 
   const [data, setData] = useState({
@@ -127,24 +127,20 @@ function SpecificProductPage() {
       pt="150px"
       pl={{ base: "10px", sm: "100px" }}
       pr={{ base: "10px", sm: "100px" }}
-
     >
-    <Center mb='20px'>
-      <SearchBar text="I'm shopping for" />
-    </Center>
-    <Box>
-      
-    </Box>
-      <SimpleGrid columns={2} spacing={5} minChildWidth="400px"       
-          borderWidth="2px"
-          borderRadius="lg"
-          borderColor="gray.300">
-        <Box
-          width="auto"
-          h="auto"
-          overflow="hidden"
-          p="5px"
-        >
+      <Center mb="20px">
+        <SearchBar text="I'm shopping for" />
+      </Center>
+
+      <SimpleGrid
+        columns={2}
+        spacing={5}
+        minChildWidth="400px"
+        borderWidth="2px"
+        borderRadius="lg"
+        borderColor="gray.300"
+      >
+        <Box width="auto" h="auto" overflow="hidden" p="5px">
           <Image
             src={data.variants[currentOrder.varient].image}
             w="auto"
@@ -175,7 +171,7 @@ function SpecificProductPage() {
                   color={i < data.feedbacks[0].rating ? "cyan.500" : "cyan.300"}
                 />
               ))}
-            <Box as="span" ml="2"  fontSize="sm">
+            <Box as="span" ml="2" fontSize="sm">
               {data.feedbacks.length} reviews &bull; {data.orders} orders
             </Box>
           </Box>
@@ -210,7 +206,6 @@ function SpecificProductPage() {
               Add to cart
             </Button>
           </HStack>
-
         </Box>
       </SimpleGrid>
       <Box
@@ -223,15 +218,14 @@ function SpecificProductPage() {
         p={{ base: "5px", sm: "20px" }}
         mt="20px"
         mb="10px"
-
       >
-        <Heading as="h2" size="2xl" mb='20px'>
+        <Heading as="h2" size="2xl" mb="20px">
           Description
         </Heading>
         <Text fontSize="md" ml="3px" mt="5px">
-            {data.description}
-          </Text>
-      </Box>  
+          {data.description}
+        </Text>
+      </Box>
       <Box
         width="auto"
         h="auto"
@@ -242,41 +236,55 @@ function SpecificProductPage() {
         p={{ base: "5px", sm: "20px" }}
         mt="20px"
         mb="100px"
-
       >
-        <Heading as="h2" size="2xl" mb='20px'>
+        <Heading as="h2" size="2xl" mb="20px">
           Reviews
         </Heading>
-        
-        <ReviewCountPreview feedbacks={data.feedbacks}/>
-          <Tabs>
+
+        <ReviewCountPreview feedbacks={data.feedbacks} />
+        <Tabs>
           <TabList>
-          <Tab><StarIcon color="cyan.500"/> All</Tab>
-            <Tab><StarIcon color="cyan.500"/> 5</Tab>
-            <Tab><StarIcon color="cyan.500"/> 4</Tab>
-            <Tab><StarIcon color="cyan.500"/> 3</Tab>
-            <Tab><StarIcon color="cyan.500"/> 2</Tab>
-            <Tab><StarIcon color="cyan.500"/> 1</Tab>
+            <Tab>
+              <StarIcon color="cyan.500" /> All
+            </Tab>
+            <Tab>
+              <StarIcon color="cyan.500" /> 5
+            </Tab>
+            <Tab>
+              <StarIcon color="cyan.500" /> 4
+            </Tab>
+            <Tab>
+              <StarIcon color="cyan.500" /> 3
+            </Tab>
+            <Tab>
+              <StarIcon color="cyan.500" /> 2
+            </Tab>
+            <Tab>
+              <StarIcon color="cyan.500" /> 1
+            </Tab>
           </TabList>
 
           <TabPanels>
             <TabPanel>
-              <CategorizedReviewPreview feedbacks={data.feedbacks} rating ='all' />
+              <CategorizedReviewPreview
+                feedbacks={data.feedbacks}
+                rating="all"
+              />
             </TabPanel>
             <TabPanel>
-              <CategorizedReviewPreview feedbacks={data.feedbacks} rating ={5} />
+              <CategorizedReviewPreview feedbacks={data.feedbacks} rating={5} />
             </TabPanel>
             <TabPanel>
-              <CategorizedReviewPreview feedbacks={data.feedbacks} rating ={4} />
+              <CategorizedReviewPreview feedbacks={data.feedbacks} rating={4} />
             </TabPanel>
             <TabPanel>
-              <CategorizedReviewPreview feedbacks={data.feedbacks} rating ={3} />
+              <CategorizedReviewPreview feedbacks={data.feedbacks} rating={3} />
             </TabPanel>
             <TabPanel>
-              <CategorizedReviewPreview feedbacks={data.feedbacks} rating ={2} />
+              <CategorizedReviewPreview feedbacks={data.feedbacks} rating={2} />
             </TabPanel>
             <TabPanel>
-              <CategorizedReviewPreview feedbacks={data.feedbacks} rating ={1} />
+              <CategorizedReviewPreview feedbacks={data.feedbacks} rating={1} />
             </TabPanel>
           </TabPanels>
         </Tabs>
