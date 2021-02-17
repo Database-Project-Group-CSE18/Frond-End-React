@@ -77,7 +77,7 @@ import {
       }
     ]);
   
-    const searchBarText = `Search in Awaiting Deliveries`;
+    const searchBarText = `Search in Awaiting Shipments`;
   
 
   

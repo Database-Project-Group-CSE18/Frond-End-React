@@ -40,7 +40,7 @@ function NewItem(){
         pt="150px"
         pl={{ base: "10px", sm: "100px" }}
         pr={{ base: "10px", sm: "100px" }}
-        textColor="black"
+        
       >
 <form method="POST" >
  <Heading as="h3" size="xl" color="gray.600" mb="10px" bg="gray.300" p="10px">
