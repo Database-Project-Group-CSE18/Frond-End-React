@@ -8,7 +8,7 @@ import {
   useColorMode,
   VStack,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import SearchBar from "../components/SearchBar";
 import ProductCard from "../components/ProductCard";
