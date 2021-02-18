@@ -9,6 +9,7 @@ export const PricingSection = styled.div`
   background: white;
 `;
 
+
 export const PricingWrapper = styled.div`
   display: flex;
   flex-direction: column;

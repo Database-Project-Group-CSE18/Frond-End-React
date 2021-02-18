@@ -41,7 +41,7 @@ function Navbar(props) {
       justify="space-between"
       wrap="wrap"
       pt="1.0rem"
-      bg={colorMode === "light" ? "cyan.50" : "#101522"}
+      bg={colorMode === "light" ? "white" : "#101522"}
       color="white"
       position="fixed"
       top="0"
