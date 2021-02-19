@@ -31,21 +31,21 @@ const BankCard = ({bankcard,deleteBankCard}) => {
 
     
 
-    const [data, setData] = useState({
-        cardNumber:bankcard.card_number,
-        owner:bankcard.owner,
-        cvv:bankcard.cvv,
-        expDate:bankcard.expDate
-    })
+    // const [data, setData] = useState({
+    //     cardNumber:bankcard.card_number,
+    //     owner:bankcard.owner,
+    //     cvv:bankcard.cvv,
+    //     expDate:bankcard.expDate
+    // })
     
 
-    const handleChange =  (event) => {
-        var value = event.target.value;
-        var name = event.target.name;
+    // const handleChange =  (event) => {
+    //     var value = event.target.value;
+    //     var name = event.target.name;
 
-        setData({ ...data, [event.target.name]: value })
-        // console.log(data)
-    };
+    //     setData({ ...data, [event.target.name]: value })
+    //     // console.log(data)
+    // };
 
 
     return(
@@ -69,7 +69,7 @@ const BankCard = ({bankcard,deleteBankCard}) => {
                         fontSize="lg"       
                         ml="2"
                     >
-                       <Heading size='lg'> x x x x  x x x x {bankcard.cardNumber.toString().substr(8,13)} </Heading>
+                       <Heading size='lg'> x x x x  x x x x {bankcard.Card_Number.toString().substr(8,13)} </Heading>
                     </Box>
                 </Box> 
                 <Box d="flex" alignItems="baseline" m='2'>
@@ -82,7 +82,7 @@ const BankCard = ({bankcard,deleteBankCard}) => {
                         ml="2"
                        
                     >
-                        { bankcard.owner }
+                        { bankcard.Owner }
                     </Box>
                 </Box> 
                
@@ -95,7 +95,7 @@ const BankCard = ({bankcard,deleteBankCard}) => {
                         fontSize="md"       
                         ml="2"
                     >
-                        {bankcard.expDate}
+                        {bankcard.Exp_Date}
                     </Box>
                 </Box> 
                 <Spacer />
@@ -125,7 +125,7 @@ const BankCard = ({bankcard,deleteBankCard}) => {
                             </PopoverBody>
                             <PopoverFooter d="flex" justifyContent="flex-end">
                                 <ButtonGroup size="sm">
-                                    <Button colorScheme="red" onClick={()=>{deleteBankCard(bankcard.cardNumber)}}>Delete</Button>
+                                    <Button colorScheme="red" onClick={()=>{deleteBankCard(bankcard.Card_Number)}}>Delete</Button>
                                 </ButtonGroup>
                             </PopoverFooter>
                             </PopoverContent>

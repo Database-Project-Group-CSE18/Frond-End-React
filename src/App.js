@@ -13,7 +13,7 @@ import Navbar from "./components/Navbar";
 import CardDetails from "./pages/CardDetails";
 import TrackOrder from "./pages/TrackOrder";
 import AllOrders from "./pages/AllOrders";
-=======
+
 import CartPage from "./pages/CartPage";
 import FeedbackPage from "./pages/FeedbackPage";
 import SellerDashboard from "./pages/SellerDashboard";

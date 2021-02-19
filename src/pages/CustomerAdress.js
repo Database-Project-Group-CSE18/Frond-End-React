@@ -17,79 +17,136 @@ import {
     useColorMode
   } from "@chakra-ui/react";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CustomerDashSideBar from "../components/CustomerDashSideBar";
 import ShipAddressses from "../components/ShipAddressses";
 import AddAddress from "../components/AddAddress"
+import Axios from "axios";
 
 const CustomerAddress = () => {
 
-    const [address,setAddress] = useState([
-        {
-            id:1,
-            name:'pasan madushan',
-            tp:'07704543436',
-            street:'1234',
-            city:'abc',
-            state:'def',
-            zip:'12121'   
-                       
-        },
-        {
-            id:2,
-            name:'vimukthi madushan',
-            tp:'077238404543436',
-            street:'sdfsdf',
-            city:'sdflndsfldsnfk',
-            state:'slfnsdflnsdf',
-            zip:'1203948234121'      
+    const [address,setAddress] = useState([])
+
+    // {
+    //     id:1,
+    //     name:'pasan madushan',
+    //     tp:'07704543436',
+    //     street:'1234',
+    //     city:'abc',
+    //     state:'def',
+    //     zip:'12121'   
                    
-        },
-        {
-            id:3,
-            name:'chalindu malshika',
-            tp:'077043543436',
-            street:'0324284',
-            city:'rathnapura',
-            state:'hdlfdfs',
-            zip:'139202121'     
-            
-             
-        },
-        {
-            id:4,
-            name:'chandima',
-            tp:'042342492',
-            street:'1234',
-            city:'jsdofjsdof',
-            state:'sdofjdsf',
-            zip:'12121'    
-                      
-        },
-    ])
+    // },
+    // {
+    //     id:2,
+    //     name:'vimukthi madushan',
+    //     tp:'077238404543436',
+    //     street:'sdfsdf',
+    //     city:'sdflndsfldsnfk',
+    //     state:'slfnsdflnsdf',
+    //     zip:'1203948234121'      
+               
+    // },
+    // {
+    //     id:3,
+    //     name:'chalindu malshika',
+    //     tp:'077043543436',
+    //     street:'0324284',
+    //     city:'rathnapura',
+    //     state:'hdlfdfs',
+    //     zip:'139202121'     
+        
+         
+    // },
+    // {
+    //     id:4,
+    //     name:'chandima',
+    //     tp:'042342492',
+    //     street:'1234',
+    //     city:'jsdofjsdof',
+    //     state:'sdofjdsf',
+    //     zip:'12121'    
+                  
+    // },
 
     const { isOpen, onOpen, onClose } = useDisclosure()
     const toast = useToast()
 
+    useEffect(() => {
+        Axios.get("http://localhost:5000/customer/addresses")
+        .then((Response)=>{
+            // console.log(Response.data.addresses);
+            setAddress(Response.data.addresses);
+        })
+        .catch((err) => {
+            toast({
+                position: "bottom-right",    
+                description: "Error loading data",
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+              })
+          }); 
+    }, [])
+
+    
+
     //delete an addresss
     const deleteAddress  = (id)=>{
-        setAddress(address.filter(
-            (address)=>address.id!==id
-        ))
-        toast({
-            position: "bottom-right",    
-            description: "Shipping address deleted successfully",
-            status: "error",
-            duration: 5000,
-            isClosable: true,
-          })
+        Axios.delete("http://localhost:5000/customer/addresses",{data:{id:id}})
+        .then((Response)=>{
+            // console.log(Response);
+            setAddress(address.filter(
+                (address)=>address.Address_ID!==id
+            ))
+            toast({
+                position: "bottom-right",    
+                description: "Shipping address deleted successfully",
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+              })
+        })
+        .catch((err) => {
+            toast({
+                position: "bottom-right",    
+                description: "Internal Server Error. Try again later",
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+              })
+          }); 
+
+        
     }
 
     //add new address
     const addAddress = (Address)=>{
-        const id = Math.floor(Math.random()*100)+1
-        const newAddress = {id,...Address}
-        setAddress([...address,newAddress]);
+        Axios.post("http://localhost:5000/customer/addresses",{Address:Address})
+        .then((Response)=>{
+            var Address_ID = Response.data.insertId;
+            // console.log(Response.json());
+            var newAddress = {Address_ID,...Address}
+            // console.log(newAddress);
+            setAddress([...address,newAddress]);
+           
+            toast({
+                position: "bottom-right",    
+                description: "New shipping address added successfully",
+                status: "success",
+                duration: 5000,
+                isClosable: true,
+              })
+        })
+        .catch((err) => {
+            toast({
+                position: "bottom-right",    
+                description: "Internal Server Error. Try again later",
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+              })
+          });  
 
     }
 
@@ -104,15 +161,12 @@ const CustomerAddress = () => {
         //     (address1)=>address1.id==data.id?{...address1,name:data.name}:address1
         // ))
         // // console.log(address[0])
-        
-   
-        setAddress(address.map(
+          setAddress(address.map(
             (address1)=>(address1.id==data.id)?{...address1,data}:address1
         ))
-        
+          }
 
 
-    }
 
     const { colorMode, toggleColorMode } = useColorMode();
 
