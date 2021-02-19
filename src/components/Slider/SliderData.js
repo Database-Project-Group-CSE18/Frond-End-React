@@ -1,0 +1,22 @@
+export const SliderData = [
+  {
+    image:
+      'img/img-4.svg'
+  },
+  {
+    image:
+      'img/samsung.jpg'
+  },
+  {
+    image:
+      'img/iphone1.jpg'
+  },
+  {
+    image:
+      'img/img-3.svg'
+  },
+  {
+    image:
+      'img/laptop.jpg'
+  }
+];

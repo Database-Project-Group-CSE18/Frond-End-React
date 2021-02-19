@@ -38,12 +38,12 @@ After finishing each part put a tik on front of it by editing readme file.
 - [X] Home page (Landing Page)
    - [X] Navigation bar
    - [X] Footer
-   - [ ] Sign in
-   - [ ] Sign up
-- [ ] Placing an order page
-   - [ ] Successfully placed an order page
-- [ ] Seller Home page (Different from the landing page) - (This includes summary of the seller. Read the page detail below) 
-   - [ ] All orders page
+   - [X] Sign in
+   - [X] Sign up
+- [X] Placing an order page
+   - [X] Successfully placed an order page
+- [X] Seller Home page (Different from the landing page) - (This includes summary of the seller. Read the page detail below) 
+   - [X] All orders page
 
 # Chandima
 
@@ -53,7 +53,7 @@ After finishing each part put a tik on front of it by editing readme file.
    - [X] Item specification
    - [x] Reviews
 - [X] Category page (Search Page)
-- [ ] Cart Page
+- [X] Cart Page
 
 # Pasan
 - [X] All Orders page

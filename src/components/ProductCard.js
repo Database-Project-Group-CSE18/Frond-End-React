@@ -11,6 +11,8 @@ import {
   Image,
   Badge,
   Img,
+  Tr,
+  Td,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 
