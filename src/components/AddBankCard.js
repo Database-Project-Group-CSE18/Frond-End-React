@@ -8,29 +8,25 @@ import{
 } from "@chakra-ui/react";
 
 const AddBankCard = ({addBankCard,trigger}) => {
-    const [cardNumber,setCardNumber] = useState('')
-    const [owner,setOwner] = useState('')
-    const [cvv,setCvv] = useState('')
-    const [expDate,setExpDate] = useState('')
-    
-
-    const toast = useToast()
-
-
+    const [Card_Number,setCardNumber] = useState('')
+    const [Owner,setOwner] = useState('')
+    const [CVV,setCvv] = useState('')
+    const [Exp_Date,setExpDate] = useState('')
+    const [Bank_Name,setBankName] = useState('')
     const onSubmit = (e)=>{
         e.preventDefault()
 
-        if(!cardNumber || !owner || !cvv || !expDate){
+        if(!Card_Number || !Owner || !CVV || !Exp_Date || !Bank_Name){
             alert('Empty Field')
             return
         }
 
-        if(cardNumber.toString().length!==12){
+        if(Card_Number.toString().length!==12){
             alert('Invalid Card Number')
             return
         }
     
-        var givenDate = new Date(expDate);
+        var givenDate = new Date(Exp_Date);
         var today = new Date();
         if (givenDate.getFullYear() < today.getFullYear()) {
             alert('card is expired')
@@ -44,39 +40,38 @@ const AddBankCard = ({addBankCard,trigger}) => {
         }
     
         
-        addBankCard({cardNumber,owner,cvv,expDate})
+        addBankCard({Card_Number,Owner,CVV,Exp_Date,Bank_Name})
 
         setCardNumber('')
         setOwner('')
         setCvv('')
         setExpDate('')
+        setBankName('')
         
-        toast({
-            position: "bottom-right",    
-            description: "New payment method added successfully",
-            status: "success",
-            duration: 5000,
-            isClosable: true,
-          })
+        
     }
 
     return (
         <form  onSubmit={onSubmit} >
             <FormControl>
+                <FormLabel>Bank Number</FormLabel>
+                <Input type="text" placeholder='Bank Name' value={Bank_Name} onChange={(e)=>setBankName(e.target.value)} />
+            </FormControl>
+            <FormControl>
                 <FormLabel>Card Number</FormLabel>
-                <Input type="number" placeholder='Card Number' value={cardNumber} onChange={(e)=>setCardNumber(e.target.value)} />
+                <Input type="number" placeholder='Card Number' value={Card_Number} onChange={(e)=>setCardNumber(e.target.value)} />
             </FormControl>
             <FormControl>
                 <FormLabel>Owner</FormLabel>
-                <Input type="text" placeholder='Owner' value={owner} onChange={(e)=>setOwner(e.target.value)}  />
+                <Input type="text" placeholder='Owner' value={Owner} onChange={(e)=>setOwner(e.target.value)}  />
             </FormControl>
             <FormControl>
                 <FormLabel>CVV</FormLabel>
-                <Input type="number" placeholder='CVV' value={cvv} onChange={(e)=>setCvv(e.target.value)} />
+                <Input type="number" placeholder='CVV' value={CVV} onChange={(e)=>setCvv(e.target.value)} />
             </FormControl>
             <FormControl>
                 <FormLabel>Exp Date</FormLabel>
-                <Input type="month" placeholder='Exp Date' value={expDate} onChange={(e)=>setExpDate(e.target.value)} />
+                <Input type="month" placeholder='Exp Date' value={Exp_Date} onChange={(e)=>setExpDate(e.target.value)} />
             </FormControl>
             <Input mt='5' mb='5'  type="submit" value='Save Card Details' className='btn btn-block' bg="teal.400" color='white' onClick={trigger} />
             
