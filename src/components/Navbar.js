@@ -2,6 +2,7 @@ import React from "react";
 import {
   Flex,
   Box,
+  Heading,
   Button,
   useColorMode,
   IconButton,
@@ -40,7 +41,7 @@ function Navbar(props) {
       justify="space-between"
       wrap="wrap"
       pt="1.0rem"
-      bg={colorMode === "light" ? "cyan.50" : "cyan.900"}
+      bg={colorMode === "light" ? "white" : "#101522"}
       color="white"
       position="fixed"
       top="0"
@@ -68,22 +69,22 @@ function Navbar(props) {
         pl="20px"
       >
         <MenuItems>
-          <Link as={ReactRouterLink} to="/Dashboard">
+          <Link as={ReactRouterLink} to="/">
             Home
           </Link>
         </MenuItems>
         <MenuItems>
-          <Link as={ReactRouterLink} to="/Dashboard">
-            Contact us
+          <Link as={ReactRouterLink} to="/">
+            Dashboard
           </Link>
         </MenuItems>
         <MenuItems>
-          <Link as={ReactRouterLink} to="/Dashboard">
+          <Link as={ReactRouterLink} to="/">
             About us
           </Link>
         </MenuItems>
         <MenuItems>
-          <Link as={ReactRouterLink} to="/Dashboard">
+          <Link as={ReactRouterLink} to="/">
             Help
           </Link>
         </MenuItems>
@@ -96,7 +97,7 @@ function Navbar(props) {
         <IconButton
           aria-label="Call Segun"
           size="lg"
-          icon={<Icon as={FiShoppingCart} w={8} h={8} />}
+          icon={<Icon as={FiShoppingCart} w={8} h={8}  />}
           mr={{ base: "5px", md: "20px" }}
           variant="ghost"
           color={colorMode === "light" ? "cyan.800" : "cyan.100"}
@@ -110,7 +111,7 @@ function Navbar(props) {
           color={colorMode === "light" ? "cyan.800" : "cyan.100"}
           onClick={toggleColorMode}
         />
-        <a href="/">
+        <a href="/signin">
           <Button
             type="button"
             border="1px"
@@ -118,7 +119,7 @@ function Navbar(props) {
             mr="1.5rem"
             color={colorMode === "light" ? "cyan.800" : "cyan.100"}
           >
-            Log out
+            Log In
           </Button>
         </a>
       </Box>
