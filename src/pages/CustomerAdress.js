@@ -122,6 +122,7 @@ const CustomerAddress = () => {
 
     //add new address
     const addAddress = (Address)=>{
+        console.log(Address);
         Axios.post("http://localhost:5000/customer/addresses",{Address:Address})
         .then((Response)=>{
             var Address_ID = Response.data.insertId;

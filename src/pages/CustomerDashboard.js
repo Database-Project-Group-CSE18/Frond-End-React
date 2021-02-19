@@ -28,7 +28,7 @@ const CustomerDashboard = () => {
     useEffect(() => {
         Axios.get("http://localhost:5000/customer/user")
         .then((Response)=>{
-            // console.log(Response.data.user);
+            console.log(Response.data.user[0]);
             // console.log(Response.data.det);
             setUserdata(Response.data.user[0]);
             const det = arrangeData(Response.data.det)
@@ -79,7 +79,7 @@ const CustomerDashboard = () => {
         return newdata
     }
 
-    console.log(orderNum);
+    // console.log(orderNum);
 
     const { colorMode, toggleColorMode } = useColorMode();
 
@@ -130,7 +130,7 @@ const CustomerDashboard = () => {
                                             />
                                         </Box>
                                         <Box >
-                                        <Heading size='lg'> Hello, {userdata.First_Name + " " + userdata.Last_Name} </Heading>
+                                        <Heading size='lg'> Hello, {userdata.First_name + " " + userdata.Last_name} </Heading>
                                         </Box>
                                     </SimpleGrid>
     
