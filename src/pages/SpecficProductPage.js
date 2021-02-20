@@ -15,13 +15,15 @@ import {
   Text,
   useColorMode,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { AddIcon, MinusIcon, StarIcon } from "@chakra-ui/icons";
 import CategorizedReviewPreview from "../components/CategorizedReviewPreview";
 import ReviewCountPreview from "../components/ReviewCountPreview";
 import SearchBar from "../components/SearchBar";
+import axios from "axios";
+import { arrayBufferToBinaryString } from "blob-util";
 
 function SpecificProductPage() {
   let { id } = useParams();
@@ -36,7 +38,6 @@ function SpecificProductPage() {
     if (currentOrder.quantity > 0)
       setCurrentOrder({ ...currentOrder, quantity: currentOrder.quantity - 1 });
   };
-
   const [data, setData] = useState({
     item_ID: "233d",
     item_name: "Electric tooth brush",
@@ -80,7 +81,7 @@ function SpecificProductPage() {
       {
         varient_name: "white 2 brushes",
         image:
-          "https://b3h2.scene7.com/is/image/BedBathandBeyond/69055867778_imageset?$690$&wid=690&hei=690",
+          "../images/White.jpg",
         color: "green",
         details: "",
         Quantity: 450,
@@ -88,7 +89,7 @@ function SpecificProductPage() {
       {
         varient_name: "pink 2 brushes with bateries",
         image:
-          "https://www.powerplanetonline.com/cdnassets/xiaomi_soocas_x3u_sonic_electric_toothbrush_01_rosa_l.jpg",
+          "../images/Pink.jpg",
         color: "pink",
         details: "",
         Quantity: 230,
@@ -96,13 +97,23 @@ function SpecificProductPage() {
       {
         varient_name: "two heads only",
         image:
-          "https://dam.which.co.uk/3b117c36-ca30-49bb-853c-9d31b220a90d.jpg",
+          "../images/blue.jpg",
         color: "blue",
         details: "",
         Quantity: 500,
       },
     ],
   });
+
+  useEffect(() => {
+    axios.get(`http://localhost:5000/items/specificitem/${id}`).then((response) => {
+      let data = response.data.items;
+      console.log(data)
+      setData(data);
+    });
+  }, []);
+
+ 
 
   var imageStack = new Array(data.variants.length)
     .fill(0)
@@ -114,13 +125,15 @@ function SpecificProductPage() {
         onClick={() => setCurrentOrder({ ...currentOrder, varient: index })}
       >
         <Image
-          src={data.variants[index].image}
+          src={data.variants[index].Image}
           w="100px"
           h="100px"
           alt="image"
         />
       </Box>
     ));
+
+    var img = (data.variants.length === 0) ? data.Image.data : data.variants[currentOrder.varient].image.data;
 
   return (
     <Box
@@ -142,13 +155,14 @@ function SpecificProductPage() {
       >
         <Box width="auto" h="auto" overflow="hidden" p="5px">
           <Image
-            src={data.variants[currentOrder.varient].image}
+            src={`data:image/png;base64,${arrayBufferToBinaryString(img)}`}
             w="auto"
             h="auto"
             alt="image"
             fit
           />
         </Box>
+        
         <Box
           width="auto"
           h="auto"
@@ -156,11 +170,11 @@ function SpecificProductPage() {
           p={{ base: "5px", sm: "20px" }}
         >
           <Heading as="h2" size="2xl">
-            {data.item_name}
+            {data.Item_name}
           </Heading>
 
           <Text fontSize="xl" ml="3px" mt="5px">
-            {data.category}
+            {data.Category}
           </Text>
           <Box d="flex" mt="2" ml="2px" alignItems="center">
             {Array(5)
@@ -168,11 +182,11 @@ function SpecificProductPage() {
               .map((_, i) => (
                 <StarIcon
                   key={i}
-                  color={i < data.feedbacks[0].rating ? "cyan.500" : "cyan.300"}
+                  color={i < data.rating ? "cyan.500" : "cyan.300"}
                 />
               ))}
             <Box as="span" ml="2" fontSize="sm">
-              {data.feedbacks.length} reviews &bull; {data.orders} orders
+              {data.feedbacks.length} reviews &bull; {data.Num_of_orders} orders
             </Box>
           </Box>
           <Heading as="h4" size="md" mt="20px">
@@ -196,6 +210,7 @@ function SpecificProductPage() {
               icon={<MinusIcon />}
               onClick={quantity_dec}
             />
+            <Text pl='20px' color='red.500' >{data.variants.length === 0 ? null : data.variants[currentOrder.varient].Quantity} items are available</Text>
           </HStack>
 
           <HStack mt="20px">
@@ -223,7 +238,7 @@ function SpecificProductPage() {
           Description
         </Heading>
         <Text fontSize="md" ml="3px" mt="5px">
-          {data.description}
+          {data.Description}
         </Text>
       </Box>
       <Box

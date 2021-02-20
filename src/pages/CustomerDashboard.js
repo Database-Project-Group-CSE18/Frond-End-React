@@ -11,8 +11,8 @@ import {
     useToast
   } from "@chakra-ui/react";
 
-import React, { useState,useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState } from "react";
+import { useParams, withRouter } from "react-router-dom";
 import Navbar from '../components/Navbar';
 import CustomerDashSideBar from "../components/CustomerDashSideBar";
 import Axios from 'axios'
@@ -191,4 +191,4 @@ const CustomerDashboard = () => {
     )
 }
 
-export default CustomerDashboard
+export default withRouter(CustomerDashboard)

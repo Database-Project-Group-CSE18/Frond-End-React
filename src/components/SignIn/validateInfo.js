@@ -13,6 +13,5 @@ export default function validateInfo(values) {
     errors.password = "Password needs to be 8 characters or more";
   }
 
-
   return errors;
 }
