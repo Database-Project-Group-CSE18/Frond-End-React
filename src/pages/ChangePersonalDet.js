@@ -6,34 +6,19 @@ import {
     Flex,
     Heading,
     useDisclosure,
+    useToast,
   } from "@chakra-ui/react";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CustomerDashSideBar from "../components/CustomerDashSideBar";
 import ChangePasswordForm from "../components/ChangePasswordForm";
 import ChangePersonalDetails from "../components/ChangePersonalDetForm";
-
-
 
 const ChangePersonalDet = () => { 
 
     const { colorMode, toggleColorMode } = useColorMode();
 
-    const [personaldet,setPersonaldet] = useState(
-        {
-            id:1,
-            firstName:'pasan',
-            lastName:'madushan',
-            tp:'07704543436',                               
-        },)
-
-    //implement change password
-
-    const updateDetails = (data)=>{
-        setPersonaldet(data)
-        console.log(personaldet)
-    }
-
+    const toast = useToast();
 
         return (
             <Box
@@ -76,7 +61,8 @@ const ChangePersonalDet = () => {
 
                         <GridItem colSpan={2}>
                               <Box bg={colorMode === "light" ? "cyan.50" : "cyan.900"}  p='10' m='5' border='2px' borderColor='teal.600' borderRadius='15px'>         
-                            <ChangePersonalDetails data={personaldet} updateDetails={updateDetails}/>   
+                            <ChangePersonalDetails />  
+                            {/* data={ personaldet } updateDetails={updateDetails}  */}
                             </Box>
                        </GridItem>
 
