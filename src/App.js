@@ -11,6 +11,10 @@ import CustomerAddress from "./pages/CustomerAdress";
 import ChangePersonalDet from "./pages/ChangePersonalDet";
 import CategoryPage from "./pages/CategoryPage";
 import Navbar from "./components/Navbar";
+import AwaitingDelivery from "./pages/AwaitingDelivery";
+import AwaitingShipment from "./pages/AwaitingShipment";
+import NewItem from "./pages/NewItem";
+import OrderView from "./pages/OrderView";
 
 import Home from "./pages/Customer/Home";
 import SignUp from "./pages/Customer/SignUp";
@@ -63,6 +67,10 @@ function App() {
           <Route path="/shippingaddress"  component={CustomerAddress} />
           <Route path="/changepersonaldet" component={ChangePersonalDet} />
           <Route path="/categorypage" component={CategoryPage} />
+          <Route path="/awaitingdelivery" component={AwaitingDelivery} />
+          <Route path="/awaitingshipment" component={AwaitingShipment} />
+          <Route path="/newitem" component={NewItem} />
+          <Route path="/orderview" component={OrderView} />
 
           <Route path="/carddetails" component={CardDetails} />
           <Route path="/trackorder/:id" component={TrackOrder} />

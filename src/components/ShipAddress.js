@@ -3,13 +3,6 @@ import {
     Box,
     Button,
     GridItem,
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalFooter,
-    ModalBody,
-    ModalCloseButton,
     useColorMode,
     useDisclosure,
     Popover,
@@ -21,9 +14,6 @@ import {
     PopoverArrow,
     PopoverCloseButton,
     ButtonGroup,
-    FormControl,
-    FormLabel,
-    Input
   } from "@chakra-ui/react";
 
 import { ImUser,ImPhone, ImLocation } from "react-icons/im";
@@ -35,32 +25,32 @@ const ShipAddress = ({address,deleteAddress,updateAddress}) => {
 
     const { colorMode, toggleColorMode } = useColorMode();
 
-    const [data, setData] = useState({
-        id: address.id,
-        name: address.name,
-        tp: address.tp,
-        street: address.street,
-        city: address.city,
-        state: address.state,
-        zip: address.zip,
-    })
+    // const [data, setData] = useState({
+    //     id: address.Address_ID,
+    //     name: address.First_Name + address.Last_Name,
+    //     tp: address.tp,
+    //     street: address.Street,
+    //     city: address.City,
+    //     state: address.State,
+    //     zip: address.ZIP,
+    // })
     
-    const handleSubmit = (e)=>{
-        e.preventDefault()
-        // console.log('---------handlesubmit data--------')
-        // console.log(data)
-        updateAddress(data)
+    // const handleSubmit = (e)=>{
+    //     e.preventDefault()
+    //     // console.log('---------handlesubmit data--------')
+    //     // console.log(data)
+    //     updateAddress(data)
         
-        // updateAddress(address.id)
-    }
+    //     // updateAddress(address.id)
+    // }
 
-    const handleChange =  (event) => {
-        var value = event.target.value;
-        var name = event.target.name;
+    // const handleChange =  (event) => {
+    //     var value = event.target.value;
+    //     var name = event.target.name;
 
-        setData({ ...data, [event.target.name]: value })
-        // console.log(data)
-    };
+    //     setData({ ...data, [event.target.name]: value })
+    //     // console.log(data)
+    // };
 
 
     return(
@@ -84,10 +74,10 @@ const ShipAddress = ({address,deleteAddress,updateAddress}) => {
                         fontSize="lg"       
                         ml="2"
                     >
-                        { address.name }
+                        { address.First_Name +" " +  address.Last_Name }
                     </Box>
                 </Box> 
-                <Box d="flex" alignItems="baseline" m='2'>
+                {/* <Box d="flex" alignItems="baseline" m='2'>
                 
                     <ImPhone color='cyan.600'/>
                     <Box
@@ -98,7 +88,7 @@ const ShipAddress = ({address,deleteAddress,updateAddress}) => {
                     >
                         { address.tp }
                     </Box>
-                </Box> 
+                </Box>  */}
 
                 <Box d="flex" alignItems="baseline" mt='2' mb='5'>
                 
@@ -109,10 +99,10 @@ const ShipAddress = ({address,deleteAddress,updateAddress}) => {
                         fontSize="md"       
                         ml="2"
                     >
-                        <Box>{ address.street }</Box>
-                        <Box>{ address.city }</Box>
-                        <Box>{ address.state }</Box>
-                        <Box>{ address.zip }</Box>
+                        <Box>{ address.Street }</Box>
+                        <Box>{ address.City }</Box>
+                        <Box>{ address.State }</Box>
+                        <Box>{ address.ZIP }</Box>
                     </Box>
                 </Box> 
                
@@ -133,7 +123,7 @@ const ShipAddress = ({address,deleteAddress,updateAddress}) => {
                             </PopoverBody>
                             <PopoverFooter d="flex" justifyContent="flex-end">
                                 <ButtonGroup size="sm">
-                                    <Button colorScheme="red" onClick={()=>{deleteAddress(address.id)}}>Delete</Button>
+                                    <Button colorScheme="red" onClick={()=>{deleteAddress(address.Address_ID)}}>Delete</Button>
                                 </ButtonGroup>
                             </PopoverFooter>
                             </PopoverContent>

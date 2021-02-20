@@ -5,7 +5,7 @@ const ShipAddressses = ({addresses,deleteAddress,updateAddress}) => {
         <>
            {    
                addresses.map((address)=>(
-                   <ShipAddress key={address.id} address={address} deleteAddress={deleteAddress} updateAddress={updateAddress}> </ShipAddress>
+                   <ShipAddress key={address.Address_ID} address={address} deleteAddress={deleteAddress} updateAddress={updateAddress}> </ShipAddress>
                    )
             )}
         </>
