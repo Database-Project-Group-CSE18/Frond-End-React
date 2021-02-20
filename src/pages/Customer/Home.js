@@ -7,8 +7,11 @@ import BottomItems from "../../components/Footer/BottomItems";
 import SearchBarHome from "../../components/SearchBarHome";
 import ImageSlider from "../../components/Slider/ImageSlider";
 import { SliderData } from "../../components/Slider/SliderData";
+// import checkLogin from "./checkLogin";
 
 function Home() {
+
+  
   return (
     <>
     <SearchBarHome />

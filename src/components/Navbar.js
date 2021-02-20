@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Flex,
   Box,
@@ -14,6 +14,7 @@ import { HamburgerIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
 
 import { FiShoppingCart } from "react-icons/fi";
+import Axios from "axios";
 
 function Navbar(props) {
   const MenuItems = ({ children }) => (
@@ -31,7 +32,8 @@ function Navbar(props) {
 
   const [show, setShow] = React.useState(false);
   const handleToggle = () => setShow(!show);
-
+  
+  
   const { colorMode, toggleColorMode } = useColorMode();
 
   return (
@@ -112,7 +114,15 @@ function Navbar(props) {
           onClick={toggleColorMode}
         />
         <a href="/signin">
-          <Button
+          {props.isLoggedIn ? <Button
+            type="button"
+            border="1px"
+            variant="ghost"
+            mr="1.5rem"
+            color={colorMode === "light" ? "cyan.800" : "cyan.100"}
+          >
+            Log Out
+          </Button>: <Button
             type="button"
             border="1px"
             variant="ghost"
@@ -120,7 +130,8 @@ function Navbar(props) {
             color={colorMode === "light" ? "cyan.800" : "cyan.100"}
           >
             Log In
-          </Button>
+          </Button> }
+          
         </a>
       </Box>
 

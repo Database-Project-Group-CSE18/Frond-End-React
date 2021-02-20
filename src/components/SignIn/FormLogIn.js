@@ -1,13 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import validate from "./validateInfo";
 import useForm from "./useForm";
 import "./LogIn.css";
+// Promise based HTTP client for the node.js
+import Axios from "axios";
+import { Button } from "@chakra-ui/react";
 
-function FormLogIn(submitForm) {
-  const { handleChange, handleSubmit, values, errors } = useForm(
+const FormLogIn = ({ submitForm }) => {
+
+  const { handleChange, handleSubmit, userAuthenticated, values, errors, loginStatus } = useForm(
     submitForm,
     validate
   );
+  
+  
   return (
     <div className="login-content-right">
       <form onSubmit={handleSubmit} className="form" noValidate>
@@ -15,7 +21,12 @@ function FormLogIn(submitForm) {
           Welcome!!!
           <br />
           Sign in to continue shopping!
+          <br />
+          <br />
+          
         </h1>
+        <h1 className="login-status"> </h1> 
+        {/* <Button color='red' onClick={userAuthenticated}>Check if</Button> */}
         <div className="login-inputs">
           <label className="login-label">Email</label>
           <input
