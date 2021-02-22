@@ -5,7 +5,7 @@ const OrderTiles = ({orders,cancelOrder,confirmOrder}) => {
         <>
            {    
                orders.map((order)=>(
-                   <OrderTile key={order.orderID} order={order} cancelOrder={cancelOrder} confirmOrder={confirmOrder}>  </OrderTile>
+                   <OrderTile key={order.Order_ID} order={order} cancelOrder={cancelOrder} confirmOrder={confirmOrder}>  </OrderTile>
                    )
             )}
         </>

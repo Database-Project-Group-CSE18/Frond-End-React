@@ -28,37 +28,6 @@ const CustomerAddress = () => {
     const [address,setAddress] = useState([])
 
     // {
-    //     id:1,
-    //     name:'pasan madushan',
-    //     tp:'07704543436',
-    //     street:'1234',
-    //     city:'abc',
-    //     state:'def',
-    //     zip:'12121'   
-                   
-    // },
-    // {
-    //     id:2,
-    //     name:'vimukthi madushan',
-    //     tp:'077238404543436',
-    //     street:'sdfsdf',
-    //     city:'sdflndsfldsnfk',
-    //     state:'slfnsdflnsdf',
-    //     zip:'1203948234121'      
-               
-    // },
-    // {
-    //     id:3,
-    //     name:'chalindu malshika',
-    //     tp:'077043543436',
-    //     street:'0324284',
-    //     city:'rathnapura',
-    //     state:'hdlfdfs',
-    //     zip:'139202121'     
-        
-         
-    // },
-    // {
     //     id:4,
     //     name:'chandima',
     //     tp:'042342492',
@@ -93,6 +62,7 @@ const CustomerAddress = () => {
 
     //delete an addresss
     const deleteAddress  = (id)=>{
+        // console.log(id);
         Axios.delete("http://localhost:5000/customer/addresses",{data:{id:id}})
         .then((Response)=>{
             // console.log(Response);
