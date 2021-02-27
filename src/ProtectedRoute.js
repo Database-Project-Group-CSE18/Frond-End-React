@@ -1,7 +1,7 @@
 import Axios from "axios";
 import React, { useState } from "react";
 import { Route, Redirect } from "react-router-dom";
-import Cookies from "js-cookie";
+
 
 function ProtectedRoute({ isAuth: isLoggedIn, component: Component, ...rest }) {
   return (
