@@ -12,115 +12,88 @@ import React, { useState, useEffect } from "react";
 
 import SearchBar from "../components/SearchBar";
 import ProductCard from "../components/ProductCard";
+import axios from "axios";
 
 function CategoryPage() {
-  const [categories, setCategories] = useState([
-    "All categories",
-    "Phones",
-    "Smart Watches",
-    "Tabs",
-    "Headphones",
-    "Chargers",
-  ]);
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    axios.get("http://localhost:5000/items/categories").then((response) => {
+      let data = response.data.items;
+      data.push("All Categories");
+      setCategories(data);
+    });
+
+    axios
+    .get(`http://localhost:5000/items`)
+    .then((response) => {
+      let data = response.data.items;
+      setActiveCategoryProducts(data);
+
+    });
+  }, []);
 
   const { colorMode, toggleColorMode } = useColorMode();
-  const [activeCategory, setActiveCategory] = useState(categories[0]);
-  const [activeCategoryProducts, setActiveCategoryProducts] = useState([
-    {
-      item_ID: "233d",
-      item_name: "Electric tooth brush",
-      category: "electronic",
-      price: 200.0,
-      orders: 345,
-      reviews:100,
-      rating:3,
-      description:
-        "dqdasd a sadasd asdasdafsfrgs gsgsg sd gsgsgsdg sdgsdgsdg sdg",
-      status: "Available",
-      image:
-        "https://b3h2.scene7.com/is/image/BedBathandBeyond/69055867778_imageset?$690$&wid=690&hei=690",
-    },
-    {
-      item_ID: "34cd",
-      item_name: "Iphone 8",
-      category: "electronic",
-      price: 200.0,
-      orders: 345,
-      reviews:100,
-      rating:3,
-      description:
-        "dqdasd a sadasd asdasdafsfrgs gsgsg sd gsgsgsdg sdgsdgsdg sdg",
-      status: "Available",
-      image:
-        "../images/iphone.jpg",
-    },
-    {
-      item_ID: "34cd",
-      item_name: "Iphone 8",
-      category: "electronic",
-      price: 200.0,
-      orders: 345,
-      reviews:250,
-      rating:4,
-      description:
-        "dqdasd a sadasd asdasdafsfrgs gsgsg sd gsgsgsdg sdgsdgsdg sdg",
-      status: "Out of stock",
-      image:
-        "https://b3h2.scene7.com/is/image/BedBathandBeyond/69055867778_imageset?$690$&wid=690&hei=690",
-    },
-    {
-      item_ID: "34cd",
-      item_name: "Iphone 8",
-      category: "electronic",
-      price: 200.0,
-      orders: 345,
-      reviews:150,
-      rating:2,
-      description:
-        "dqdasd a sadasd asdasdafsfrgs gsgsg sd gsgsgsdg sdgsdgsdg sdg",
-      status: "Available",
-      image:
-        "https://b3h2.scene7.com/is/image/BedBathandBeyond/69055867778_imageset?$690$&wid=690&hei=690",
-    },
-    {
-      item_ID: "34cd",
-      item_name: "Iphone 8",
-      category: "electronic",
-      price: 200.0,
-      orders: 345,
-      reviews:50,
-      rating:5,
-      description:
-        "dqdasd a sadasd asdasdafsfrgs gsgsg sd gsgsgsdg sdgsdgsdg sdg",
-      status: "Available",
-      image:
-        "https://b3h2.scene7.com/is/image/BedBathandBeyond/69055867778_imageset?$690$&wid=690&hei=690",
-    },
-  ]);
+  const [activeCategory, setActiveCategory] = useState();
+  const [activeCategoryProducts, setActiveCategoryProducts] = useState([]);
+
 
   var searchBarText = `Search in ${activeCategory}`;
 
   const HandleClick = (category) => {
     setActiveCategory(category);
+    if(category!=="All Categories"){
+      var url = `http://localhost:5000/items/search/${category}`;
+    }else{
+      var url = `http://localhost:5000/items`;
+    }
 
+    axios
+    .get(url)
+    .then((response) => {
+      let data = response.data.items;
+      setActiveCategoryProducts(data);
+
+    });
+  
   };
+  const HandleChange = (event) => {
+    var value = event.target.value;
+    axios
+    .post("http://localhost:5000/items",{
+      "category":`${activeCategory}`,
+      "item_name":`${value}`
+    })
+    .then((response) => {
+      let data = response.data.items;
+      setActiveCategoryProducts(data);
+    });
+  
+  };
+
+
 
   return (
     <Box
       pt="150px"
-      pl={{ base: "10px", sm: "100px" }}
-      pr={{ base: "10px", sm: "100px" }}
+      pl={{ base: "10px", md: "100px" }}
+      pr={{ base: "10px", md: "100px" }}
     >
-      <Center mb='10px'>
-        <SearchBar text={searchBarText} />
+      <Center mb="10px">
+        <SearchBar text={searchBarText} onChange={HandleChange}/>
       </Center>
       <Grid
         templateRows="repeat(1, 1fr)"
         templateColumns="repeat(5, 1fr)"
         gap={0}
-        pb='200px'
+        pb="200px"
       >
-        <GridItem rowSpan={1} colSpan={1} bg={colorMode === "light" ? "gray.200" : "gray.600"} p="10px">
+        <GridItem
+          rowSpan={1}
+          colSpan={1}
+          bg={colorMode === "light" ? "gray.200" : "gray.600"}
+          p="10px"
+        >
           <Heading as="h3" size="lg" mb="20px">
             Categories
           </Heading>
@@ -132,7 +105,7 @@ function CategoryPage() {
                   <Button
                     w="100%"
                     variant="ghost"
-                    colorScheme="gray"
+                    colorScheme="cyan"
                     isActive
                     onClick={() => HandleClick(categories[i])}
                   >
@@ -142,7 +115,7 @@ function CategoryPage() {
                   <Button
                     w="100%"
                     variant="ghost"
-                    colorScheme="gray"
+                    colorScheme="cyan"
                     onClick={() => HandleClick(categories[i])}
                   >
                     {categories[i]}
@@ -161,21 +134,28 @@ function CategoryPage() {
           <Heading as="h2" size="2xl" mb="20px">
             {activeCategory}
           </Heading>
-          <Grid h="auto" templateColumns="repeat(4, 1fr)" gap={2}>
+          <Grid
+            h="auto"
+            templateColumns={{
+              md: "repeat(1, 1fr)",
+              lg: "repeat(3, 1fr)",
+              xl: "repeat(4, 1fr)",
+            }}
+            gap={2}
+          >
             {Array(activeCategoryProducts.length)
               .fill("")
               .map((_, i) => (
                 <ProductCard
-                  title={activeCategoryProducts[i].item_name}
-                  imageUrl={activeCategoryProducts[i].image}
-                  itemName= {activeCategoryProducts[i].item_name}
-                  category= {activeCategoryProducts[i].category}
-                  price= {activeCategoryProducts[i].price}
-                  orders= {activeCategoryProducts[i].orders}
-                  status={activeCategoryProducts[i].status}
-                  rating={activeCategoryProducts[i].rating}
-                  reviews={activeCategoryProducts[i].reviews}
-                  
+                  title={activeCategoryProducts[i].Item_name}
+                  imageUrl={activeCategoryProducts[i].Image}
+                  itemName={activeCategoryProducts[i].Item_name}
+                  category={activeCategoryProducts[i].Category}
+                  price={activeCategoryProducts[i].Price}
+                  orders={activeCategoryProducts[i].Num_of_orders}
+                  status={activeCategoryProducts[i].Status}
+                  rating={activeCategoryProducts[i].Rating}
+                  reviews={activeCategoryProducts[i].Reviews}
                 />
               ))}
           </Grid>

@@ -14,27 +14,40 @@ import {
   Tr,
   Td,
 } from "@chakra-ui/react";
+import { encode } from "base64-arraybuffer";
+import { arrayBufferToBinaryString } from "blob-util";
 import React, { useState } from "react";
+import ImageLoader from "react-image-file";
 
 function ProductCard(props) {
   return (
-    <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden">
-      <Img src={props.imageUrl} alt={props.imageAlt} w='230px' h='250px' />
-
+    <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden" cursor='pointer'>
+      <Image
+        src={`data:image/png;base64,${arrayBufferToBinaryString(props.imageUrl.data)}`}
+        alt="product image"
+        w="200px"
+        h="200px"
+      />
       <Box p="6">
-      <Badge
-            borderRadius="full"
-            px="2"
-            colorScheme='yellow'
-            variant="outline" 
-            fontSize='9px'
-          >
-            {props.category}
-          </Badge>
-        <Box fontWeight="semibold" as="h4" lineHeight="tight" fontSize='xl' isTruncated>
+        <Badge
+          borderRadius="full"
+          px="2"
+          colorScheme="yellow"
+          variant="outline"
+          fontSize="9px"
+        >
+          {props.category}
+        </Badge>
+        <Box
+          fontWeight="semibold"
+          as="h4"
+          lineHeight="tight"
+          fontSize="xl"
+          isTruncated
+        >
           {props.title}
         </Box>
-       
+
         <Box>
           <Text color="gray.600" fontSize="3xl">
             Rs. {props.price}
@@ -61,7 +74,6 @@ function ProductCard(props) {
           </Box>
         </Box>
 
-       
         <Box d="flex" mt="2" alignItems="center">
           {Array(5)
             .fill("")
