@@ -36,19 +36,12 @@ import Axios from "axios";
 function App() {
   const[isAuth, setIsAuth] = useState(false);
   const[isLoggedIn, setIsLoggedIn] = useState(false);
-  const userAuthenticated = () => {
-    Axios.get("http://localhost:5000/customer/isUserAuth", {
-    headers: {
-      "x-access-token": localStorage.getItem("token")},
-    }).then(response => {
-      console.log(response.status);
-    });
-  };
+
 
   useEffect(() => {
     Axios.get("http://localhost:5000/customer/login")
     .then((response) => {
-      if(response.data.LoggedIn == true) {
+      if(response.data.LoggedIn === true) {
         setIsLoggedIn(true);
       }else{
         setIsLoggedIn(false)
@@ -77,10 +70,11 @@ function App() {
           <Route path="/allorders" component={AllOrders} />
 
 
-          <ProtectedRoute path="/cart/:customer_id" component={CartPage} />
+       {/* <ProtectedRoute path="/cart/:customer_id" component={CartPage} /> */}
+       <Route path="/cart/:customer_id" component={CartPage} />
+
           <Route path="/feedbackpage/:id" component={FeedbackPage} />
           <ProtectedRoute path="/SellerDashboard/:id" component={SellerDashboard} />
-          {}
           <Route path="/signUp" component={SignUp} />
           <Route path="/signin" component={SignIn} />
           <ProtectedRoute path="/sellerHome" component={SellerHome} />
