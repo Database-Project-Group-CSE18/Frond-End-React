@@ -12,11 +12,13 @@ import {
 } from "@chakra-ui/react";
 import { HamburgerIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
-
+import { useHistory } from 'react-router-dom';
 import { FiShoppingCart } from "react-icons/fi";
 import Axios from "axios";
+import checkLogin from "../API_Service/checkLogin"
 
 function Navbar(props) {
+  var his=useHistory();
   const MenuItems = ({ children }) => (
     <Button
       mt={{ base: 4, md: 0 }}
@@ -30,11 +32,31 @@ function Navbar(props) {
     </Button>
   );
 
+  const[isLoggedIn, setIsLoggedIn] = useState(props.isLoggedIn);
   const [show, setShow] = React.useState(false);
   const handleToggle = () => setShow(!show);
-  
+  // useEffect(() => {
+  //   Axios.get("http://localhost:5000/customer/login")
+  //   .then((response) => {
+  //     console.log('is authenticated navbar?')
+  //     if(response.data.LoggedIn === true) {
+  //       // console.log(response.data)
+  //       setIsLoggedIn(true);
+  //     }else{
+  //       setIsLoggedIn(false);
+  //     }
+  //     });
+    
+  // }, [props.isLoggedIn])
   
   const { colorMode, toggleColorMode } = useColorMode();
+  // const isLoggedIn = checkLogin.isAuthenticated();
+  console.log("Navigation bar")
+
+  // const logout=()=>{
+  //   checkLogin.clearCookie();
+  //   his.push('/');
+  // }
 
   return (
     <Flex
@@ -76,7 +98,7 @@ function Navbar(props) {
           </Link>
         </MenuItems>
         <MenuItems>
-          <Link as={ReactRouterLink} to="/">
+          <Link as={ReactRouterLink} to="/sellerhome">
             Dashboard
           </Link>
         </MenuItems>
