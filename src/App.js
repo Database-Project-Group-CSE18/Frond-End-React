@@ -3,8 +3,6 @@ import "./App.css";
 import SpecificProductPage from "./pages/SpecficProductPage";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
-import ProtectedRoute from "./ProtectedRoute";
-import checkLogin from "./API_Service/checkLogin"
 
 import CustomerDashboard from "./pages/CustomerDashboard";
 import CustomerAddress from "./pages/CustomerAdress";
@@ -29,62 +27,95 @@ import CartPage from "./pages/CartPage";
 import FeedbackPage from "./pages/FeedbackPage";
 import SellerDashboard from "./pages/SellerDashboard";
 import Axios from "axios";
-import Cookies from "js-cookie"
-
-
 
 function App() {
-  const[auth, setAuth] = useState({isLoggedIn:false, userID: 0});
-  const[signInClicked, setSignInClicked] = useState(false);
+  const [auth, setAuth] = useState({ isLoggedIn: false, userID: 0 });
+  const [signInClicked, setSignInClicked] = useState(false);
   Axios.defaults.withCredentials = true;
-  
-  console.log("App js")
+
+  console.log("App js");
   useEffect(() => {
     Axios.defaults.withCredentials = true;
-    Axios.get("http://localhost:5000/customer/login")
-  .then((response) => {
-    if(response.data.LoggedIn == true) {
-      setAuth({isLoggedIn: true, userID : response.data.user.user_id});
-    }else{
-      setAuth({isLoggedIn: false, userID: 0});
-    }
+    Axios.get("http://localhost:5000/customer/login").then((response) => {
+      if (response.data.LoggedIn === true) {
+        setAuth({ isLoggedIn: true, userID: response.data.user.user_id });
+      } else {
+        setAuth({ isLoggedIn: false, userID: 0 });
+      }
     });
-  }, [signInClicked])
+  }, [signInClicked]);
 
-  return (
-    <ChakraProvider>
+
+  if(auth.isLoggedIn){
+    if(auth.userID === 1){
+      return (
+        <ChakraProvider>
+          <Router>
+          <Navbar isLoggedIn={auth.isLoggedIn} />
+            <Switch >
+              {/* Common Routes */}
+              <Route path="/" exact component={Home} />
+              <Route path="/newitem" component={NewItem} />
+              <Route path="/categorypage" component={CategoryPage} />
+              <Route path="/productpage/:id" component={SpecificProductPage} />
+
+              {/* Customer Routes */}
+
+              {/* Seller Routes */}
+              <Route path="/SellerDashboard/:id" component={SellerDashboard} />
+              <Route path="/sellerHome" component={SellerHome} />
+              <Route path="/awaitingshipment" component={AwaitingShipment} />
+              <Route path="/awaitingdelivery" component={AwaitingDelivery} />
+
+            </Switch>
+          </Router>
+        </ChakraProvider>
+      );
+    }else{
+      return(
+        <ChakraProvider>
+          <Router>
+            <Navbar isLoggedIn={auth.isLoggedIn} />
+            <Switch >
+              <Route path="/" exact component={Home} />
+              <Route path="/newitem" component={NewItem} />
+              <Route path="/categorypage" component={CategoryPage} />
+              <Route path="/productpage/:id" component={SpecificProductPage} />
+
+              <Route path="/cart/:customer_id" component={CartPage} />
+              <Route path="/customerdashboard" component={CustomerDashboard}  />
+              <Route path="/shippingaddress"  component={CustomerAddress} />
+              <Route path="/changepersonaldet" component={ChangePersonalDet} />
+              <Route path="/orderview" component={OrderView} />
+              <Route path="/feedbackpage/:id" component={FeedbackPage} />
+              <Route path="/carddetails" component={CardDetails} />
+              <Route path="/trackorder/:id" component={TrackOrder} />
+              <Route path="/allorders" component={AllOrders} />
+            </Switch>
+          </Router>
+        </ChakraProvider>
+      )
+    }
+    }
+
+  else{
+    return(
+      <ChakraProvider>
       <Router>
       <Navbar isLoggedIn={auth.isLoggedIn} />
         <Switch >
           {/* Common Routes */}
-          <Route path="/" component={Home} />
+          <Route path="/" exact component={Home} />
           <Route path="/newitem" component={NewItem} />
           <Route path="/categorypage" component={CategoryPage} />
           <Route path="/productpage/:id" component={SpecificProductPage} />
-          <Route path="/signUp" component={SignUp} Auth={auth} />
+          <Route path="/signUp" component={SignUp}/>
           <Route path="/signin" component={ () => {return <SignIn setSignInClicked={setSignInClicked}/>}} />
-
-          {/* Customer Routes */}
-          <ProtectedRoute path="/cart/:customer_id" component={CartPage} Auth={auth} Seller={false}/>
-          <ProtectedRoute path="/customerdashboard" component={CustomerDashboard}  Auth={auth} Seller={false}/>
-          <ProtectedRoute path="/shippingaddress"  component={CustomerAddress} Auth={auth} Seller={false}/>
-          <ProtectedRoute path="/changepersonaldet" component={ChangePersonalDet} Auth={auth} Seller={false}/>
-          <ProtectedRoute path="/orderview" component={OrderView} Auth={auth} Seller={false}/>
-          <ProtectedRoute path="/feedbackpage/:id" component={FeedbackPage} Auth={auth} Seller={false}/>
-          <ProtectedRoute path="/carddetails" component={CardDetails} Auth={auth} Seller={false}/>
-          <ProtectedRoute path="/trackorder/:id" component={TrackOrder} Auth={auth} Seller={false}/>
-          <ProtectedRoute path="/allorders" component={AllOrders} Auth={auth} Seller={false}/>
-
-          {/* Seller Routes */}
-          <ProtectedRoute path="/SellerDashboard/:id" component={SellerDashboard} Auth={auth} Seller={true}/>
-          <ProtectedRoute path="/sellerHome" component={SellerHome} Auth={auth} Seller={true}/>
-          <ProtectedRoute path="/awaitingshipment" component={AwaitingShipment} Auth={auth} Seller={true}/>
-          <ProtectedRoute path="/awaitingdelivery" component={AwaitingDelivery} Auth={auth} Seller={true}/>
-
-        </Switch>
+          </Switch>
       </Router>
     </ChakraProvider>
-  );
+    );
+  }
 }
 
 export default App;
