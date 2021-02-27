@@ -18,7 +18,7 @@ function checkAuthentication (callback) {
         headers: {
           "x-access-token": localStorage.getItem("token")},
         }).then(response => {
-          if(response.status == 200) {
+          if(response.status === 200) {
               callback(true)
           } else {
               callback(false);
@@ -42,14 +42,14 @@ function clearCookie(){
   Cookies.remove("user");
 }
 function isLoggedIn(){
-  if(Cookies.get("user") == undefined) {
+  if(Cookies.get("user") === undefined) {
     return false;
   }
   return true;
 
 }
 function getData(){
-  if(Cookies.get("user") == undefined) {
+  if(Cookies.get("user") === undefined) {
     return null;
   }
   return JSON.parse(Cookies.get("user"))
