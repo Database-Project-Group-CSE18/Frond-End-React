@@ -9,7 +9,7 @@ import checkLogin from "./API_Service/checkLogin"
 import CustomerDashboard from "./pages/CustomerDashboard";
 import CustomerAddress from "./pages/CustomerAdress";
 import ChangePersonalDet from "./pages/ChangePersonalDet";
-import CategoryPage from "./pages/CategoryPage";
+// import CategoryPage from "./pages/CategoryPage";
 import Navbar from "./components/Navbar";
 import AwaitingDelivery from "./pages/AwaitingDelivery";
 import AwaitingShipment from "./pages/AwaitingShipment";
@@ -59,7 +59,7 @@ function App() {
           {/* Common Routes */}
           <Route path="/" component={Home} />
           <Route path="/newitem" component={NewItem} />
-          <Route path="/categorypage" component={CategoryPage} />
+          {/* <Route path="/categorypage" component={CategoryPage} /> */}
           <Route path="/productpage/:id" component={SpecificProductPage} />
           <Route path="/signUp" component={SignUp} Auth={auth} />
           <Route path="/signin" component={ () => {return <SignIn setSignInClicked={setSignInClicked}/>}} />
