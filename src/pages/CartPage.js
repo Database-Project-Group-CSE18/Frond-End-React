@@ -51,8 +51,8 @@ function CartPage() {
 
   const [shippingAddress, setShippingAddress] = useState([
     {
-      first_name: "",
-      last_name: "",
+      first_Name: "",
+      last_Name: "",
       street: "",
       city: "",
       state: "",

@@ -51,22 +51,22 @@ function App() {
       return (
         <ChakraProvider>
           <Router>
-          <Navbar isLoggedIn={auth.isLoggedIn} />
+          <Navbar Auth={auth} />
             <Switch >
               {/* Common Routes */}
-              <Route path="/" exact component={Home} />
-              <Route path="/newitem" component={NewItem} />
-              <Route path="/categorypage" component={CategoryPage} />
-              <Route path="/productpage/:id" component={SpecificProductPage} />
+              
+              <Route path="/newitem" exact component={NewItem} />
+              <Route path="/categorypage" exact component={CategoryPage} />
+              <Route path="/productpage/:id" exact component={SpecificProductPage} />
 
-              {/* Customer Routes */}
 
               {/* Seller Routes */}
-              <Route path="/SellerDashboard/:id" component={SellerDashboard} />
-              <Route path="/sellerHome" component={SellerHome} />
-              <Route path="/awaitingshipment" component={AwaitingShipment} />
-              <Route path="/awaitingdelivery" component={AwaitingDelivery} />
+              <Route path="/SellerDashboard/:id" exact component={SellerDashboard} />
+              <Route path="/sellerHome" exact component={SellerHome} />
+              <Route path="/awaitingshipment" exact component={AwaitingShipment} />
+              <Route path="/awaitingdelivery" exact component={AwaitingDelivery} />
 
+              <Route path="/"  component={Home} />
             </Switch>
           </Router>
         </ChakraProvider>
@@ -75,22 +75,22 @@ function App() {
       return(
         <ChakraProvider>
           <Router>
-            <Navbar isLoggedIn={auth.isLoggedIn} />
+            <Navbar Auth={auth} />
             <Switch >
-              <Route path="/" exact component={Home} />
-              <Route path="/newitem" component={NewItem} />
-              <Route path="/categorypage" component={CategoryPage} />
-              <Route path="/productpage/:id" component={SpecificProductPage} />
-
-              <Route path="/cart/:customer_id" component={CartPage} />
-              <Route path="/customerdashboard" component={CustomerDashboard}  />
-              <Route path="/shippingaddress"  component={CustomerAddress} />
-              <Route path="/changepersonaldet" component={ChangePersonalDet} />
-              <Route path="/orderview" component={OrderView} />
-              <Route path="/feedbackpage/:id" component={FeedbackPage} />
-              <Route path="/carddetails" component={CardDetails} />
-              <Route path="/trackorder/:id" component={TrackOrder} />
-              <Route path="/allorders" component={AllOrders} />
+              {/* Customer Routes */}
+              <Route path="/newitem" exact component={NewItem} />
+              <Route path="/categorypage" exact component={CategoryPage} />
+              <Route path="/productpage/:id" exact component={SpecificProductPage} />
+              <Route path="/cart/:customer_id" exact component={CartPage} />
+              <Route path="/customerdashboard" exact component={CustomerDashboard}  />
+              <Route path="/shippingaddress" exact  component={CustomerAddress} />
+              <Route path="/changepersonaldet" exact component={ChangePersonalDet} />
+              <Route path="/orderview" exact component={OrderView} />
+              <Route path="/feedbackpage/:id" exact component={FeedbackPage} />
+              <Route path="/carddetails" exact component={CardDetails} />
+              <Route path="/trackorder/:id" exact component={TrackOrder} />
+              <Route path="/allorders" exact component={AllOrders} />
+              <Route path="/"  component={Home} />
             </Switch>
           </Router>
         </ChakraProvider>
@@ -102,15 +102,15 @@ function App() {
     return(
       <ChakraProvider>
       <Router>
-      <Navbar isLoggedIn={auth.isLoggedIn} />
+      <Navbar Auth={auth} />
         <Switch >
           {/* Common Routes */}
-          <Route path="/" exact component={Home} />
-          <Route path="/newitem" component={NewItem} />
-          <Route path="/categorypage" component={CategoryPage} />
-          <Route path="/productpage/:id" component={SpecificProductPage} />
-          <Route path="/signUp" component={SignUp}/>
-          <Route path="/signin" component={ () => {return <SignIn setSignInClicked={setSignInClicked}/>}} />
+          <Route path="/newitem" exact component={NewItem} />
+          <Route path="/categorypage" exact component={CategoryPage} />
+          <Route path="/productpage/:id" exact component={SpecificProductPage} />
+          <Route path="/signUp" exact component={SignUp}/>
+          <Route path="/signin" exact component={ () => {return <SignIn setSignInClicked={setSignInClicked}/>}} />
+          <Route path="/"  component={Home} />
           </Switch>
       </Router>
     </ChakraProvider>
