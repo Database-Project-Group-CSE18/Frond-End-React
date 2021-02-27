@@ -6,6 +6,12 @@ import {
   HStack,
   IconButton,
   Image,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   SimpleGrid,
   Tab,
   TabList,
@@ -14,9 +20,11 @@ import {
   Tabs,
   Text,
   useColorMode,
+  useDisclosure,
+  Modal
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Redirect, useParams } from "react-router-dom";
 
 import { AddIcon, MinusIcon, StarIcon } from "@chakra-ui/icons";
 import CategorizedReviewPreview from "../components/CategorizedReviewPreview";
@@ -25,9 +33,15 @@ import SearchBar from "../components/SearchBar";
 import axios from "axios";
 import { arrayBufferToBinaryString } from "blob-util";
 
+import ErrorModel from "../components/ErrorModel";
+import { render } from "@testing-library/react";
+
 function SpecificProductPage() {
   let { id } = useParams();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
+
+  const [serverResponse, setServerResponse] = useState("");
 
   const [currentOrder, setCurrentOrder] = useState({ varient: 0, quantity: 0 });
 
@@ -39,81 +53,95 @@ function SpecificProductPage() {
       setCurrentOrder({ ...currentOrder, quantity: currentOrder.quantity - 1 });
   };
   const [data, setData] = useState({
-    item_ID: "233d",
-    item_name: "Electric tooth brush",
-    category: "electronic",
-    price: 200.0,
-    orders: 345,
-    description:
-      "dqdasd a sadasd asdasdafsfrgs gsgsg sd gsgsgsdg sdgsdgsdg sdg",
-    status: "Available",
+    item_ID: "",
+    item_name: "",
+    category_name: "",
+    price: 0,
+    num_of_orders: 0,
+    description: "",
+    status: "",
+    image: "",
     feedbacks: [
       {
-        customer_name: "jof hagi",
-        customer_dp: "jof hagi",
-        comment: "asdasds asdasd sad",
-        rating: 4,
-        reply: ["sfsdfsd", "Thank you"],
-      },
-      {
-        customer_name: "den kali",
-        customer_dp: "jof hagi",
-        comment: "axasxas asdasd sad",
-        rating: 5,
-        reply: ["sfsdsddfsd", "asdassadasd sadssadasd sadasad"],
-      },
-      {
-        customer_name: "gendi gahnadi",
-        customer_dp: "jof hagi",
-        comment: "hgfhf dghhdgf dfgshssdd",
-        rating: 2,
-        reply: ["sfsdsddfsd", "asdassadasd sadssadasd sadasad"],
-      },
-      {
-        customer_name: "den kali",
-        customer_dp: "jof hagi",
-        comment: "axasxas asdasd sad",
-        rating: 2,
-        reply: ["sfsdsddfsd", "asdassadasd sadssadasd sadasad"],
+        feedback_ID: "",
+        user_ID: "",
       },
     ],
     variants: [
       {
-        varient_name: "white 2 brushes",
-        image:
-          "../images/White.jpg",
-        color: "green",
-        details: "",
-        Quantity: 450,
-      },
-      {
-        varient_name: "pink 2 brushes with bateries",
-        image:
-          "../images/Pink.jpg",
-        color: "pink",
-        details: "",
-        Quantity: 230,
-      },
-      {
-        varient_name: "two heads only",
-        image:
-          "../images/blue.jpg",
-        color: "blue",
-        details: "",
-        Quantity: 500,
+        variant_ID: "",
+        variant_name: "",
+        image: "",
+        color: "",
+        size: "",
+        specificDetail: "",
+        quantity: "",
       },
     ],
   });
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/items/specificitem/${id}`).then((response) => {
-      let data = response.data.items;
-      console.log(data)
-      setData(data);
-    });
+    axios
+      .get(`http://localhost:5000/items/specificitem/${id}`)
+      .then((response) => {
+        let data = response.data.items;
+        console.log(data);
+        setData(data);
+        setCurrentOrder({
+          ...currentOrder,
+          varient_id: data.variants[0].variant_id,
+        });
+      });
   }, []);
 
- 
+  const HandleClickAddtoCart = () => {
+    if(currentOrder.quantity <= 0){
+      setServerResponse("Select the Quntitiy");
+      onOpen();
+    }else{
+      axios
+      .post(`http://localhost:5000/items/specificitem/addtocart`, {
+        cart_id: "3",
+        varient_id: currentOrder.varient_id,
+        quantity: currentOrder.quantity,
+      })
+      .then((response) => {
+        console.log(response);
+        setServerResponse("Item added to cart");
+        onOpen();
+      })
+      .catch((error) => {
+        console.log(error.response.data.message);
+        setServerResponse(error.response.data.message.sqlMessage);
+        onOpen();
+      });
+    }
+    
+  };
+
+  const HandleClickBuyNow = () => {
+    if(currentOrder.quantity <= 0){
+      setServerResponse("Select the Quntitiy");
+      onOpen();
+    }else{
+      axios
+      .post(`http://localhost:5000/items/specificitem/addtocart`, {
+        cart_id: "3",
+        varient_id: currentOrder.varient_id,
+        quantity: currentOrder.quantity,
+      })
+      .then((response) => {
+        console.log(response);
+        setServerResponse("Item added to cart");
+      })
+      .catch((error) => {
+        console.log(error.response.data.message);
+        setServerResponse(error.response.data.message.sqlMessage);
+      });
+
+    }
+    
+  };
 
   var imageStack = new Array(data.variants.length)
     .fill(0)
@@ -122,18 +150,24 @@ function SpecificProductPage() {
         cursor="pointer"
         borderWidth={currentOrder.varient === index ? "3px" : "1px"}
         borderColor="gray.500"
-        onClick={() => setCurrentOrder({ ...currentOrder, varient: index })}
+        onClick={() =>
+          setCurrentOrder({
+            ...currentOrder,
+            varient: index,
+            varient_id: data.variants[index].variant_id,
+          })
+        }
       >
         <Image
-          src={data.variants[index].Image}
+          src={`data:image/png;base64,${arrayBufferToBinaryString(
+            data.variants[index].image ? data.variants[index].image.data : null
+          )}`}
           w="100px"
           h="100px"
           alt="image"
         />
       </Box>
     ));
-
-    var img = (data.variants.length === 0) ? data.Image.data : data.variants[currentOrder.varient].image.data;
 
   return (
     <Box
@@ -145,6 +179,7 @@ function SpecificProductPage() {
         <SearchBar text="I'm shopping for" />
       </Center>
 
+
       <SimpleGrid
         columns={2}
         spacing={5}
@@ -153,16 +188,19 @@ function SpecificProductPage() {
         borderRadius="lg"
         borderColor="gray.300"
       >
+
         <Box width="auto" h="auto" overflow="hidden" p="5px">
           <Image
-            src={`data:image/png;base64,${arrayBufferToBinaryString(img)}`}
-            w="auto"
-            h="auto"
+            src={`data:image/png;base64,${arrayBufferToBinaryString(
+              data.image ? data.image.data : null
+            )}`}
+            w="400px"
+            h="400px"
             alt="image"
             fit
           />
         </Box>
-        
+
         <Box
           width="auto"
           h="auto"
@@ -170,11 +208,11 @@ function SpecificProductPage() {
           p={{ base: "5px", sm: "20px" }}
         >
           <Heading as="h2" size="2xl">
-            {data.Item_name}
+            {data.item_name}
           </Heading>
 
           <Text fontSize="xl" ml="3px" mt="5px">
-            {data.Category}
+            {data.category}
           </Text>
           <Box d="flex" mt="2" ml="2px" alignItems="center">
             {Array(5)
@@ -186,13 +224,37 @@ function SpecificProductPage() {
                 />
               ))}
             <Box as="span" ml="2" fontSize="sm">
-              {data.feedbacks.length} reviews &bull; {data.Num_of_orders} orders
+              {data.feedbacks.length} reviews &bull; {data.num_of_orders} orders
             </Box>
           </Box>
           <Heading as="h4" size="md" mt="20px">
             Varient
           </Heading>
-          <HStack mt="20px">{imageStack}</HStack>
+          <Text mt="10px" color="green.500">
+            {data.variants[currentOrder.varient].variant_name}
+          </Text>
+          <HStack>{imageStack}</HStack>
+          <HStack spacing="40px">
+            <Box>
+              <Heading as="h4" size="md" mt="20px">
+                Color
+              </Heading>
+              <Text mt="5px">{data.variants[currentOrder.varient].color}</Text>
+            </Box>
+            <Box>
+              <Heading as="h4" size="md" mt="20px">
+                Size
+              </Heading>
+              <Text mt="5px">{data.variants[currentOrder.varient].size}</Text>
+            </Box>
+          </HStack>
+
+          <Heading as="h4" size="md" mt="20px">
+            Specific details of the variant
+          </Heading>
+          <Text mt="5px">
+            {data.variants[currentOrder.varient].specific_detail}
+          </Text>
           <Heading as="h4" size="md" mt="20px">
             Quantity
           </Heading>
@@ -210,14 +272,29 @@ function SpecificProductPage() {
               icon={<MinusIcon />}
               onClick={quantity_dec}
             />
-            <Text pl='20px' color='red.500' >{data.variants.length === 0 ? null : data.variants[currentOrder.varient].Quantity} items are available</Text>
+            <Text pl="20px" color="red.500">
+              {data.variants.length === 0
+                ? null
+                : data.variants[currentOrder.varient].quantity}{" "}
+              items are available
+            </Text>
           </HStack>
-
+          <Heading as="h4" size="xl" mt="20px">
+            Price
+          </Heading>
+          <Text fontSize="4xl">
+            Rs. {data.variants[currentOrder.varient].price}
+          </Text>
           <HStack mt="20px">
-            <Button colorScheme="cyan" color="white" size="lg">
+            <Button onClick={HandleClickBuyNow} colorScheme="cyan" color="white" size="lg">
               Buy now
             </Button>
-            <Button colorScheme="orange" size="lg" variant="outline">
+            <Button
+              onClick={HandleClickAddtoCart}
+              colorScheme="orange"
+              size="lg"
+              variant="outline"
+            >
               Add to cart
             </Button>
           </HStack>
@@ -238,7 +315,7 @@ function SpecificProductPage() {
           Description
         </Heading>
         <Text fontSize="md" ml="3px" mt="5px">
-          {data.Description}
+          {data.description}
         </Text>
       </Box>
       <Box
@@ -304,6 +381,21 @@ function SpecificProductPage() {
           </TabPanels>
         </Tabs>
       </Box>
+
+
+      <Modal onClose={onClose} isOpen={isOpen} isCentered>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Modal Title</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            {serverResponse}
+          </ModalBody>
+          <ModalFooter>
+            <Button onClick={onClose}>Close</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 }

@@ -54,7 +54,7 @@ function App() {
   return (
     <ChakraProvider>
       <Router>
-      <Navbar isLoggedIn={isLoggedIn} />
+      <Navbar isLoggedIn={auth.isLoggedIn} />
         <Switch >
           {/* Common Routes */}
           <Route path="/" component={Home} />
