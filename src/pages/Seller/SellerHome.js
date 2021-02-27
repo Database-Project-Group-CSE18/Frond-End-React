@@ -9,6 +9,7 @@ import { Box, Flex, Skeleton, Stack } from "@chakra-ui/react";
 import { AiFillExperiment } from "react-icons/ai";
 
 function SellerHome() {
+  console.log("SellerHome")
   return (
     <>
     <SearchBarHome />

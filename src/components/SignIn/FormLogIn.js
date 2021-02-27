@@ -6,11 +6,12 @@ import "./LogIn.css";
 import Axios from "axios";
 import { Button } from "@chakra-ui/react";
 
-const FormLogIn = ({ submitForm }) => {
+function FormLogIn(props){
 
-  const { handleChange, handleSubmit, userAuthenticated, values, errors, loginStatus } = useForm(
-    submitForm,
-    validate
+  const { handleChange, handleSubmit,  values, errors, loginStatus } = useForm(
+    props.submitForm,
+    validate,
+    props.setSignInClicked
   );
   
   
