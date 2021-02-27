@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import Axios from "axios";
+import Cookies from "js-cookie"
 //custom hook
 
-const useForm = (callback, validate) => {
+const useForm = (callback, validate, setSignInClicked) => {
   Axios.defaults.withCredentials = true;
   const [values, setValues] = useState({
     email: "",
@@ -37,9 +38,13 @@ const useForm = (callback, validate) => {
           setLoginStatus(false);
           
         } else {
-          console.log(response.data);
+          // console.log(response.data);
           localStorage.setItem("token", response.data.token);
+          // Store user in localstorage
+          // localStorage.setItem("user2", response.data.result[0]);
+          // Cookies.set('user', response.data.result[0], { expires: 1 })
           setLoginStatus(true);
+          setSignInClicked(true);
         }
       });
     }
@@ -68,7 +73,7 @@ const userAuthenticated = () => {
      }
   }, [errors]);
 
-  return { handleChange, handleSubmit, userAuthenticated, values, errors, loginStatus };
+  return { handleChange, handleSubmit, values, errors, loginStatus };
 };
 
 export default useForm;

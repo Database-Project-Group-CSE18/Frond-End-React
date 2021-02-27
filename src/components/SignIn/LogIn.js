@@ -8,7 +8,7 @@ import { Redirect } from "react-router-dom";
 
 
 
-const LogIn = () => {
+function LogIn(props) {
 
   
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -31,12 +31,12 @@ const LogIn = () => {
         <div className="login-content-left">
           <img className="login-img" src="img/svg-2.svg" alt="Security" />
         </div>
-        {/* {!isSubmitted ? (
-          <FormLogIn submitForm={submitForm} />
+        {!isSubmitted ? (
+          <FormLogIn submitForm={submitForm} setSignInClicked={props.setSignInClicked}/>
         ) : (
           <Redirect to='/' />
-        )} */}
-        <FormLogIn submitForm={submitForm} />
+        )}
+        {/* <FormLogIn submitForm={submitForm} /> */}
       </div>
     </>
   );

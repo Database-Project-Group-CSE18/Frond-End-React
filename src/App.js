@@ -4,7 +4,7 @@ import SpecificProductPage from "./pages/SpecficProductPage";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 import ProtectedRoute from "./ProtectedRoute";
-// import checkLogin from "./API_Service/checkLogin"
+import checkLogin from "./API_Service/checkLogin"
 
 import CustomerDashboard from "./pages/CustomerDashboard";
 import CustomerAddress from "./pages/CustomerAdress";
@@ -29,61 +29,57 @@ import CartPage from "./pages/CartPage";
 import FeedbackPage from "./pages/FeedbackPage";
 import SellerDashboard from "./pages/SellerDashboard";
 import Axios from "axios";
-
+import Cookies from "js-cookie"
 
 
 
 function App() {
-  const[isAuth, setIsAuth] = useState(false);
-  const[isLoggedIn, setIsLoggedIn] = useState(false);
-  const userAuthenticated = () => {
-    Axios.get("http://localhost:5000/customer/isUserAuth", {
-    headers: {
-      "x-access-token": localStorage.getItem("token")},
-    }).then(response => {
-      console.log(response.status);
-    });
-  };
-
+  const[auth, setAuth] = useState({isLoggedIn:false, userID: 0});
+  const[signInClicked, setSignInClicked] = useState(false);
+  Axios.defaults.withCredentials = true;
+  
+  console.log("App js")
   useEffect(() => {
+    Axios.defaults.withCredentials = true;
     Axios.get("http://localhost:5000/customer/login")
-    .then((response) => {
-      if(response.data.LoggedIn == true) {
-        setIsLoggedIn(true);
-      }else{
-        setIsLoggedIn(false)
-      }
-      });
-  })
+  .then((response) => {
+    if(response.data.LoggedIn == true) {
+      setAuth({isLoggedIn: true, userID : response.data.user.user_id});
+    }else{
+      setAuth({isLoggedIn: false, userID: 0});
+    }
+    });
+  }, [signInClicked])
 
   return (
     <ChakraProvider>
       <Router>
-      <Navbar isLoggedIn={isLoggedIn}/>
+      <Navbar isLoggedIn={isLoggedIn} />
         <Switch >
-          <Route path="/" exact component={Home} />
-          <Route path="/productpage/:id" component={SpecificProductPage} />
-          <ProtectedRoute path="/customerdashboard" component={CustomerDashboard} isAuth={isLoggedIn}/>
-          <Route path="/shippingaddress"  component={CustomerAddress} />
-          <Route path="/changepersonaldet" component={ChangePersonalDet} />
-          <Route path="/categorypage" component={CategoryPage} />
-          <Route path="/awaitingdelivery" component={AwaitingDelivery} />
-          <Route path="/awaitingshipment" component={AwaitingShipment} />
+          {/* Common Routes */}
+          <Route path="/" component={Home} />
           <Route path="/newitem" component={NewItem} />
-          <Route path="/orderview" component={OrderView} />
+          <Route path="/categorypage" component={CategoryPage} />
+          <Route path="/productpage/:id" component={SpecificProductPage} />
+          <Route path="/signUp" component={SignUp} Auth={auth} />
+          <Route path="/signin" component={ () => {return <SignIn setSignInClicked={setSignInClicked}/>}} />
 
-          <Route path="/carddetails" component={CardDetails} />
-          <Route path="/trackorder/:id" component={TrackOrder} />
-          <Route path="/allorders" component={AllOrders} />
+          {/* Customer Routes */}
+          <ProtectedRoute path="/cart/:customer_id" component={CartPage} Auth={auth} Seller={false}/>
+          <ProtectedRoute path="/customerdashboard" component={CustomerDashboard}  Auth={auth} Seller={false}/>
+          <ProtectedRoute path="/shippingaddress"  component={CustomerAddress} Auth={auth} Seller={false}/>
+          <ProtectedRoute path="/changepersonaldet" component={ChangePersonalDet} Auth={auth} Seller={false}/>
+          <ProtectedRoute path="/orderview" component={OrderView} Auth={auth} Seller={false}/>
+          <ProtectedRoute path="/feedbackpage/:id" component={FeedbackPage} Auth={auth} Seller={false}/>
+          <ProtectedRoute path="/carddetails" component={CardDetails} Auth={auth} Seller={false}/>
+          <ProtectedRoute path="/trackorder/:id" component={TrackOrder} Auth={auth} Seller={false}/>
+          <ProtectedRoute path="/allorders" component={AllOrders} Auth={auth} Seller={false}/>
 
-
-          <ProtectedRoute path="/cart/:customer_id" component={CartPage} />
-          <Route path="/feedbackpage/:id" component={FeedbackPage} />
-          <ProtectedRoute path="/SellerDashboard/:id" component={SellerDashboard} />
-          {}
-          <Route path="/signUp" component={SignUp} />
-          <Route path="/signin" component={SignIn} />
-          <ProtectedRoute path="/sellerHome" component={SellerHome} />
+          {/* Seller Routes */}
+          <ProtectedRoute path="/SellerDashboard/:id" component={SellerDashboard} Auth={auth} Seller={true}/>
+          <ProtectedRoute path="/sellerHome" component={SellerHome} Auth={auth} Seller={true}/>
+          <ProtectedRoute path="/awaitingshipment" component={AwaitingShipment} Auth={auth} Seller={true}/>
+          <ProtectedRoute path="/awaitingdelivery" component={AwaitingDelivery} Auth={auth} Seller={true}/>
 
         </Switch>
       </Router>

@@ -11,7 +11,7 @@ import {
     useToast
   } from "@chakra-ui/react";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, withRouter } from "react-router-dom";
 import Navbar from '../components/Navbar';
 import CustomerDashSideBar from "../components/CustomerDashSideBar";
