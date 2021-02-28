@@ -4,17 +4,15 @@ import useForm from "./useForm";
 import "./LogIn.css";
 // Promise based HTTP client for the node.js
 import Axios from "axios";
-import { Button } from "@chakra-ui/react";
+import { Badge, Box, Button, Center } from "@chakra-ui/react";
 
-function FormLogIn(props){
-
-  const { handleChange, handleSubmit,  values, errors, loginStatus } = useForm(
+function FormLogIn(props) {
+  const { handleChange, handleSubmit, values, errors, backEndErrors } = useForm(
     props.submitForm,
     validate,
     props.setSignInClicked
   );
-  
-  
+
   return (
     <div className="login-content-right">
       <form onSubmit={handleSubmit} className="form" noValidate>
@@ -23,11 +21,18 @@ function FormLogIn(props){
           <br />
           Sign in to continue shopping!
           <br />
-          <br />
-          
         </h1>
-        <h1 className="login-status"> </h1> 
-        {/* <Button color='red' onClick={userAuthenticated}>Check if</Button> */}
+        {backEndErrors == "" ? (
+          ""
+        ) : (
+          <Box w="80%" h="40px" bg="red.500" borderRadius="5px">
+            <Center>
+              <Badge variant="solid" m="2%" colorScheme="red">
+                {backEndErrors}
+              </Badge>
+            </Center>
+          </Box>
+        )}
         <div className="login-inputs">
           <label className="login-label">Email</label>
           <input
@@ -52,7 +57,15 @@ function FormLogIn(props){
           />
           {errors.password && <p>{errors.password}</p>}
         </div>
-        
+        {backEndErrors == "" ? (
+          ""
+        ) : (
+          <Box h='10%' mt='20px'>
+            <Badge variant="outline" colorScheme="red">
+              Sign In Failed
+            </Badge>
+          </Box>
+        )}
         <button className="login-input-btn" type="submit">
           Sign In
         </button>
