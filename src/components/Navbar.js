@@ -11,11 +11,10 @@ import {
   Icon,
 } from "@chakra-ui/react";
 import { HamburgerIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { useHistory } from 'react-router-dom';
 import { FiShoppingCart } from "react-icons/fi";
 import Axios from "axios";
-import checkLogin from "../API_Service/checkLogin"
 
 function Navbar(props) {
   var his=useHistory();
@@ -32,31 +31,16 @@ function Navbar(props) {
     </Button>
   );
 
-  const[isLoggedIn, setIsLoggedIn] = useState(props.isLoggedIn);
   const [show, setShow] = React.useState(false);
   const handleToggle = () => setShow(!show);
-  // useEffect(() => {
-  //   Axios.get("http://localhost:5000/customer/login")
-  //   .then((response) => {
-  //     console.log('is authenticated navbar?')
-  //     if(response.data.LoggedIn === true) {
-  //       // console.log(response.data)
-  //       setIsLoggedIn(true);
-  //     }else{
-  //       setIsLoggedIn(false);
-  //     }
-  //     });
-    
-  // }, [props.isLoggedIn])
   
   const { colorMode, toggleColorMode } = useColorMode();
-  // const isLoggedIn = checkLogin.isAuthenticated();
   console.log("Navigation bar")
-
-  // const logout=()=>{
-  //   checkLogin.clearCookie();
-  //   his.push('/');
-  // }
+  function handleLogOut() {
+    Axios.post("http://localhost:5000/customer/logout").then((response) => {
+      return <Redirect to='/signin' />
+    })
+  }
 
   return (
     <Flex
@@ -98,9 +82,12 @@ function Navbar(props) {
           </Link>
         </MenuItems>
         <MenuItems>
-          <Link as={ReactRouterLink} to="/sellerhome">
+        {props.Auth.userID === 1 ? <Link as={ReactRouterLink} to="/sellerdashboard/1">
             Dashboard
-          </Link>
+          </Link> : <Link as={ReactRouterLink} to="/customerdashboard">
+            Dashboard
+          </Link>}
+          
         </MenuItems>
         <MenuItems>
           <Link as={ReactRouterLink} to="/">
@@ -136,12 +123,13 @@ function Navbar(props) {
           onClick={toggleColorMode}
         />
         <a href="/signin">
-          {props.isLoggedIn ? <Button
+          {props.Auth.isLoggedIn ? <Button
             type="button"
             border="1px"
             variant="ghost"
             mr="1.5rem"
             color={colorMode === "light" ? "cyan.800" : "cyan.100"}
+            onClick= {handleLogOut}
           >
             Log Out
           </Button>: <Button

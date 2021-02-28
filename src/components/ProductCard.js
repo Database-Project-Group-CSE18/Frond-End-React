@@ -7,7 +7,6 @@ import {
   Link,
   ReactRouterLink
 } from "@chakra-ui/react";
-import { encode } from "base64-arraybuffer";
 import { arrayBufferToBinaryString } from "blob-util";
 import React, { useState } from "react";
 
