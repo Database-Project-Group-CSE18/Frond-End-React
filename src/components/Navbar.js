@@ -11,12 +11,13 @@ import {
   Icon,
 } from "@chakra-ui/react";
 import { HamburgerIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
-import { Link } from "react-router-dom";
-
+import { Link, Redirect } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 import { FiShoppingCart } from "react-icons/fi";
 import Axios from "axios";
 
 function Navbar(props) {
+  var his=useHistory();
   const MenuItems = ({ children }) => (
     <Button
       mt={{ base: 4, md: 0 }}
@@ -33,8 +34,13 @@ function Navbar(props) {
   const [show, setShow] = React.useState(false);
   const handleToggle = () => setShow(!show);
   
-  
   const { colorMode, toggleColorMode } = useColorMode();
+  console.log("Navigation bar")
+  function handleLogOut() {
+    Axios.post("http://localhost:5000/customer/logout").then((response) => {
+      return <Redirect to='/signin' />
+    })
+  }
 
   return (
     <Flex
@@ -76,9 +82,12 @@ function Navbar(props) {
           </Link>
         </MenuItems>
         <MenuItems>
-          <Link as={ReactRouterLink} to="/">
+        {props.Auth.userID === 1 ? <Link as={ReactRouterLink} to="/sellerdashboard/1">
             Dashboard
-          </Link>
+          </Link> : <Link as={ReactRouterLink} to="/customerdashboard">
+            Dashboard
+          </Link>}
+          
         </MenuItems>
         <MenuItems>
           <Link as={ReactRouterLink} to="/">
@@ -114,12 +123,13 @@ function Navbar(props) {
           onClick={toggleColorMode}
         />
         <a href="/signin">
-          {props.isLoggedIn ? <Button
+          {props.Auth.isLoggedIn ? <Button
             type="button"
             border="1px"
             variant="ghost"
             mr="1.5rem"
             color={colorMode === "light" ? "cyan.800" : "cyan.100"}
+            onClick= {handleLogOut}
           >
             Log Out
           </Button>: <Button

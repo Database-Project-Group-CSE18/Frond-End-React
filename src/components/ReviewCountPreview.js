@@ -26,15 +26,15 @@ function ReviewCountPreview(props) {
   var s1 = 0;
 
   for (var i = 0; i < props.feedbacks.length; i++) {
-    if (props.feedbacks[i].Rate === 5) {
+    if (props.feedbacks[i].rate === 5) {
       s5 = s5 + 1;
-    } else if (props.feedbacks[i].Rate === 4) {
+    } else if (props.feedbacks[i].rate === 4) {
       s4 = s4 + 1;
-    } else if (props.feedbacks[i].Rate === 3) {
+    } else if (props.feedbacks[i].rate === 3) {
       s3 = s3 + 1;
-    } else if (props.feedbacks[i].Rate === 2) {
+    } else if (props.feedbacks[i].rate === 2) {
       s2 = s2 + 1;
-    } else if (props.feedbacks[i].Rate === 1) {
+    } else if (props.feedbacks[i].rate === 1) {
       s1 = s1 + 1;
     }
   }
