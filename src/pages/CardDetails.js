@@ -70,7 +70,7 @@ const CardDetails = () => {
         .then((Response)=>{
             // console.log(Response);
             setBankCards(bankCards.filter(
-                (bankCard)=>bankCard.Card_Number!==cardNumber
+                (bankCard)=>bankCard.card_number!==cardNumber
             ))
             toast({
                 position: "bottom-right",    
@@ -96,17 +96,31 @@ const CardDetails = () => {
 
         Axios.post("http://localhost:5000/customer/bankCards",{CardDetails:CardDetails})
         .then((Response)=>{
-            // console.log(Response.json());
+            console.log("response",Response);
             // console.log(newAddress);
-            setBankCards([...bankCards,CardDetails]);
+            if (Response.data.success===true){
+                setBankCards([...bankCards,CardDetails]);
            
-            toast({
-                position: "bottom-right",    
-                description: "New payment method added successfully",
-                status: "success",
-                duration: 5000,
-                isClosable: true,
-              })
+                toast({
+                    position: "bottom-right",    
+                    description: "New payment method added successfully",
+                    status: "success",
+                    duration: 5000,
+                    isClosable: true,
+                })
+            }
+            else{
+
+                toast({
+                    position: "bottom-right",    
+                    description: "Card Number Already Exists",
+                    status: "error",
+                    duration: 5000,
+                    isClosable: true,
+                })
+
+            }
+            
         })
         .catch((err) => {
             toast({

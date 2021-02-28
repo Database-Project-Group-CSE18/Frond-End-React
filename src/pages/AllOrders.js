@@ -22,7 +22,7 @@ const AllOrders = () => {
 
     const toast = useToast();
 
-    const [orderStats, setOrderStats] = ([])
+    const [orderStats, setOrderStats] = useState([])
 
     const [orders,setOrders] = useState([])
 
@@ -41,7 +41,7 @@ const AllOrders = () => {
     useEffect(() => {
         Axios.get("http://localhost:5000/customer/allorders")
         .then((Response)=>{
-            console.log(Response.data.orders);        
+            // console.log(Response.data.orders);        
             setOrders(Response.data.orders);
         })
         .catch((err) => {
@@ -55,13 +55,40 @@ const AllOrders = () => {
           }); 
     }, [])
 
+    const mapStats = (list)=>{
+        var prep = 0
+        var shipped = 0
+        var cancelled = 0
+        var await_cancel  = 0
+        var delivered = 0
+       
+        for (var i=0;i<list.length;i++){
+            if(list[i].order_status==='preparing'){
+                prep= list[i].Count
+            }
+            else if (list[i].order_status==='shipped'){
+                shipped= list[i].Count
+            }
+            else if (list[i].order_status==='cancelled'){
+                cancelled= list[i].Count
+            }
+            else if (list[i].order_status==='awaiting_cancel'){
+                await_cancel= list[i].Count
+            }
+            else if (list[i].order_status==='delivered'){
+                delivered= list[i].Count
+            }
+        }
+       
+        return [prep,shipped,cancelled,await_cancel,delivered]
+    }
 
     useEffect(() => {
         Axios.get("http://localhost:5000/customer/allorders/stats")
         .then((Response)=>{
-            // console.log(Response.data.stats);
-            var stats = mapStats(Response.data.stats)
-            console.log(stats)
+            // console.log("stats",Response.data.stats);
+            const stats = mapStats(Response.data.stats)
+            console.log("mapped stats",stats)
             setOrderStats(stats)
             // console.log(orderStats)
 
@@ -78,41 +105,12 @@ const AllOrders = () => {
     }, [])
 
 
-    const mapStats = (list)=>{
-        var prep = 0
-        var shipped = 0
-        var cancelled = 0
-        var await_cancel  = 0
-        var delivered = 0
-       
-        for (var i=0;i<list.length;i++){
-            if(list[i].Order_status==='Preparing'){
-                prep= list[i].Count
-            }
-            else if (list[i].Order_status==='Shipped'){
-                shipped= list[i].Count
-            }
-            else if (list[i].Order_status==='Cancelled'){
-                cancelled= list[i].Count
-            }
-            else if (list[i].Order_status==='Await_cancel'){
-                await_cancel= list[i].Count
-            }
-            else if (list[i].Order_status==='Delivered'){
-                delivered= list[i].Count
-            }
-        }
-        return {prep,shipped,cancelled,await_cancel,delivered}
-    }
-
-    
-
     const cancelOrder = (order_id)=>{
-        Axios.put("http://localhost:5000/customer/allorders",{Order_ID:order_id, Order_status:'Await_cancel'})
+        Axios.put("http://localhost:5000/customer/allorders",{Order_ID:order_id, Order_status:'awaiting_cancel'})
         .then((Response)=>{
-            console.log(Response)
+            // console.log("Orders",orders)
             setOrders(orders.map(
-                (order)=>order.Order_ID===order_id?{...order,Order_status:'Await_cancel'}:order
+                (order)=>order.order_id===order_id?{...order,order_status:'awaiting_cancel'}:order
               ))
         })
         .catch((err) => {
@@ -128,11 +126,11 @@ const AllOrders = () => {
     }
 
     const confirmOrder = (order_id)=>{
-        Axios.put("http://localhost:5000/customer/allorders",{Order_ID:order_id, Order_status:'Delivered'})
+        Axios.put("http://localhost:5000/customer/allorders",{Order_ID:order_id, Order_status:'delivered'})
         .then((Response)=>{
-            console.log(Response)
+            // console.log(Response)
             setOrders(orders.map(
-                (order)=>order.Order_ID===order_id?{...order,Order_status:'Delivered'}:order
+                (order)=>order.order_id===order_id?{...order,order_status:'delivered'}:order
               ))
         })
         .catch((err) => {
@@ -199,27 +197,27 @@ const AllOrders = () => {
                                         <HStack>
                                             <Box ml='3'>Preparing </Box>
                                             <Spacer />
-                                            <Box mr='3'>{}</Box>
+                                            <Box mr='3'>{orderStats[0]}</Box>
                                         </HStack>
                                         <HStack>
                                             <Box ml='3'>Shipped </Box>
                                             <Spacer />
-                                            <Box mr='3'>{}</Box>
+                                            <Box mr='3'>{orderStats[1]}</Box>
                                         </HStack>
                                         <HStack>
                                             <Box ml='3'>Await Cancel </Box>
                                             <Spacer />
-                                            <Box mr='3'>{}</Box>
+                                            <Box mr='3'>{orderStats[3]}</Box>
                                         </HStack>
                                         <HStack>
                                             <Box ml='3'>Cancelled </Box>
                                             <Spacer />
-                                            <Box mr='3'>{}</Box>
+                                            <Box mr='3'>{orderStats[2]}</Box>
                                         </HStack>
                                         <HStack>
                                             <Box ml='3'>Received </Box>
                                             <Spacer />
-                                            <Box mr='3'>{}</Box>
+                                            <Box mr='3'>{orderStats[4]}</Box>
                                         </HStack>
                                     </Box>
 

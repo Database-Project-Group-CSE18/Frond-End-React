@@ -26,54 +26,74 @@ const ChangePasswordForm = () => {
             return
         }
         else{
-            Axios.get("http://localhost:5000/customer/userpwd")
-                .then((Response)=>{
+            Axios.put("http://localhost:5000/customer/userpwd",{newpwd:newpwd, oldpwd:oldpwd})
+            .then((Response)=>{
+                toast({
+                    position: "bottom-right",    
+                    description: "Password update successful",
+                    status: "success",
+                    duration: 5000,
+                    isClosable: true,
+                    })
+            })
+            .catch((err)=>{
+                toast({
+                    position: "bottom-right",    
+                    description: err.message,
+                    status: "error",
+                    duration: 5000,
+                    isClosable: true,
+                    })
+            })
+        }
+        // else{
+        //     Axios.get("http://localhost:5000/customer/userpwd")
+        //         .then((Response)=>{
                     
-                    if(Response.data.pwd[0].Password!==oldpwd){
-                        alert("Wrong Existing Password")
-                    }
-                    else{
-                        Axios.put("http://localhost:5000/customer/userpwd",{newpwd:newpwd})
-                        .then((Response)=>{
+        //             if(Response.data.pwd[0].Password!==oldpwd){
+        //                 alert("Wrong Existing Password")
+        //             }
+        //             else{
+        //                 Axios.put("http://localhost:5000/customer/userpwd",{newpwd:newpwd})
+        //                 .then((Response)=>{
                             
-                            setOldPwd('')
-                            setNewPwd('')
-                            setConfNewPwd('')
+        //                     setOldPwd('')
+        //                     setNewPwd('')
+        //                     setConfNewPwd('')
 
-                            toast({
-                                position: "bottom-right",    
-                                description: "Password Updated Successfully",
-                                status: "success",
-                                duration: 5000,
-                                isClosable: true,
-                                })
+        //                     toast({
+        //                         position: "bottom-right",    
+        //                         description: "Password Updated Successfully",
+        //                         status: "success",
+        //                         duration: 5000,
+        //                         isClosable: true,
+        //                         })
 
                                 
-                        })
-                        .catch((err) => {
-                            toast({
-                                position: "bottom-right",    
-                                description: "Error Updating Password",
-                                status: "error",
-                                duration: 5000,
-                                isClosable: true,
-                                })
-                            }); 
+        //                 })
+        //                 .catch((err) => {
+        //                     toast({
+        //                         position: "bottom-right",    
+        //                         description: "Error Updating Password",
+        //                         status: "error",
+        //                         duration: 5000,
+        //                         isClosable: true,
+        //                         })
+        //                     }); 
 
-                    }
+        //             }
             
-                })
-                .catch((err) => {
-                    toast({
-                        position: "bottom-right",    
-                        description: "Error loading password",
-                        status: "error",
-                        duration: 5000,
-                        isClosable: true,
-                        })
-                    }); 
-        }
-
+        //         })
+        //         .catch((err) => {
+        //             toast({
+        //                 position: "bottom-right",    
+        //                 description: "Error loading password",
+        //                 status: "error",
+        //                 duration: 5000,
+        //                 isClosable: true,
+        //                 })
+        //             }); 
+        // }
 
     }
 

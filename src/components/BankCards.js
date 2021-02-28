@@ -5,7 +5,7 @@ const BankCards = ({bankcards,deleteBankCard}) => {
         <>
         {
             bankcards.map((bankcard)=>(
-                <BankCard key={bankcard.Card_Number} bankcard={bankcard} deleteBankCard={deleteBankCard} />
+                <BankCard key={bankcard.card_number} bankcard={bankcard} deleteBankCard={deleteBankCard} />
             ))
         }
         </>

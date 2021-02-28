@@ -67,7 +67,7 @@ const CustomerAddress = () => {
         .then((Response)=>{
             // console.log(Response);
             setAddress(address.filter(
-                (address)=>address.Address_ID!==id
+                (address)=>address.address_id!==id
             ))
             toast({
                 position: "bottom-right",    
@@ -92,7 +92,7 @@ const CustomerAddress = () => {
 
     //add new address
     const addAddress = (Address)=>{
-        console.log(Address);
+        // console.log(Address);
         Axios.post("http://localhost:5000/customer/addresses",{Address:Address})
         .then((Response)=>{
             var Address_ID = Response.data.insertId;

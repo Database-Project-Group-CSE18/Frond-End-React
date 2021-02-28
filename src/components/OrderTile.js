@@ -31,19 +31,19 @@ const OrderTile = ({order,cancelOrder,confirmOrder}) => {
     const { colorMode, toggleColorMode } = useColorMode();
 // try with normal functions
     const StatusBadge = ({status})=>{
-        if(status==='Shipped'){
+        if(status==='shipped'){
             return (<Badge colorScheme="green">Shipped</Badge>)
         }
-        else if (status==='Preparing'){
+        else if (status==='preparing'){
             return (<Badge colorScheme="yellow">Preparing</Badge>)
         }
-        else if (status==='Cancelled'){
+        else if (status==='cancelled'){
             return (<Badge colorScheme="red">Cancelled</Badge>)
         }
-        else if (status==='Delivered'){
-            return (<Badge colorScheme="gray.100">Delivered</Badge>)
+        else if (status==='delivered'){
+            return (<Badge colorScheme="green">Delivered</Badge>)
         }
-        else if (status==='Await_cancel'){
+        else if (status==='awaiting_cancel'){
             return  (<Badge colorScheme="yellow">Await Cancel</Badge>)
         }
         else{
@@ -53,6 +53,7 @@ const OrderTile = ({order,cancelOrder,confirmOrder}) => {
     
     // calculate the total price of the order
     const totPrice = (list) =>{
+        console.log("Price",list)
         var price = 0
         var list = list.substring(1,list.length-1)
         list = list.split(",")
@@ -65,13 +66,13 @@ const OrderTile = ({order,cancelOrder,confirmOrder}) => {
 
 
     const OrderActions = ({status})=>{
-        if(status=='Shipped'){
+        if(status=='shipped'){
             return (<VStack>
                 <Link href={"https://parcelsapp.com/en/tracking/"+order.Track} isExternal><Button colorScheme='teal' size='xs'>Track Order</Button></Link>
-                <Button colorScheme='teal' size='xs' onClick={()=>{confirmOrder(order.Order_ID)}}>Confirm Received</Button>
+                <Button colorScheme='teal' size='xs' onClick={()=>{confirmOrder(order.order_id)}}>Confirm Received</Button>
             </VStack>)
         }
-        else if (status=='Preparing'){
+        else if (status=='preparing'){
             return (
             <Box>
                 
@@ -88,7 +89,7 @@ const OrderTile = ({order,cancelOrder,confirmOrder}) => {
                             </PopoverBody>
                             <PopoverFooter d="flex" justifyContent="flex-end">
                                 <ButtonGroup size="sm">
-                                    <Button colorScheme="red" onClick={()=>{cancelOrder(order.Order_ID)}}>Cancel Order</Button>
+                                    <Button colorScheme="red" onClick={()=>{cancelOrder(order.order_id)}}>Cancel Order</Button>
                                 </ButtonGroup>
                             </PopoverFooter>
                             </PopoverContent>
@@ -104,9 +105,9 @@ const OrderTile = ({order,cancelOrder,confirmOrder}) => {
 
     const mapOrderItems = (order)=>{
         var finalList = []
-        var itemIDList= order.Item_ID
-        itemIDList = itemIDList.substring(1,itemIDList.length-1)
-        itemIDList = itemIDList.split(",")
+        // var itemIDList= order.item_id
+        // itemIDList = itemIDList.substring(1,itemIDList.length-1)
+        // itemIDList = itemIDList.split(",")
 
         var nameList = order.Name
         nameList = nameList.substring(1,nameList.length-1)
@@ -118,7 +119,7 @@ const OrderTile = ({order,cancelOrder,confirmOrder}) => {
 
         for(var i=0;i<nameList.length;i++){
             var a = {
-                "ID":itemIDList[i].replace(/\s/g, ''),
+                "ID":i,
                 "Name":nameList[i].replace(/\s/g, ''),
                 "Image":imageList[i].replace(/\s/g, '')
             }
@@ -154,11 +155,11 @@ const OrderTile = ({order,cancelOrder,confirmOrder}) => {
                     <SimpleGrid columns={3} textAlign='center'>
                         <Box>
                             <Heading as='h6' size='xs'>Order ID</Heading>
-                            <Text>{order.Order_ID}</Text>
+                            <Text>{order.order_id}</Text>
                         </Box>
                         <Box>
                             <Heading as='h6' size='xs'>Order Date</Heading>
-                            <Text>{order.Ordered_date.substring(0, 10)}</Text>
+                            <Text>{order.ordered_date.substring(0, 10)}</Text>
                         </Box>
                         <Box>
                             <Heading as='h6' size='xs'>Order Amount</Heading>
@@ -180,13 +181,13 @@ const OrderTile = ({order,cancelOrder,confirmOrder}) => {
                         </GridItem>
                         <GridItem>
                         <Box textAlign='center'>
-                           <StatusBadge  status={order.Order_status}/>
+                           <StatusBadge  status={order.order_status}/>
                         </Box>
                         </GridItem>
                         <GridItem>
                         <Box textAlign='center'>
                            
-                           <OrderActions status={order.Order_status}/> 
+                           <OrderActions status={order.order_status}/> 
                          
                       </Box>
                         </GridItem>
