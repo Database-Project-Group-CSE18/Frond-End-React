@@ -37,6 +37,7 @@ function App() {
   useEffect(() => {
     Axios.defaults.withCredentials = true;
     Axios.get("http://localhost:5000/customer/login").then((response) => {
+      console.log(response.data)
       if (response.data.LoggedIn === true) {
         setAuth({ isLoggedIn: true, userID: response.data.user.user_id });
       } else {

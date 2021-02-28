@@ -51,8 +51,8 @@ function CartPage() {
 
   const [shippingAddress, setShippingAddress] = useState([
     {
-      first_name: "",
-      last_name: "",
+      first_Name: "",
+      last_Name: "",
       street: "",
       city: "",
       state: "",
@@ -246,12 +246,12 @@ function CartPage() {
                 bg={colorMode === "light" ? "gray.50" : "gray.700"}
               >
                 <HStack>
-                  {cardIcon(card[currentCard].card_type)}
+                  {card.length !==0 ? cardIcon(card[currentCard].card_type):"No cards added"}
                   <Box>
-                    <Text>{card[currentCard].owner}</Text>
+                    <Text>{card.length !==0 ? card[currentCard].owner:null}</Text>
                     <Text>
                       XXXX XXXX XXXX{" "}
-                      {card[currentCard].card_number.substr(12, 15)}
+                      {card.length !==0 ? card[currentCard].card_number.substr(12, 15):null}
                     </Text>
                   </Box>
                 </HStack>
