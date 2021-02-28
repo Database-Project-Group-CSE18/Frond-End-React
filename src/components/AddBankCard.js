@@ -3,30 +3,32 @@ import{
     FormControl,
     FormLabel,
     Input,
-    useToast
-
+    Select
 } from "@chakra-ui/react";
 
 const AddBankCard = ({addBankCard,trigger}) => {
-    const [Card_Number,setCardNumber] = useState('')
-    const [Owner,setOwner] = useState('')
-    const [CVV,setCvv] = useState('')
-    const [Exp_Date,setExpDate] = useState('')
-    const [Bank_Name,setBankName] = useState('')
+    const [card_number,setCardNumber] = useState('')
+    const [owner,setOwner] = useState('')
+    const [cvv,setCvv] = useState('')
+    const [exp_date,setExpDate] = useState('')
+    const [bank_name,setBankName] = useState('')
+    const [card_type,setType] = useState('')
     const onSubmit = (e)=>{
         e.preventDefault()
 
-        if(!Card_Number || !Owner || !CVV || !Exp_Date || !Bank_Name){
+        console.log(card_type)
+
+        if(!card_number || !owner || !cvv || !exp_date || !bank_name || !card_type){
             alert('Empty Field')
             return
         }
 
-        if(Card_Number.toString().length!==12){
+        if(card_number.toString().length!==16){
             alert('Invalid Card Number')
             return
         }
     
-        var givenDate = new Date(Exp_Date);
+        var givenDate = new Date(exp_date);
         var today = new Date();
         if (givenDate.getFullYear() < today.getFullYear()) {
             alert('card is expired')
@@ -38,15 +40,15 @@ const AddBankCard = ({addBankCard,trigger}) => {
                 return
             }
         }
-    
-        
-        addBankCard({Card_Number,Owner,CVV,Exp_Date,Bank_Name})
+       
+        addBankCard({card_number,owner,cvv,exp_date,bank_name,card_type})
 
         setCardNumber('')
         setOwner('')
         setCvv('')
         setExpDate('')
         setBankName('')
+        setType('')
         
         
     }
@@ -54,24 +56,32 @@ const AddBankCard = ({addBankCard,trigger}) => {
     return (
         <form  onSubmit={onSubmit} >
             <FormControl>
-                <FormLabel>Bank Number</FormLabel>
-                <Input type="text" placeholder='Bank Name' value={Bank_Name} onChange={(e)=>setBankName(e.target.value)} />
+                <FormLabel>Bank Name</FormLabel>
+                <Input type="text" placeholder='Bank Name' value={bank_name} onChange={(e)=>setBankName(e.target.value)} />
             </FormControl>
             <FormControl>
                 <FormLabel>Card Number</FormLabel>
-                <Input type="number" placeholder='Card Number' value={Card_Number} onChange={(e)=>setCardNumber(e.target.value)} />
+                <Input type="number" placeholder='Card Number' value={card_number} onChange={(e)=>setCardNumber(e.target.value)} />
             </FormControl>
             <FormControl>
                 <FormLabel>Owner</FormLabel>
-                <Input type="text" placeholder='Owner' value={Owner} onChange={(e)=>setOwner(e.target.value)}  />
+                <Input type="text" placeholder='Owner' value={owner} onChange={(e)=>setOwner(e.target.value)}  />
             </FormControl>
             <FormControl>
                 <FormLabel>CVV</FormLabel>
-                <Input type="number" placeholder='CVV' value={CVV} onChange={(e)=>setCvv(e.target.value)} />
+                <Input type="number" placeholder='CVV' value={cvv} onChange={(e)=>setCvv(e.target.value)} />
+            </FormControl>
+            <FormControl>
+                <FormLabel>Card Type</FormLabel>
+                <Select placeholder="Select Card Type" onChange={(e)=>setType(e.target.value)}>
+                    <option value='visa'>visa</option>
+                    <option value='mastercard'>mastercard</option>
+                    <option value='amex'>amex</option>
+                 </Select>
             </FormControl>
             <FormControl>
                 <FormLabel>Exp Date</FormLabel>
-                <Input type="month" placeholder='Exp Date' value={Exp_Date} onChange={(e)=>setExpDate(e.target.value)} />
+                <Input type="month" placeholder='Exp Date' value={exp_date} onChange={(e)=>setExpDate(e.target.value)} />
             </FormControl>
             <Input mt='5' mb='5'  type="submit" value='Save Card Details' className='btn btn-block' bg="teal.400" color='white' onClick={trigger} />
             

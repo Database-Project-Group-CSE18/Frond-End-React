@@ -64,13 +64,13 @@ const CardDetails = () => {
 
 
     //delete a card
-    const deleteBankCard  = (cardNumber)=>{
+    const deleteBankCard  = (card_id)=>{
 
-        Axios.delete("http://localhost:5000/customer/bankCards",{data:{cardNumber:cardNumber}})
+        Axios.delete("http://localhost:5000/customer/bankCards",{data:{card_id:card_id}})
         .then((Response)=>{
             // console.log(Response);
             setBankCards(bankCards.filter(
-                (bankCard)=>bankCard.Card_Number!==cardNumber
+                (bankCard)=>bankCard.card_id!==card_id
             ))
             toast({
                 position: "bottom-right",    
@@ -96,17 +96,31 @@ const CardDetails = () => {
 
         Axios.post("http://localhost:5000/customer/bankCards",{CardDetails:CardDetails})
         .then((Response)=>{
-            // console.log(Response.json());
+            console.log("response",Response);
             // console.log(newAddress);
-            setBankCards([...bankCards,CardDetails]);
+            if (Response.data.success===true){
+                setBankCards([...bankCards,CardDetails]);
            
-            toast({
-                position: "bottom-right",    
-                description: "New payment method added successfully",
-                status: "success",
-                duration: 5000,
-                isClosable: true,
-              })
+                toast({
+                    position: "bottom-right",    
+                    description: "New payment method added successfully",
+                    status: "success",
+                    duration: 5000,
+                    isClosable: true,
+                })
+            }
+            else{
+
+                toast({
+                    position: "bottom-right",    
+                    description: "Card Number Already Exists",
+                    status: "error",
+                    duration: 5000,
+                    isClosable: true,
+                })
+
+            }
+            
         })
         .catch((err) => {
             toast({
