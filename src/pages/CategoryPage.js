@@ -147,15 +147,16 @@ function CategoryPage() {
               .fill("")
               .map((_, i) => (
                 <ProductCard
-                  title={activeCategoryProducts[i].Item_name}
-                  imageUrl={activeCategoryProducts[i].Image}
-                  itemName={activeCategoryProducts[i].Item_name}
-                  category={activeCategoryProducts[i].Category}
-                  price={activeCategoryProducts[i].Price}
-                  orders={activeCategoryProducts[i].Num_of_orders}
-                  status={activeCategoryProducts[i].Status}
-                  rating={activeCategoryProducts[i].Rating}
-                  reviews={activeCategoryProducts[i].Reviews}
+                  item_id = {activeCategoryProducts[i].item_id} 
+                  title={activeCategoryProducts[i].item_name}
+                  imageUrl={activeCategoryProducts[i].image}
+                  itemName={activeCategoryProducts[i].item_name}
+                  category={activeCategoryProducts[i].category_name}
+                  price={activeCategoryProducts[i].price}
+                  orders={activeCategoryProducts[i].num_of_orders}
+                  status={activeCategoryProducts[i].status}
+                  rating={activeCategoryProducts[i].rating}
+                  reviews={activeCategoryProducts[i].reviews}
                 />
               ))}
           </Grid>

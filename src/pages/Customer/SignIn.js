@@ -7,7 +7,7 @@ import LogIn from "../../components/SignIn/LogIn";
 import service from "../../API_Service/checkLogin";
 import Axios from "axios";
 
-function SignIn() {
+function SignIn(props) {
 
   // const [isAuthorized, setIsAuthorized] = useState(false);
   // const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -31,7 +31,7 @@ function SignIn() {
     <>
       <SearchBarHome />
 
-      <LogIn />
+      <LogIn setSignInClicked={props.setSignInClicked}/>
       <BottomItems />
       <Footer />
       <BottomFooter shopName="Electrica" />
