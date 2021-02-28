@@ -7,127 +7,142 @@ import {
     Flex,
     Heading,
     Divider,
-    HStack,Spacer
+    HStack,Spacer, useToast
   } from "@chakra-ui/react";
 
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import CustomerDashSideBar from "../components/CustomerDashSideBar";
 import OrderTiles from "..//components/OrderTiles";
-
+import Axios from "axios";
   
 
 const AllOrders = () => {
 
     const { colorMode, toggleColorMode } = useColorMode();
 
-    const [orders,setOrders] = useState([
-        {
-            orderID:1,
-            orderStatus:'preparing',
-            orderedDate:'21/01',
-            orderItemTitle:'Purple Rose Jewelry Water Transfer Tattoo',
-            orderItemImage:'https://images.unsplash.com/photo-1562962230-16e4623d36e6?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80',
-            quantity:5,
-            orderAmount:35.47,
-            trackingNumber:'23232323232323'
-                  
-        },
-        {
-            orderID:2,
-            orderStatus:'shipped',
-            orderedDate:'13/01',
-            
-            orderItemTitle:'Marvel batman',
-            orderItemImage:'https://images.unsplash.com/photo-1562962230-16e4623d36e6?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80',
-            quantity:2,
-            orderAmount:37.24,
-            trackingNumber:'23232323232323'
-                  
-        },
-        {
-            orderID:3,
-            
-            orderStatus:'preparing',
-            orderedDate:'15/01',
-            
-            orderItemTitle:'sonic toy',
-            orderItemImage:'https://images.unsplash.com/photo-1562962230-16e4623d36e6?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80',
-            quantity:3,
-            orderAmount:24.56,
-            trackingNumber:'23232323232323'
-                  
-        },
-        {
-            orderID:4,
-            
-            orderStatus:'preparing',
-            orderedDate:'15/01',
-            
-            orderItemTitle:'sonic toy',
-            orderItemImage:'https://images.unsplash.com/photo-1562962230-16e4623d36e6?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80',
-            quantity:3,
-            orderAmount:24.56,
-            trackingNumber:'23232323232323'
-                  
-        },
-        {
-            orderID:5,
-            
-            orderStatus:'preparing',
-            orderedDate:'15/01',
-            
-            orderItemTitle:'sonic toy',
-            orderItemImage:'https://images.unsplash.com/photo-1562962230-16e4623d36e6?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80',
-            quantity:3,
-            orderAmount:24.56,
-            trackingNumber:'23232323232323'
-                  
-        },
-    ])
+    const toast = useToast();
 
+    const [orderStats, setOrderStats] = useState([])
 
-    const countOrders = ()=>{
+    const [orders,setOrders] = useState([])
+
+    // {
+    //     orderID:1,
+    //     orderStatus:'preparing',
+    //     orderedDate:'21/01',
+    //     orderItemTitle:'Purple Rose Jewelry Water Transfer Tattoo',
+    //     orderItemImage:'https://images.unsplash.com/photo-1562962230-16e4623d36e6?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80',
+    //     quantity:5,
+    //     orderAmount:35.47,
+    //     trackingNumber:'23232323232323'
+              
+    // }
+
+    useEffect(() => {
+        Axios.get("http://localhost:5000/customer/allorders")
+        .then((Response)=>{
+            // console.log(Response.data.orders);        
+            setOrders(Response.data.orders);
+        })
+        .catch((err) => {
+            toast({
+                position: "bottom-right",    
+                description: "Error loading data",
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+              })
+          }); 
+    }, [])
+
+    const mapStats = (list)=>{
         var prep = 0
-        var ship = 0
-        var canc = 0
-        var await_can = 0
-        var received = 0
-        for (var i=0;i<orders.length;i++){
-            if(orders[i].orderStatus==='preparing'){
-                prep+=1
+        var shipped = 0
+        var cancelled = 0
+        var await_cancel  = 0
+        var delivered = 0
+       
+        for (var i=0;i<list.length;i++){
+            if(list[i].order_status==='preparing'){
+                prep= list[i].Count
             }
-            else if (orders[i].orderStatus==='shipped'){
-                ship+=1
+            else if (list[i].order_status==='shipped'){
+                shipped= list[i].Count
             }
-            else if (orders[i].orderStatus==='cancelled'){
-                canc+=1
+            else if (list[i].order_status==='cancelled'){
+                cancelled= list[i].Count
             }
-            else if (orders[i].orderStatus==='await_cancel'){
-                await_can+=1
+            else if (list[i].order_status==='awaiting_cancel'){
+                await_cancel= list[i].Count
             }
-            else if (orders[i].orderStatus==='received'){
-                received+=1
+            else if (list[i].order_status==='delivered'){
+                delivered= list[i].Count
             }
         }
-        return {prep,ship,canc,await_can,received}
+       
+        return [prep,shipped,cancelled,await_cancel,delivered]
     }
 
-    const getacount = countOrders()
+    useEffect(() => {
+        Axios.get("http://localhost:5000/customer/allorders/stats")
+        .then((Response)=>{
+            // console.log("stats",Response.data.stats);
+            const stats = mapStats(Response.data.stats)
+            console.log("mapped stats",stats)
+            setOrderStats(stats)
+            // console.log(orderStats)
+
+        })
+        .catch((err) => {
+            toast({
+                position: "bottom-right",    
+                description: "Error loading summary",
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+              })
+          }); 
+    }, [])
+
 
     const cancelOrder = (order_id)=>{
-            // console.log(order_id)
+        Axios.put("http://localhost:5000/customer/allorders",{Order_ID:order_id, Order_status:'awaiting_cancel'})
+        .then((Response)=>{
+            // console.log("Orders",orders)
             setOrders(orders.map(
-              (order)=>order.orderID===order_id?{...order,orderStatus:'await_cancel'}:order
-            ))
+                (order)=>order.order_id===order_id?{...order,order_status:'awaiting_cancel'}:order
+              ))
+        })
+        .catch((err) => {
+            toast({
+                position: "bottom-right",    
+                description: "Error Order Cancellation. Please try again later",
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+              })
+    })    
             
     }
 
     const confirmOrder = (order_id)=>{
-        setOrders(orders.map(
-            (order)=>order.orderID===order_id?{...order,orderStatus:'received'}:order
-          ))
+        Axios.put("http://localhost:5000/customer/allorders",{Order_ID:order_id, Order_status:'delivered'})
+        .then((Response)=>{
+            // console.log(Response)
+            setOrders(orders.map(
+                (order)=>order.order_id===order_id?{...order,order_status:'delivered'}:order
+              ))
+        })
+        .catch((err) => {
+            toast({
+                position: "bottom-right",    
+                description: "Error Order Confirmation. Please try again later",
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+              })
+    })
     }
-
 
     return (
         <Box
@@ -182,27 +197,27 @@ const AllOrders = () => {
                                         <HStack>
                                             <Box ml='3'>Preparing </Box>
                                             <Spacer />
-                                            <Box mr='3'>{getacount.prep}</Box>
+                                            <Box mr='3'>{orderStats[0]}</Box>
                                         </HStack>
                                         <HStack>
                                             <Box ml='3'>Shipped </Box>
                                             <Spacer />
-                                            <Box mr='3'>{getacount.ship}</Box>
+                                            <Box mr='3'>{orderStats[1]}</Box>
                                         </HStack>
                                         <HStack>
                                             <Box ml='3'>Await Cancel </Box>
                                             <Spacer />
-                                            <Box mr='3'>{getacount.await_can}</Box>
+                                            <Box mr='3'>{orderStats[3]}</Box>
                                         </HStack>
                                         <HStack>
                                             <Box ml='3'>Cancelled </Box>
                                             <Spacer />
-                                            <Box mr='3'>{getacount.canc}</Box>
+                                            <Box mr='3'>{orderStats[2]}</Box>
                                         </HStack>
                                         <HStack>
                                             <Box ml='3'>Received </Box>
                                             <Spacer />
-                                            <Box mr='3'>{getacount.received}</Box>
+                                            <Box mr='3'>{orderStats[4]}</Box>
                                         </HStack>
                                     </Box>
 
