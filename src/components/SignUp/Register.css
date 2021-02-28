@@ -108,6 +108,7 @@
   height: 40px;
   width: 100%;
   border: none;
+  color: black;
 }
 
 .form-input::placeholder {
