@@ -3,8 +3,7 @@ import{
     FormControl,
     FormLabel,
     Input,
-    useToast
-
+    Select
 } from "@chakra-ui/react";
 
 const AddBankCard = ({addBankCard,trigger}) => {
@@ -13,10 +12,13 @@ const AddBankCard = ({addBankCard,trigger}) => {
     const [cvv,setCvv] = useState('')
     const [exp_date,setExpDate] = useState('')
     const [bank_name,setBankName] = useState('')
+    const [card_type,setType] = useState('')
     const onSubmit = (e)=>{
         e.preventDefault()
 
-        if(!card_number || !owner || !cvv || !exp_date || !bank_name){
+        console.log(card_type)
+
+        if(!card_number || !owner || !cvv || !exp_date || !bank_name || !card_type){
             alert('Empty Field')
             return
         }
@@ -39,13 +41,14 @@ const AddBankCard = ({addBankCard,trigger}) => {
             }
         }
        
-        addBankCard({card_number,owner,cvv,exp_date,bank_name})
+        addBankCard({card_number,owner,cvv,exp_date,bank_name,card_type})
 
         setCardNumber('')
         setOwner('')
         setCvv('')
         setExpDate('')
         setBankName('')
+        setType('')
         
         
     }
@@ -67,6 +70,14 @@ const AddBankCard = ({addBankCard,trigger}) => {
             <FormControl>
                 <FormLabel>CVV</FormLabel>
                 <Input type="number" placeholder='CVV' value={cvv} onChange={(e)=>setCvv(e.target.value)} />
+            </FormControl>
+            <FormControl>
+                <FormLabel>Card Type</FormLabel>
+                <Select placeholder="Select Card Type" onChange={(e)=>setType(e.target.value)}>
+                    <option value='visa'>visa</option>
+                    <option value='mastercard'>mastercard</option>
+                    <option value='amex'>amex</option>
+                 </Select>
             </FormControl>
             <FormControl>
                 <FormLabel>Exp Date</FormLabel>

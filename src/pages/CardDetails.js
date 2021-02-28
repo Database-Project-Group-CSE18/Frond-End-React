@@ -64,13 +64,13 @@ const CardDetails = () => {
 
 
     //delete a card
-    const deleteBankCard  = (cardNumber)=>{
+    const deleteBankCard  = (card_id)=>{
 
-        Axios.delete("http://localhost:5000/customer/bankCards",{data:{cardNumber:cardNumber}})
+        Axios.delete("http://localhost:5000/customer/bankCards",{data:{card_id:card_id}})
         .then((Response)=>{
             // console.log(Response);
             setBankCards(bankCards.filter(
-                (bankCard)=>bankCard.card_number!==cardNumber
+                (bankCard)=>bankCard.card_id!==card_id
             ))
             toast({
                 position: "bottom-right",    

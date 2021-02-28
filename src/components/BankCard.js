@@ -102,7 +102,7 @@ const BankCard = ({bankcard,deleteBankCard}) => {
                 <Box d="flex" alignItems="baseline" m='2'>
                 <Image
                     width='70px'
-                    src="../visa.png"
+                    src={`../${bankcard.card_type}.png`}
                     />
                 </Box> 
                 </HStack>
@@ -125,7 +125,7 @@ const BankCard = ({bankcard,deleteBankCard}) => {
                             </PopoverBody>
                             <PopoverFooter d="flex" justifyContent="flex-end">
                                 <ButtonGroup size="sm">
-                                    <Button colorScheme="red" onClick={()=>{deleteBankCard(bankcard.card_number)}}>Delete</Button>
+                                    <Button colorScheme="red" onClick={()=>{deleteBankCard(bankcard.card_id)}}>Delete</Button>
                                 </ButtonGroup>
                             </PopoverFooter>
                             </PopoverContent>
