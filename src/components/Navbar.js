@@ -36,6 +36,8 @@ function Navbar(props) {
   
   const { colorMode, toggleColorMode } = useColorMode();
   console.log("Navigation bar")
+  console.log(props)
+  
   function handleLogOut() {
     Axios.post("http://localhost:5000/customer/logout").then((response) => {
       return <Redirect to='/signin' />
@@ -105,14 +107,18 @@ function Navbar(props) {
         display={{ base: show ? "block" : "none", md: "block" }}
         mt={{ base: 4, md: 0 }}
       >
-        <IconButton
+      {props.Auth.userID === 1 || !props.Auth.isLoggedIn ?null: 
+          <Link  as={ReactRouterLink} to="/cart">
+          <IconButton
           aria-label="Call Segun"
           size="lg"
           icon={<Icon as={FiShoppingCart} w={8} h={8}  />}
           mr={{ base: "5px", md: "20px" }}
           variant="ghost"
           color={colorMode === "light" ? "cyan.800" : "cyan.100"}
-        />
+        /></Link>
+        }
+        
         <IconButton
           aria-label="Call Segun"
           size="md"

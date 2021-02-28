@@ -82,7 +82,7 @@ function App() {
               <Route path="/newitem" exact component={NewItem} />
               <Route path="/categorypage" exact component={CategoryPage} />
               <Route path="/productpage/:id" exact component={SpecificProductPage} />
-              <Route path="/cart/:customer_id" exact component={CartPage} />
+              <Route path="/cart" exact component={CartPage} />
               <Route path="/customerdashboard" exact component={CustomerDashboard}  />
               <Route path="/shippingaddress" exact  component={CustomerAddress} />
               <Route path="/changepersonaldet" exact component={ChangePersonalDet} />

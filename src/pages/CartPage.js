@@ -31,6 +31,7 @@ import { RiVisaLine } from "react-icons/ri";
 
 import visa from "payment-icons/min/flat/visa.svg";
 import mastercard from "payment-icons/min/flat/mastercard-old.svg";
+import amex from "payment-icons/min/flat/amex.svg";
 
 import { useParams } from "react-router-dom";
 import axios from "axios";
@@ -81,14 +82,14 @@ function CartPage() {
       return <Img src={visa} w={12} h={12} />;
     } else if (type === "mastercard") {
       return <Img src={mastercard} w={12} h={12} />;
+    }else if (type === "amex") {
+      return <Img src={amex} w={12} h={12} />;
     }
   };
 
   cartItems.forEach((element) => {
     TotalPrice = TotalPrice + element.quantity * element.price;
   });
-
-  let { customer_id } = useParams();
 
   useEffect(() => {
     axios
@@ -177,9 +178,9 @@ function CartPage() {
               <Th>-</Th>
               <Th>-</Th>
               <Th isNumeric>-</Th>
-              <Th isNumeric>-</Th>
-              <Th isNumeric fontSize="3xl">
-                Rs. {TotalPrice}
+              <Th isNumeric fontSize="2xl">Rs. </Th>
+              <Th isNumeric fontSize="2xl">
+                {TotalPrice}
               </Th>
             </Tr>
           </Tfoot>
@@ -191,6 +192,8 @@ function CartPage() {
               Shipping address
             </Heading>
 
+            {shippingAddress.length !==0 ?
+            <>
             <Box
               p="10px"
               borderWidth="1px"
@@ -235,6 +238,10 @@ function CartPage() {
                 </MenuList>
               </Menu>
             </Box>
+            </>
+            : <Text color='red.300'>Please add a shipping address</Text>
+            }
+            
             <Heading as="h2" size="xl" mb="20px" mt="50px">
               Payment method
             </Heading>
