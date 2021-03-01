@@ -31,6 +31,7 @@ import { RiVisaLine } from "react-icons/ri";
 
 import visa from "payment-icons/min/flat/visa.svg";
 import mastercard from "payment-icons/min/flat/mastercard-old.svg";
+import amex from "payment-icons/min/flat/amex.svg";
 
 import { useParams } from "react-router-dom";
 import axios from "axios";
@@ -81,14 +82,14 @@ function CartPage() {
       return <Img src={visa} w={12} h={12} />;
     } else if (type === "mastercard") {
       return <Img src={mastercard} w={12} h={12} />;
+    }else if (type === "amex") {
+      return <Img src={amex} w={12} h={12} />;
     }
   };
 
   cartItems.forEach((element) => {
     TotalPrice = TotalPrice + element.quantity * element.price;
   });
-
-  let { customer_id } = useParams();
 
   useEffect(() => {
     axios
@@ -120,6 +121,20 @@ function CartPage() {
       setCartItems(data);
     });
   };
+
+  const HandlePlaceOrder = () =>{
+    axios.post(`http://localhost:5000/orders/placeorder`,{
+      payment_method: paymentMethod,
+      order_address:shippingAddress[currentShippingAddress].address_id,
+      order_total:TotalPrice,
+      order_status:"paid",
+      ordered_date: Date(),
+      tracking_number : "123123213"
+    })
+      .then((response)=>{
+
+      })
+  }
 
   return (
     <Box
@@ -177,9 +192,9 @@ function CartPage() {
               <Th>-</Th>
               <Th>-</Th>
               <Th isNumeric>-</Th>
-              <Th isNumeric>-</Th>
-              <Th isNumeric fontSize="3xl">
-                Rs. {TotalPrice}
+              <Th isNumeric fontSize="2xl">Rs. </Th>
+              <Th isNumeric fontSize="2xl">
+                {TotalPrice}
               </Th>
             </Tr>
           </Tfoot>
@@ -191,6 +206,8 @@ function CartPage() {
               Shipping address
             </Heading>
 
+            {shippingAddress.length !==0 ?
+            <>
             <Box
               p="10px"
               borderWidth="1px"
@@ -235,6 +252,10 @@ function CartPage() {
                 </MenuList>
               </Menu>
             </Box>
+            </>
+            : <Text color='red.300'>Please add a shipping address</Text>
+            }
+            
             <Heading as="h2" size="xl" mb="20px" mt="50px">
               Payment method
             </Heading>
@@ -246,12 +267,12 @@ function CartPage() {
                 bg={colorMode === "light" ? "gray.50" : "gray.700"}
               >
                 <HStack>
-                  {cardIcon(card[currentCard].card_type)}
+                  {card.length !==0 ? cardIcon(card[currentCard].card_type):"No cards added"}
                   <Box>
-                    <Text>{card[currentCard].owner}</Text>
+                    <Text>{card.length !==0 ? card[currentCard].owner:null}</Text>
                     <Text>
                       XXXX XXXX XXXX{" "}
-                      {card[currentCard].card_number.substr(12, 15)}
+                      {card.length !==0 ? card[currentCard].card_number.substr(12, 15):null}
                     </Text>
                   </Box>
                 </HStack>
@@ -263,9 +284,8 @@ function CartPage() {
                 <Menu>
                   <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
                     {paymentMethod === 0 ? <Text>Select method</Text> : null}
-                    {paymentMethod === 1 ? <Text>Cash on delivery</Text> : null}
-                    {paymentMethod === 2 ? <Text>Card</Text> : null}
-                    {paymentMethod === 3 ? <Text>Paypal</Text> : null}
+                    {paymentMethod === "cash" ? <Text>Cash on delivery</Text> : null}
+                    {paymentMethod === "card" ? <Text>Card</Text> : null}
                   </MenuButton>
                   <MenuList>
                     <MenuItem
@@ -277,7 +297,7 @@ function CartPage() {
                           color="green.500"
                         />
                       }
-                      onClick={() => setPaymentMethod(1)}
+                      onClick={() => setPaymentMethod("cash")}
                     >
                       Cash on delivery
                     </MenuItem>
@@ -290,33 +310,24 @@ function CartPage() {
                           color="cyan.500"
                         />
                       }
-                      onClick={() => setPaymentMethod(2)}
+                      onClick={() => setPaymentMethod("card")}
                     >
                       Card
-                    </MenuItem>
-                    <MenuItem
-                      icon={<Icon as={SiPaypal} w={6} h={6} color="blue.500" />}
-                      onClick={() => setPaymentMethod(3)}
-                    >
-                      paypal
                     </MenuItem>
                   </MenuList>
                 </Menu>
               </Box>
               <Box pl="10px">
-                {paymentMethod === 1 ? (
+                {paymentMethod === "cash" ? (
                   <Icon as={FaMoneyBillAlt} w={8} h={8} color="green.500" />
                 ) : null}
-                {paymentMethod === 2 ? (
+                {paymentMethod === "card" ? (
                   <Icon as={FaRegCreditCard} w={8} h={8} color="cyan.500" />
-                ) : null}
-                {paymentMethod === 3 ? (
-                  <Icon as={SiPaypal} w={8} h={8} color="blue.500" />
                 ) : null}
               </Box>
             </HStack>
 
-            {paymentMethod === 2 ? (
+            {paymentMethod === "card" ? (
               <Box pl="10px" pt="10px">
                 {card.length !== 0 ? (
                   <Box>
@@ -371,7 +382,7 @@ function CartPage() {
                   </Tr>
                 </Tbody>
               </Table>
-              <Button mt="20px" colorScheme="cyan" w="100%">
+              <Button onClick={HandlePlaceOrder} mt="20px" colorScheme="cyan" w="100%">
                 Checkout
               </Button>
             </Box>

@@ -22,6 +22,7 @@ function CategoryPage() {
       let data = response.data.items;
       data.push("All Categories");
       setCategories(data);
+      setActiveCategory("All Categories")
     });
 
     axios
