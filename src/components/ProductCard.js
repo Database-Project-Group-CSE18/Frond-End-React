@@ -2,28 +2,20 @@ import { StarIcon } from "@chakra-ui/icons";
 import {
   Box,
   Text,
-  useColorMode,
-  Avatar,
-  AvatarBadge,
-  HStack,
-  VStack,
-  Heading,
   Image,
   Badge,
-  Img,
-  Tr,
-  Td,
+  Link,
+  ReactRouterLink
 } from "@chakra-ui/react";
-import { encode } from "base64-arraybuffer";
 import { arrayBufferToBinaryString } from "blob-util";
 import React, { useState } from "react";
-import ImageLoader from "react-image-file";
+
 
 function ProductCard(props) {
   return (
-    <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden" cursor='pointer'>
+    <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden">
       <Image
-        src={`data:image/png;base64,${arrayBufferToBinaryString(props.imageUrl.data)}`}
+        src={`data:image/png;base64,${arrayBufferToBinaryString(props.imageUrl ? props.imageUrl.data : '')}`}
         alt="product image"
         w="200px"
         h="200px"
@@ -45,7 +37,7 @@ function ProductCard(props) {
           fontSize="xl"
           isTruncated
         >
-          {props.title}
+          <Link href={`/productpage/${props.item_id}`}>{props.title}</Link>
         </Box>
 
         <Box>

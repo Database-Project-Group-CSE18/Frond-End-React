@@ -13,7 +13,7 @@ const useForm = (callback, validate) => {
   });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-
+  const [backEndErrors, setBackEndErrors] = useState({registered: false, error: ""});
   const firstName = values.firstname;
   const lastName = values.lastname;
   const email = values.email;
@@ -32,6 +32,7 @@ const useForm = (callback, validate) => {
     e.preventDefault();
     setErrors(validate(values));
     setIsSubmitting(true);
+
     if (Object.keys(errors).length === 0) {
       Axios.post("http://localhost:5000/customer/register", {
         firstName: firstName,
@@ -40,7 +41,12 @@ const useForm = (callback, validate) => {
         phoneNumber: phoneNumber,
         password: password,
       }).then((response) => {
-        console.log(response);
+        if (!response.data.registered) {
+          console.log(response.data.message);
+          setBackEndErrors({registered: false, error: response.data.message});
+        } else {
+          setBackEndErrors({registered: true, error: response.data.message});
+        }
       });
     }
   };
@@ -48,11 +54,13 @@ const useForm = (callback, validate) => {
   useEffect(() => {
     //If there are no errors and submitted it wil call submitForm function(callback())
     if (Object.keys(errors).length === 0 && isSubmitting) {
-      callback();
+      if (!!backEndErrors.registered) {
+        callback();
+      }
     }
-  }, [errors]);
+  }, [errors, backEndErrors.registered]);
 
-  return { handleChange, handleSubmit, values, errors };
+  return { handleChange, handleSubmit, values, errors, backEndErrors };
 };
 
 export default useForm;

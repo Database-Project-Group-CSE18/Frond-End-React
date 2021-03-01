@@ -8,10 +8,9 @@ import SearchBarHome from "../../components/SearchBarHome";
 import ImageSlider from "../../components/Slider/ImageSlider";
 import { SliderData } from "../../components/Slider/SliderData";
 // import checkLogin from "./checkLogin";
-
+import { useHistory } from 'react-router'
 function Home() {
-
-  
+console.log("Home page")
   return (
     <>
     <SearchBarHome />

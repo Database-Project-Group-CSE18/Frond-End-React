@@ -8,7 +8,7 @@ import { Redirect } from "react-router-dom";
 
 
 
-const LogIn = () => {
+function LogIn(props) {
 
   
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -16,13 +16,6 @@ const LogIn = () => {
   function submitForm() {
     setIsSubmitted(true);
   }
-  // Axios.defaults.withCredentials = true;
-  // useEffect(() => {
-  //   Axios.get("http://localhost:5000/customer/login").then((response) => {
-  //     console.log(response);
-  //   })
-  // }, [])
-
   return (
     <>
       {/**background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../img/Midwife.jpg') !important;
@@ -31,12 +24,12 @@ const LogIn = () => {
         <div className="login-content-left">
           <img className="login-img" src="img/svg-2.svg" alt="Security" />
         </div>
-        {/* {!isSubmitted ? (
-          <FormLogIn submitForm={submitForm} />
+        {!isSubmitted ? (
+          <FormLogIn submitForm={submitForm} setSignInClicked={props.setSignInClicked}/>
         ) : (
           <Redirect to='/' />
-        )} */}
-        <FormLogIn submitForm={submitForm} />
+        )}
+        {/* <FormLogIn submitForm={submitForm} /> */}
       </div>
     </>
   );
