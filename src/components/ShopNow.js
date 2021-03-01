@@ -26,7 +26,7 @@ function ShopNow() {
 
       <p>What are you waiting for?</p>
       <div>
-        <a href="#">
+        <a href="/categorypage">
           <Box
             as="button"
             p={4}
