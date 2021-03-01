@@ -122,6 +122,20 @@ function CartPage() {
     });
   };
 
+  const HandlePlaceOrder = () =>{
+    axios.post(`http://localhost:5000/orders/placeorder`,{
+      payment_method: paymentMethod,
+      order_address:shippingAddress[currentShippingAddress].address_id,
+      order_total:TotalPrice,
+      order_status:"paid",
+      ordered_date: Date(),
+      tracking_number : "123123213"
+    })
+      .then((response)=>{
+
+      })
+  }
+
   return (
     <Box
       pt="150px"
@@ -270,9 +284,8 @@ function CartPage() {
                 <Menu>
                   <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
                     {paymentMethod === 0 ? <Text>Select method</Text> : null}
-                    {paymentMethod === 1 ? <Text>Cash on delivery</Text> : null}
-                    {paymentMethod === 2 ? <Text>Card</Text> : null}
-                    {paymentMethod === 3 ? <Text>Paypal</Text> : null}
+                    {paymentMethod === "cash" ? <Text>Cash on delivery</Text> : null}
+                    {paymentMethod === "card" ? <Text>Card</Text> : null}
                   </MenuButton>
                   <MenuList>
                     <MenuItem
@@ -284,7 +297,7 @@ function CartPage() {
                           color="green.500"
                         />
                       }
-                      onClick={() => setPaymentMethod(1)}
+                      onClick={() => setPaymentMethod("cash")}
                     >
                       Cash on delivery
                     </MenuItem>
@@ -297,33 +310,24 @@ function CartPage() {
                           color="cyan.500"
                         />
                       }
-                      onClick={() => setPaymentMethod(2)}
+                      onClick={() => setPaymentMethod("card")}
                     >
                       Card
-                    </MenuItem>
-                    <MenuItem
-                      icon={<Icon as={SiPaypal} w={6} h={6} color="blue.500" />}
-                      onClick={() => setPaymentMethod(3)}
-                    >
-                      paypal
                     </MenuItem>
                   </MenuList>
                 </Menu>
               </Box>
               <Box pl="10px">
-                {paymentMethod === 1 ? (
+                {paymentMethod === "cash" ? (
                   <Icon as={FaMoneyBillAlt} w={8} h={8} color="green.500" />
                 ) : null}
-                {paymentMethod === 2 ? (
+                {paymentMethod === "card" ? (
                   <Icon as={FaRegCreditCard} w={8} h={8} color="cyan.500" />
-                ) : null}
-                {paymentMethod === 3 ? (
-                  <Icon as={SiPaypal} w={8} h={8} color="blue.500" />
                 ) : null}
               </Box>
             </HStack>
 
-            {paymentMethod === 2 ? (
+            {paymentMethod === "card" ? (
               <Box pl="10px" pt="10px">
                 {card.length !== 0 ? (
                   <Box>
@@ -378,7 +382,7 @@ function CartPage() {
                   </Tr>
                 </Tbody>
               </Table>
-              <Button mt="20px" colorScheme="cyan" w="100%">
+              <Button onClick={HandlePlaceOrder} mt="20px" colorScheme="cyan" w="100%">
                 Checkout
               </Button>
             </Box>
