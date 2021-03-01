@@ -33,7 +33,11 @@ function ShopNow() {
             color={colorMode === "light" ? "white" : "black"}
             fontWeight="bold"
             borderRadius="15px"
-            bgGradient={colorMode === "light" ? "linear(to-r, black, blue.600)" : "linear(to-r, white, blue.600)"}
+            bgGradient={
+              colorMode === "light"
+                ? "linear(to-r, black, blue.600)"
+                : "linear(to-r, white, blue.600)"
+            }
             _hover={{
               bgGradient: "linear(to-r, red, white)",
             }}
@@ -41,6 +45,9 @@ function ShopNow() {
             SHOP NOW
           </Box>
         </a>
+          
+        
+
         <GiShoppingCart
           className="cart-icon"
           size="100px"
