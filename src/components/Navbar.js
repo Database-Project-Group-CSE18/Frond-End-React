@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import {
   Flex,
   Box,
-  Heading,
   Button,
   useColorMode,
   IconButton,
@@ -39,8 +38,8 @@ function Navbar(props) {
   console.log(props)
   
   function handleLogOut() {
-    Axios.post("http://localhost:5000/customer/logout").then((response) => {
-      return <Redirect to='/signin' />
+    Axios.get("http://localhost:5000/customer/logout").then((response) => {
+      return <Redirect to='/' />
     })
   }
 
@@ -89,12 +88,13 @@ function Navbar(props) {
           </Link> : <Link as={ReactRouterLink} to="/customerdashboard">
             Dashboard
           </Link>}
-          
         </MenuItems>
         <MenuItems>
-          <Link as={ReactRouterLink} to="/">
-            About us
-          </Link>
+        {props.Auth.userID === 1 ? <Link as={ReactRouterLink} to="/sellerHome">
+            Seller Home
+          </Link> : <Link as={ReactRouterLink} to="/">
+            About Us
+          </Link>}
         </MenuItems>
         <MenuItems>
           <Link as={ReactRouterLink} to="/">
