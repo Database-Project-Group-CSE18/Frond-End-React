@@ -37,6 +37,7 @@ function App() {
   useEffect(() => {
     Axios.defaults.withCredentials = true;
     Axios.get("http://localhost:5000/customer/login").then((response) => {
+      console.log(response.data)
       if (response.data.LoggedIn === true) {
         setAuth({ isLoggedIn: true, userID: response.data.user.user_id });
       } else {
@@ -81,7 +82,7 @@ function App() {
               <Route path="/newitem" exact component={NewItem} />
               <Route path="/categorypage" exact component={CategoryPage} />
               <Route path="/productpage/:id" exact component={SpecificProductPage} />
-              <Route path="/cart/:customer_id" exact component={CartPage} />
+              <Route path="/cart" exact component={CartPage} />
               <Route path="/customerdashboard" exact component={CustomerDashboard}  />
               <Route path="/shippingaddress" exact  component={CustomerAddress} />
               <Route path="/changepersonaldet" exact component={ChangePersonalDet} />
