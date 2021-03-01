@@ -25,26 +25,26 @@ const CustomerDashboard = () => {
     const [userdata, setUserdata] = useState([])
     const [orderNum, setOrderNum] = useState([])
         
-    useEffect(() => {
-        Axios.get("http://localhost:5000/customer/user")
-        .then((Response)=>{
-            console.log(Response.data.user[0]);
-            // console.log(Response.data.det);
-            setUserdata(Response.data.user[0]);
-            const det = arrangeData(Response.data.det)
-            setOrderNum(det);
+    // useEffect(() => {
+    //     Axios.get("http://localhost:5000/customer/user")
+    //     .then((Response)=>{
+    //         console.log(Response.data.user[0]);
+    //         // console.log(Response.data.det);
+    //         setUserdata(Response.data.user[0]);
+    //         const det = arrangeData(Response.data.det)
+    //         setOrderNum(det);
             
-        })
-        .catch((err) => {
-            toast({
-                position: "bottom-right",    
-                description: "Loading Error",
-                status: "error",
-                duration: 5000,
-                isClosable: true,
-              })
-          }); 
-    }, [])
+    //     })
+    //     .catch((err) => {
+    //         toast({
+    //             position: "bottom-right",    
+    //             description: "Loading Error",
+    //             status: "error",
+    //             duration: 5000,
+    //             isClosable: true,
+    //           })
+    //       }); 
+    // }, [])
 
 
 
