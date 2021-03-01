@@ -23,12 +23,12 @@ function CategorizedReviewPreview(props) {
   };
 
   for (var i = 0; i < props.feedbacks.length; i++) {
-    if (props.feedbacks[i].rating === props.rating || props.rating === 'all') {
+    if (props.feedbacks[i].rate === props.rating || props.rating === 'all') {
       reviews.push(
         <Box mb='10px'>
           <HStack>
             <Avatar
-              name={props.feedbacks[i].customer_name}
+              name={props.feedbacks[i].first_name +' ' +props.feedbacks[i].last_name}
               src={props.feedbacks[i].customer_dp}
             />
             <Box
@@ -39,18 +39,18 @@ function CategorizedReviewPreview(props) {
               bg={colorMode === "light" ? "cyan.50" : "cyan.500"}
             >
               <Heading as="h5" size="sm">
-                {props.feedbacks[i].customer_name}
+                {props.feedbacks[i].first_name +' ' +props.feedbacks[i].last_name}
               </Heading>
               <Text>{props.feedbacks[i].comment}</Text>
               <Box d="flex" mt="2" ml="2px" alignItems="center">
-                {stars(props.feedbacks[i].rating)}
+                {stars(props.feedbacks[i].rate)}
                 <Box as="span" ml="2" fontSize="sm">
-                  {props.feedbacks[i].rating}/5
+                  {props.feedbacks[i].rate}/5
                 </Box>
               </Box>
             </Box>
           </HStack>
-          <Replys replys={props.feedbacks[i].reply} />
+          <Replys replys={[]} />
         </Box>
       );
     }

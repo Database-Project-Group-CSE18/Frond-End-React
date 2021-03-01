@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Flex,
   Box,
-  Heading,
   Button,
   useColorMode,
   IconButton,
@@ -11,11 +10,13 @@ import {
   Icon,
 } from "@chakra-ui/react";
 import { HamburgerIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
-import { Link } from "react-router-dom";
-
+import { Link, Redirect } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 import { FiShoppingCart } from "react-icons/fi";
+import Axios from "axios";
 
 function Navbar(props) {
+  var his=useHistory();
   const MenuItems = ({ children }) => (
     <Button
       mt={{ base: 4, md: 0 }}
@@ -31,8 +32,16 @@ function Navbar(props) {
 
   const [show, setShow] = React.useState(false);
   const handleToggle = () => setShow(!show);
-
+  
   const { colorMode, toggleColorMode } = useColorMode();
+  console.log("Navigation bar")
+  console.log(props)
+  
+  function handleLogOut() {
+    Axios.get("http://localhost:5000/customer/logout").then((response) => {
+      return <Redirect to='/' />
+    })
+  }
 
   return (
     <Flex
@@ -74,14 +83,18 @@ function Navbar(props) {
           </Link>
         </MenuItems>
         <MenuItems>
-          <Link as={ReactRouterLink} to="/">
+        {props.Auth.userID === 1 ? <Link as={ReactRouterLink} to="/sellerdashboard/1">
             Dashboard
-          </Link>
+          </Link> : <Link as={ReactRouterLink} to="/customerdashboard">
+            Dashboard
+          </Link>}
         </MenuItems>
         <MenuItems>
-          <Link as={ReactRouterLink} to="/">
-            About us
-          </Link>
+        {props.Auth.userID === 1 ? <Link as={ReactRouterLink} to="/sellerHome">
+            Seller Home
+          </Link> : <Link as={ReactRouterLink} to="/">
+            About Us
+          </Link>}
         </MenuItems>
         <MenuItems>
           <Link as={ReactRouterLink} to="/">
@@ -94,14 +107,18 @@ function Navbar(props) {
         display={{ base: show ? "block" : "none", md: "block" }}
         mt={{ base: 4, md: 0 }}
       >
-        <IconButton
+      {props.Auth.userID === 1 || !props.Auth.isLoggedIn ?null: 
+          <Link  as={ReactRouterLink} to="/cart">
+          <IconButton
           aria-label="Call Segun"
           size="lg"
           icon={<Icon as={FiShoppingCart} w={8} h={8}  />}
           mr={{ base: "5px", md: "20px" }}
           variant="ghost"
           color={colorMode === "light" ? "cyan.800" : "cyan.100"}
-        />
+        /></Link>
+        }
+        
         <IconButton
           aria-label="Call Segun"
           size="md"
@@ -112,7 +129,16 @@ function Navbar(props) {
           onClick={toggleColorMode}
         />
         <a href="/signin">
-          <Button
+          {props.Auth.isLoggedIn ? <Button
+            type="button"
+            border="1px"
+            variant="ghost"
+            mr="1.5rem"
+            color={colorMode === "light" ? "cyan.800" : "cyan.100"}
+            onClick= {handleLogOut}
+          >
+            Log Out
+          </Button>: <Button
             type="button"
             border="1px"
             variant="ghost"
@@ -120,7 +146,8 @@ function Navbar(props) {
             color={colorMode === "light" ? "cyan.800" : "cyan.100"}
           >
             Log In
-          </Button>
+          </Button> }
+          
         </a>
       </Box>
 

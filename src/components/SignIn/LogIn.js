@@ -1,8 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./LogIn.css";
 import FormLogIn from "./FormLogIn";
+import FormSuccess from "./FormSuccess";
+import Axios from "axios";
+import { Redirect } from "react-router-dom";
 
-const LogIn = () => {
+
+
+
+function LogIn(props) {
+
+  
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   function submitForm() {
@@ -11,12 +19,17 @@ const LogIn = () => {
   return (
     <>
       {/**background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../img/Midwife.jpg') !important;
-      background-size: cover !important; */}
+    background-size: cover !important; <Redirect to='/' />*/}
       <div className="login-container">
         <div className="login-content-left">
-          <img className="login-img" src="img/svg-4.svg" alt="Security" />
+          <img className="login-img" src="img/svg-2.svg" alt="Security" />
         </div>
-        <FormLogIn />
+        {!isSubmitted ? (
+          <FormLogIn submitForm={submitForm} setSignInClicked={props.setSignInClicked}/>
+        ) : (
+          <Redirect to='/' />
+        )}
+        {/* <FormLogIn submitForm={submitForm} /> */}
       </div>
     </>
   );

@@ -8,8 +8,8 @@ import{
 } from "@chakra-ui/react";
 
 const AddAddress = ({addAddress,trigger}) => {
-    const [name,setName] = useState('')
-    const [tp,setTp] = useState('')
+    const [first_Name,setFirstName] = useState('')
+    const [last_Name,setLastName] = useState('')
     const [street,setStreet] = useState('')
     const [city,setCity] = useState('')
     const [state,setState] = useState('')
@@ -21,38 +21,32 @@ const AddAddress = ({addAddress,trigger}) => {
     const onSubmit = (e)=>{
         e.preventDefault()
 
-        if(!name || !tp || !street || !city || !state || !zip){
+        if(!first_Name || !last_Name || !street || !city || !state || !zip){
             alert('Empty Field')
             return
         }
         
-        addAddress({name,tp,street,city,state,zip})
+        addAddress({first_Name,last_Name,street,city,state,zip})
 
-        setName('')
-        setTp('')
+        setFirstName('')
+        setLastName('')
         setStreet('')
         setCity('')
         setState('')
         setZip('')
 
-        toast({
-            position: "bottom-right",    
-            description: "New shipping address added successfully",
-            status: "success",
-            duration: 5000,
-            isClosable: true,
-          })
+        
     }
 
     return (
         <form  onSubmit={onSubmit} >
             <FormControl>
-                <FormLabel>Name</FormLabel>
-                <Input type="text" placeholder='Name' value={name} onChange={(e)=>setName(e.target.value)} />
+                <FormLabel>First Name</FormLabel>
+                <Input type="text" placeholder='Name' value={first_Name} onChange={(e)=>setFirstName(e.target.value)} />
             </FormControl>
             <FormControl>
-                <FormLabel>Telephone</FormLabel>
-                <Input type="text" placeholder='Telephone' value={tp} onChange={(e)=>setTp(e.target.value)}  />
+                <FormLabel>Last Name</FormLabel>
+                <Input type="text" placeholder='Telephone' value={last_Name} onChange={(e)=>setLastName(e.target.value)}  />
             </FormControl>
             <FormControl>
                 <FormLabel>Street</FormLabel>

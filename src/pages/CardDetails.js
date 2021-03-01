@@ -17,64 +17,120 @@ import {
     useColorMode
   } from "@chakra-ui/react";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AddBankCard from "../components/AddBankCard";
 import BankCards from "../components/BankCards";
 import CustomerDashSideBar from "../components/CustomerDashSideBar";
+import Axios from "axios";
 
 const CardDetails = () => {
 
-    const [bankCards,setBankCards] = useState([
-        {
-            cardNumber:323446453434,
-            owner:'pasan madushan',
-            cvv:'123',
-            expDate:'10/12',
-                  
-        },
-        {
-            cardNumber:323446453435,
-            owner:'vimukthi madushan',
-            cvv:'123',
-            expDate:'10/12',
-                  
-        },
-        {
-            cardNumber:323446453436,
-            owner:'chalindu malshika',
-            cvv:'123',
-            expDate:'10/12',
-                  
-        },
-        {
-            cardNumber:323446453437,
-            owner:'chandima prabath',
-            cvv:'123',
-            expDate:'10/12',
-                  
-        },
-    ])
+    const [bankCards,setBankCards] = useState([])
+
+    // {
+    //     Card_Number:323446453434,
+    //     Owner:'pasan madushan',
+    //     cvv:'123',
+    //     Exp_Date:'10/12',
+              
+    // },
+    // {
+    //     Card_Number:323446453435,
+    //     Owner:'vimukthi madushan',
+    //     cvv:'123',
+    //     Exp_Date:'10/12',
+              
+    // },
 
     const { isOpen, onOpen, onClose } = useDisclosure()
     const toast = useToast()
 
+    useEffect(() => {
+        Axios.get("http://localhost:5000/customer/bankCards")
+        .then((Response)=>{
+            // console.log(Response.data.addresses);
+            setBankCards(Response.data.bankCards);
+        })
+        .catch((err) => {
+            toast({
+                position: "bottom-right",    
+                description: "Error loading data",
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+              })
+          }); 
+    }, [])
+
+
     //delete a card
-    const deleteBankCard  = (cardNumber)=>{
-        setBankCards(bankCards.filter(
-            (bankCard)=>bankCard.cardNumber!==cardNumber
-        ))
-        toast({
-            position: "bottom-right",    
-            description: "Bank Card deleted successfully",
-            status: "error",
-            duration: 5000,
-            isClosable: true,
-          })
+    const deleteBankCard  = (card_id)=>{
+
+        Axios.delete("http://localhost:5000/customer/bankCards",{data:{card_id:card_id}})
+        .then((Response)=>{
+            // console.log(Response);
+            setBankCards(bankCards.filter(
+                (bankCard)=>bankCard.card_id!==card_id
+            ))
+            toast({
+                position: "bottom-right",    
+                description: "Bank Card deleted successfully",
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+              })
+        })
+        .catch((err) => {
+            toast({
+                position: "bottom-right",    
+                description: "Internal Server Error. Try again later",
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+              })
+          }); 
     }
 
     //add new card
     const addBankCard = (CardDetails)=>{
-        setBankCards([...bankCards,CardDetails]);
+
+        Axios.post("http://localhost:5000/customer/bankCards",{CardDetails:CardDetails})
+        .then((Response)=>{
+            console.log("response",Response);
+            // console.log(newAddress);
+            if (Response.data.success===true){
+                setBankCards([...bankCards,CardDetails]);
+           
+                toast({
+                    position: "bottom-right",    
+                    description: "New payment method added successfully",
+                    status: "success",
+                    duration: 5000,
+                    isClosable: true,
+                })
+            }
+            else{
+
+                toast({
+                    position: "bottom-right",    
+                    description: "Card Number Already Exists",
+                    status: "error",
+                    duration: 5000,
+                    isClosable: true,
+                })
+
+            }
+            
+        })
+        .catch((err) => {
+            toast({
+                position: "bottom-right",    
+                description: "Internal Server Error. Try again later",
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+              })
+          });       
 
     }
 

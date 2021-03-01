@@ -23,7 +23,7 @@ import {
   useColorMode,
   VStack,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FiShoppingCart } from "react-icons/fi";
 import { FaMoneyBillAlt, FaRegCreditCard } from "react-icons/fa";
 import { SiPaypal } from "react-icons/si";
@@ -31,82 +31,41 @@ import { RiVisaLine } from "react-icons/ri";
 
 import visa from "payment-icons/min/flat/visa.svg";
 import mastercard from "payment-icons/min/flat/mastercard-old.svg";
+import amex from "payment-icons/min/flat/amex.svg";
 
 import { useParams } from "react-router-dom";
+import axios from "axios";
 
 function CartPage() {
   const { colorMode, toggleColorMode } = useColorMode();
 
   const [cartItems, setCartItems] = useState([
     {
-      item_ID: "213d",
-      item_name: "Electric tooth brush",
-      price: 2000.0,
-      quantity: 2,
-      varient: "pink",
-      image: "../images/pink.jpg",
-    },
-    {
-      item_ID: "213d",
-      item_name: "Electric tooth brush",
-      price: 2000.0,
-      quantity: 2,
-      varient: "pink",
-      image: "../images/pink.jpg",
-    },
-    {
-      item_ID: "235",
-      item_name: "IPhone 8",
-      price: 50000.0,
-      quantity: 1,
-      varient: "64GB",
-      image: "../images/iphone.jpg",
-    },
-   
-    {
-      item_ID: "233d",
-      item_name: "Electric tooth brush",
-      price: 300.0,
-      quantity: 5,
-      varient: "blue",
-      image: "../images/blue.jpg",
+      item_ID: "",
+      item_name: "",
+      price: 0,
+      quantity: 0,
+      varient: "",
+      image: "",
     },
   ]);
 
   const [shippingAddress, setShippingAddress] = useState([
     {
-      customer_name: "Chandima Amarasena",
-      street: "No.231, Dutugamunu mv",
-      city: "Peliyagoda",
-      state: "western",
-      zip: "11830",
-    },
-    {
-      customer_name: "Rahal Athukorala",
-      street: "No.345, Parakrma Mv",
-      city: "Kelaniya",
-      state: "western",
-      zip: "11810",
-    },
-    {
-      customer_name: "Rahal Athukorala",
-      street: "No.345, Parakrma Mv",
-      city: "Kelaniya",
-      state: "western",
-      zip: "11810",
+      first_Name: "",
+      last_Name: "",
+      street: "",
+      city: "",
+      state: "",
+      zip: "",
     },
   ]);
 
   const [card, setCard] = useState([
     {
-      name: "P A C P Amarasena",
-      card_no: "1234234123452341",
-      card_type: "mastercard",
-    },
-    {
-      name: "R M Athukorala",
-      card_no: "2334234123457894",
-      card_type: "mastercard",
+      owner: "",
+      card_number: "",
+      bank_name: "",
     },
   ]);
 
@@ -123,6 +82,8 @@ function CartPage() {
       return <Img src={visa} w={12} h={12} />;
     } else if (type === "mastercard") {
       return <Img src={mastercard} w={12} h={12} />;
+    }else if (type === "amex") {
+      return <Img src={amex} w={12} h={12} />;
     }
   };
 
@@ -130,7 +91,50 @@ function CartPage() {
     TotalPrice = TotalPrice + element.quantity * element.price;
   });
 
-  let { customer_id } = useParams();
+  useEffect(() => {
+    axios
+      .get(`http://localhost:5000/items/cart`)
+      .then((response) => {
+        let data = response.data.items;
+        console.log(data);
+        setCartItems(data);
+      });
+    axios.get(`http://localhost:5000/customer/addresses`).then((response) => {
+      let data = response.data.addresses;
+      console.log(data);
+      setShippingAddress(data);
+    });
+    axios.get(`http://localhost:5000/customer/bankCards`).then((response) => {
+      let data = response.data.bankCards;
+      console.log(data);
+      setCard(data);
+    });
+  }, []);
+
+  const HandleRemove = (id) => {
+    axios.delete(`http://localhost:5000/items/cart/${id}`).then((response) => {
+      console.log(id);
+    });
+    axios.get(`http://localhost:5000/items/cart`).then((response) => {
+      let data = response.data.items;
+      console.log(data);
+      setCartItems(data);
+    });
+  };
+
+  const HandlePlaceOrder = () =>{
+    axios.post(`http://localhost:5000/orders/placeorder`,{
+      payment_method: paymentMethod,
+      order_address:shippingAddress[currentShippingAddress].address_id,
+      order_total:TotalPrice,
+      order_status:"paid",
+      ordered_date: Date(),
+      tracking_number : "123123213"
+    })
+      .then((response)=>{
+
+      })
+  }
 
   return (
     <Box
@@ -151,6 +155,7 @@ function CartPage() {
               <Th isNumeric>Quantity</Th>
               <Th isNumeric>Price(each)</Th>
               <Th isNumeric>Price</Th>
+              <Th></Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -162,11 +167,21 @@ function CartPage() {
                     <Img src={cartItems[i].image} w="50px" h="50px" />
                   </Td>
                   <Td>{cartItems[i].item_name}</Td>
-                  <Td>{cartItems[i].varient}</Td>
+                  <Td>{cartItems[i].variant}</Td>
                   <Td isNumeric>{cartItems[i].quantity}</Td>
                   <Td isNumeric>{cartItems[i].price}</Td>
                   <Td isNumeric>
                     {cartItems[i].price * cartItems[i].quantity}
+                  </Td>
+                  <Td>
+                    <Button
+                      colorScheme="red"
+                      variant="outline"
+                      size="xs"
+                      onClick={() => HandleRemove(cartItems[i].variant_id)}
+                    >
+                      Remove
+                    </Button>
                   </Td>
                 </Tr>
               ))}
@@ -177,9 +192,9 @@ function CartPage() {
               <Th>-</Th>
               <Th>-</Th>
               <Th isNumeric>-</Th>
-              <Th isNumeric>-</Th>
-              <Th isNumeric fontSize="3xl">
-                Rs. {TotalPrice}
+              <Th isNumeric fontSize="2xl">Rs. </Th>
+              <Th isNumeric fontSize="2xl">
+                {TotalPrice}
               </Th>
             </Tr>
           </Tfoot>
@@ -191,17 +206,21 @@ function CartPage() {
               Shipping address
             </Heading>
 
+            {shippingAddress.length !==0 ?
+            <>
             <Box
               p="10px"
               borderWidth="1px"
               bg={colorMode === "light" ? "gray.50" : "gray.700"}
             >
               <Heading as="h5" size="sm">
-                {shippingAddress[currentShippingAddress].customer_name}
+                {shippingAddress[currentShippingAddress].first_Name}{" "}
+                {shippingAddress[currentShippingAddress].last_Name}
               </Heading>
 
               <Text>{shippingAddress[currentShippingAddress].street}</Text>
               <Text>{shippingAddress[currentShippingAddress].city}</Text>
+              <Text>{shippingAddress[currentShippingAddress].state}</Text>
               <Text>{shippingAddress[currentShippingAddress].zip}</Text>
             </Box>
             <Box ml="10px" pt="10px">
@@ -217,9 +236,13 @@ function CartPage() {
                         {"Address No. " +
                           (i + 1) +
                           " - " +
-                          shippingAddress[i].customer_name +
+                          shippingAddress[i].first_Name +
+                          " " +
+                          shippingAddress[i].last_Name +
                           ", " +
                           shippingAddress[i].street +
+                          ", " +
+                          shippingAddress[i].city +
                           ", " +
                           shippingAddress[i].state +
                           ", " +
@@ -229,6 +252,10 @@ function CartPage() {
                 </MenuList>
               </Menu>
             </Box>
+            </>
+            : <Text color='red.300'>Please add a shipping address</Text>
+            }
+            
             <Heading as="h2" size="xl" mb="20px" mt="50px">
               Payment method
             </Heading>
@@ -240,25 +267,25 @@ function CartPage() {
                 bg={colorMode === "light" ? "gray.50" : "gray.700"}
               >
                 <HStack>
-                  {cardIcon(card[currentCard].card_type)}
+                  {card.length !==0 ? cardIcon(card[currentCard].card_type):"No cards added"}
                   <Box>
-                    <Text>{card[currentCard].name}</Text>
+                    <Text>{card.length !==0 ? card[currentCard].owner:null}</Text>
                     <Text>
-                      XXXX XXXX XXXX {card[currentCard].card_no.substr(12, 15)}
+                      XXXX XXXX XXXX{" "}
+                      {card.length !==0 ? card[currentCard].card_number.substr(12, 15):null}
                     </Text>
                   </Box>
                 </HStack>
               </Box>
             ) : null}
 
-            <HStack pt='10px'>
+            <HStack pt="10px">
               <Box pl="10px">
                 <Menu>
                   <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
                     {paymentMethod === 0 ? <Text>Select method</Text> : null}
-                    {paymentMethod === 1 ? <Text>Cash on delivery</Text> : null}
-                    {paymentMethod === 2 ? <Text>Card</Text> : null}
-                    {paymentMethod === 3 ? <Text>Paypal</Text> : null}
+                    {paymentMethod === "cash" ? <Text>Cash on delivery</Text> : null}
+                    {paymentMethod === "card" ? <Text>Card</Text> : null}
                   </MenuButton>
                   <MenuList>
                     <MenuItem
@@ -270,7 +297,7 @@ function CartPage() {
                           color="green.500"
                         />
                       }
-                      onClick={() => setPaymentMethod(1)}
+                      onClick={() => setPaymentMethod("cash")}
                     >
                       Cash on delivery
                     </MenuItem>
@@ -283,33 +310,24 @@ function CartPage() {
                           color="cyan.500"
                         />
                       }
-                      onClick={() => setPaymentMethod(2)}
+                      onClick={() => setPaymentMethod("card")}
                     >
                       Card
-                    </MenuItem>
-                    <MenuItem
-                      icon={<Icon as={SiPaypal} w={6} h={6} color="blue.500" />}
-                      onClick={() => setPaymentMethod(3)}
-                    >
-                      paypal
                     </MenuItem>
                   </MenuList>
                 </Menu>
               </Box>
               <Box pl="10px">
-                {paymentMethod === 1 ? (
+                {paymentMethod === "cash" ? (
                   <Icon as={FaMoneyBillAlt} w={8} h={8} color="green.500" />
                 ) : null}
-                {paymentMethod === 2 ? (
+                {paymentMethod === "card" ? (
                   <Icon as={FaRegCreditCard} w={8} h={8} color="cyan.500" />
-                ) : null}
-                {paymentMethod === 3 ? (
-                  <Icon as={SiPaypal} w={8} h={8} color="blue.500" />
                 ) : null}
               </Box>
             </HStack>
 
-            {paymentMethod === 2 ? (
+            {paymentMethod === "card" ? (
               <Box pl="10px" pt="10px">
                 {card.length !== 0 ? (
                   <Box>
@@ -322,12 +340,13 @@ function CartPage() {
                           .fill("")
                           .map((_, i) => (
                             <MenuItem
-                              icon={cardIcon(card[i].card_type)}
+                              icon={cardIcon("visa")}
                               onClick={() => setCurrentCard(i)}
                             >
-                              <Text>{card[i].name}</Text>
+                              <Text>{card[i].owner}</Text>
                               <Text>
-                                XXXX XXXX XXXX {card[i].card_no.substr(12, 15)}
+                                XXXX XXXX XXXX{" "}
+                                {card[i].card_number.substr(12, 15)}
                               </Text>
                             </MenuItem>
                           ))}
@@ -363,7 +382,7 @@ function CartPage() {
                   </Tr>
                 </Tbody>
               </Table>
-              <Button mt="20px" colorScheme="cyan" w="100%">
+              <Button onClick={HandlePlaceOrder} mt="20px" colorScheme="cyan" w="100%">
                 Checkout
               </Button>
             </Box>

@@ -3,34 +3,32 @@ import{
     FormControl,
     FormLabel,
     Input,
-    useToast
-
+    Select
 } from "@chakra-ui/react";
 
 const AddBankCard = ({addBankCard,trigger}) => {
-    const [cardNumber,setCardNumber] = useState('')
+    const [card_number,setCardNumber] = useState('')
     const [owner,setOwner] = useState('')
     const [cvv,setCvv] = useState('')
-    const [expDate,setExpDate] = useState('')
-    
-
-    const toast = useToast()
-
-
+    const [exp_date,setExpDate] = useState('')
+    const [bank_name,setBankName] = useState('')
+    const [card_type,setType] = useState('')
     const onSubmit = (e)=>{
         e.preventDefault()
 
-        if(!cardNumber || !owner || !cvv || !expDate){
+        console.log(card_type)
+
+        if(!card_number || !owner || !cvv || !exp_date || !bank_name || !card_type){
             alert('Empty Field')
             return
         }
 
-        if(cardNumber.toString().length!==12){
+        if(card_number.toString().length!==16){
             alert('Invalid Card Number')
             return
         }
     
-        var givenDate = new Date(expDate);
+        var givenDate = new Date(exp_date);
         var today = new Date();
         if (givenDate.getFullYear() < today.getFullYear()) {
             alert('card is expired')
@@ -42,29 +40,28 @@ const AddBankCard = ({addBankCard,trigger}) => {
                 return
             }
         }
-    
-        
-        addBankCard({cardNumber,owner,cvv,expDate})
+       
+        addBankCard({card_number,owner,cvv,exp_date,bank_name,card_type})
 
         setCardNumber('')
         setOwner('')
         setCvv('')
         setExpDate('')
+        setBankName('')
+        setType('')
         
-        toast({
-            position: "bottom-right",    
-            description: "New payment method added successfully",
-            status: "success",
-            duration: 5000,
-            isClosable: true,
-          })
+        
     }
 
     return (
         <form  onSubmit={onSubmit} >
             <FormControl>
+                <FormLabel>Bank Name</FormLabel>
+                <Input type="text" placeholder='Bank Name' value={bank_name} onChange={(e)=>setBankName(e.target.value)} />
+            </FormControl>
+            <FormControl>
                 <FormLabel>Card Number</FormLabel>
-                <Input type="number" placeholder='Card Number' value={cardNumber} onChange={(e)=>setCardNumber(e.target.value)} />
+                <Input type="number" placeholder='Card Number' value={card_number} onChange={(e)=>setCardNumber(e.target.value)} />
             </FormControl>
             <FormControl>
                 <FormLabel>Owner</FormLabel>
@@ -75,8 +72,16 @@ const AddBankCard = ({addBankCard,trigger}) => {
                 <Input type="number" placeholder='CVV' value={cvv} onChange={(e)=>setCvv(e.target.value)} />
             </FormControl>
             <FormControl>
+                <FormLabel>Card Type</FormLabel>
+                <Select placeholder="Select Card Type" onChange={(e)=>setType(e.target.value)}>
+                    <option value='visa'>visa</option>
+                    <option value='mastercard'>mastercard</option>
+                    <option value='amex'>amex</option>
+                 </Select>
+            </FormControl>
+            <FormControl>
                 <FormLabel>Exp Date</FormLabel>
-                <Input type="month" placeholder='Exp Date' value={expDate} onChange={(e)=>setExpDate(e.target.value)} />
+                <Input type="month" placeholder='Exp Date' value={exp_date} onChange={(e)=>setExpDate(e.target.value)} />
             </FormControl>
             <Input mt='5' mb='5'  type="submit" value='Save Card Details' className='btn btn-block' bg="teal.400" color='white' onClick={trigger} />
             

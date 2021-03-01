@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import SpecificProductPage from "./pages/SpecficProductPage";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import {ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider } from "@chakra-ui/react";
+
 import CustomerDashboard from "./pages/CustomerDashboard";
 import CustomerAddress from "./pages/CustomerAdress";
 import ChangePersonalDet from "./pages/ChangePersonalDet";
@@ -25,42 +26,97 @@ import AllOrders from "./pages/AllOrders";
 import CartPage from "./pages/CartPage";
 import FeedbackPage from "./pages/FeedbackPage";
 import SellerDashboard from "./pages/SellerDashboard";
-
+import Axios from "axios";
 
 function App() {
-  return (
-    <ChakraProvider>
+  const [auth, setAuth] = useState({ isLoggedIn: false, userID: 0 });
+  const [signInClicked, setSignInClicked] = useState(false);
+  Axios.defaults.withCredentials = true;
+
+  console.log("App js");
+  useEffect(() => {
+    Axios.defaults.withCredentials = true;
+    Axios.get("http://localhost:5000/customer/login").then((response) => {
+      console.log(response.data)
+      if (response.data.LoggedIn === true) {
+        setAuth({ isLoggedIn: true, userID: response.data.user.user_id });
+      } else {
+        setAuth({ isLoggedIn: false, userID: 0 });
+      }
+    });
+  }, [signInClicked]);
+
+
+  if(auth.isLoggedIn){
+    if(auth.userID === 1){
+      return (
+        <ChakraProvider>
+          <Router>
+          <Navbar Auth={auth} />
+            <Switch >
+              {/* Common Routes */}
+              
+              <Route path="/newitem" exact component={NewItem} />
+              <Route path="/categorypage" exact component={CategoryPage} />
+              <Route path="/productpage/:id" exact component={SpecificProductPage} />
+
+
+              {/* Seller Routes */}
+              <Route path="/SellerDashboard/:id" exact component={SellerDashboard} />
+              <Route path="/sellerHome" exact component={SellerHome} />
+              <Route path="/awaitingshipment" exact component={AwaitingShipment} />
+              <Route path="/awaitingdelivery" exact component={AwaitingDelivery} />
+
+              <Route path="/"  component={Home} />
+            </Switch>
+          </Router>
+        </ChakraProvider>
+      );
+    }else{
+      return(
+        <ChakraProvider>
+          <Router>
+            <Navbar Auth={auth} />
+            <Switch >
+              {/* Customer Routes */}
+              <Route path="/newitem" exact component={NewItem} />
+              <Route path="/categorypage" exact component={CategoryPage} />
+              <Route path="/productpage/:id" exact component={SpecificProductPage} />
+              <Route path="/cart" exact component={CartPage} />
+              <Route path="/customerdashboard" exact component={CustomerDashboard}  />
+              <Route path="/shippingaddress" exact  component={CustomerAddress} />
+              <Route path="/changepersonaldet" exact component={ChangePersonalDet} />
+              <Route path="/orderview" exact component={OrderView} />
+              <Route path="/feedbackpage/:id" exact component={FeedbackPage} />
+              <Route path="/carddetails" exact component={CardDetails} />
+              <Route path="/trackorder/:id" exact component={TrackOrder} />
+              <Route path="/allorders" exact component={AllOrders} />
+              <Route path="/"  component={Home} />
+            </Switch>
+          </Router>
+        </ChakraProvider>
+      )
+    }
+    }
+
+  else{
+    return(
+      <ChakraProvider>
       <Router>
-      <Navbar/>
-        <Switch>
-          <Route path="/" exact component={Home} />
-          <Route path="/productpage/:id" component={SpecificProductPage} />
-          <Route path="/customerdashboard" component={CustomerDashboard} />
-          <Route path="/shippingaddress" component={CustomerAddress} />
-          <Route path="/changepersonaldet" component={ChangePersonalDet} />
-          <Route path="/categorypage" component={CategoryPage} />
-          <Route path="/awaitingdelivery" component={AwaitingDelivery} />
-          <Route path="/awaitingshipment" component={AwaitingShipment} />
-          <Route path="/newitem" component={NewItem} />
-          <Route path="/orderview" component={OrderView} />
-
-          <Route path="/carddetails" component={CardDetails} />
-          <Route path="/trackorder/:id" component={TrackOrder} />
-          <Route path="/allorders" component={AllOrders} />
-
-
-          <Route path="/cart/:customer_id" component={CartPage} />
-          <Route path="/feedbackpage/:id" component={FeedbackPage} />
-          <Route path="/SellerDashboard/:id" component={SellerDashboard} />
-
-          <Route path="/signUp" component={SignUp} />
-          <Route path="/signin" component={SignIn} />
-          <Route path="/sellerHome" component={SellerHome} />
-
-        </Switch>
+      <Navbar Auth={auth} />
+        <Switch >
+          {/* Common Routes */}
+          <Route path="/newitem" exact component={NewItem} />
+          <Route path="/categorypage" exact component={CategoryPage} />
+          <Route path="/productpage/:id" exact component={SpecificProductPage} />
+          <Route path="/signUp" exact component={SignUp}/>
+          <Route path="/signin" exact component={ () => {return <SignIn setSignInClicked={setSignInClicked}/>}} />
+          <Route path="/"  component={Home} />
+          </Switch>
       </Router>
     </ChakraProvider>
-  );
+    );
+  }
 }
 
 export default App;

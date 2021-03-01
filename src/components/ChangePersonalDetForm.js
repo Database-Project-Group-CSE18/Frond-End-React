@@ -7,43 +7,71 @@ import {
     useToast
   } from "@chakra-ui/react";
 
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
+import Axios from "axios";
 
-const ChangePersonalDetForm = ({data,updateDetails}) => {
+const ChangePersonalDetForm = () => {
+    const [user_id,setUserID] = useState('')
+    const [first_name,setFirstName] = useState('')
+    const [last_name,setLastName] = useState('')
+    const [phone_number,setTelephone] = useState('')
+    const [email,setEmail] = useState('')
+   
+    useEffect(() => {
+        Axios.get("http://localhost:5000/customer/user")
+        .then((Response)=>{
+            console.log(Response.data);
+            setFirstName(Response.data.user[0].first_name);
+            setLastName(Response.data.user[0].last_name);
+            setTelephone(Response.data.user[0].phone_number);
+            setEmail(Response.data.user[0].email);
+            setUserID(Response.data.user[0].user_id);
+            
+        })
+        .catch((err) => {
+            toast({
+                position: "bottom-right",    
+                description: "Error loading data",
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+              })
+          }); 
+    }, [])
 
-    const [firstname,setFirstName] = useState(data.firstName)
-    const [lastname,setLastName] = useState(data.lastName)
-    const [telephone,setTelephone] = useState(data.tp)
-
+    
     const toast = useToast()
 
     const onSubmit = (e)=>{
         e.preventDefault()
 
-        if(!firstname || !lastname || !telephone){
-            alert('Empty Fields')
+        if(phone_number.length!==10){
+            alert("Invalid Mobile Number")
             return
         }
 
-        if(firstname === data.firstName && lastname === data.lastName && telephone ===data.tp){
-            alert("Non changes made")
-            return
-        }
-
-        updateDetails({id:data.id,firstname,lastname,telephone})
-
-        setFirstName(data.firstName)
-        setLastName(data.lastName)
-        setTelephone(data.telephone)
-
-        toast({
-            position: "bottom-right",    
-            description: "Account details updated succesfully",
-            status: "success",
-            duration: 5000,
-            isClosable: true,
-          })
+        Axios.put('http://localhost:5000/customer/user',{user_id,first_name,last_name,phone_number,email})
+        .then((Response)=>{
+            toast({
+                position: "bottom-right",    
+                description: "Successfully Updated the Personal Data",
+                status: "success",
+                duration: 5000,
+                isClosable: true,
+              })
+        })
+        .catch((err) => {
+            toast({
+                position: "bottom-right",    
+                description: "Internal Server Error. Try again later",
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+              })
+          });  
     }
+
+    // console.log(firstname,lastname,telephone,Email)
 
 
     return (
@@ -54,21 +82,38 @@ const ChangePersonalDetForm = ({data,updateDetails}) => {
                     <FormLabel>First Name</FormLabel>
                                 
                         <Input   
+                            type='text'  
                             placeholder='First Name'       
-                            defaultValue={data.firstName}
+                            defaultValue={first_name}
                             name='firstname'
                             onChange={(e)=>setFirstName(e.target.value)}
+                            required
                         />
                 </FormControl>
 
                 <FormControl id="lastname" mb='8'>
                     <FormLabel>Last Name</FormLabel>
                                 
-                        <Input   
+                        <Input 
+                            type='text'  
                             placeholder='Last Name'  
-                            defaultValue={data.lastName} 
+                            defaultValue={last_name} 
                             name='lastname'
                             onChange={(e)=>setLastName(e.target.value)}
+                            required
+                        />
+                </FormControl>
+
+                <FormControl id="email" mb='8'>
+                    <FormLabel>Email</FormLabel>
+                                
+                        <Input   
+                            type='email'
+                            placeholder='Email'  
+                            defaultValue={email} 
+                            name='Email'
+                            onChange={(e)=>setEmail(e.target.value)}
+                            required
                         />
                 </FormControl>
 
@@ -76,10 +121,12 @@ const ChangePersonalDetForm = ({data,updateDetails}) => {
                     <FormLabel>Telephone Number</FormLabel>
                                 
                         <Input   
+                            type='number'
                             placeholder='Telephone Number'       
-                            defaultValue={data.tp}
+                            defaultValue={phone_number}
                             name='telephone'
                             onChange={(e)=>setTelephone(e.target.value)}
+                            required
                         />
                 </FormControl>
 

@@ -1,42 +1,57 @@
-import { useState, useEffect } from 'react';
-
+import { useState, useEffect } from "react";
+import Axios from "axios";
+import Cookies from "js-cookie"
 //custom hook
 
-const useForm = (callback, validate) => {
+const useForm = (callback, validate, setSignInClicked) => {
+  Axios.defaults.withCredentials = true;
   const [values, setValues] = useState({
-    email: '',
-    password: ''
+    email: "",
+    password: "",
   });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [backEndErrors, setBackEndErrors] = useState("");
 
-  const handleChange = e => {
+  const email = values.email;
+  const password = values.password;
+
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setValues({
       ...values,
-      [name]: value
+      [name]: value,
     });
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
     setErrors(validate(values));
-    setIsSubmitting(true);
+    if (Object.keys(errors).length === 0) {
+      Axios.post("http://localhost:5000/customer/login", {
+        email: email,
+        password: password,
+      }).then((response) => {
+        if (!response.data.auth) {
+          console.log(response);
+          setBackEndErrors(response.data.message);
+        } else {
+          localStorage.setItem("token", response.data.token);
+          setSignInClicked(true);
+          setIsSubmitting(true);
+        }
+      });
+    }
   };
 
 
-  useEffect(
-    () => {
-      //If there are no errors and submitted it wil call submitForm function(callback())
-      if (Object.keys(errors).length === 0 && isSubmitting) {
-        callback();
-      }
-    },
-    [errors]
-  );
+  useEffect(() => {
+    if (Object.keys(errors).length === 0 && isSubmitting) {
+      callback();
+     }
+  }, [errors]);
 
-  return { handleChange, handleSubmit, values, errors };
+  return { handleChange, handleSubmit, values, errors, backEndErrors };
 };
 
 export default useForm;

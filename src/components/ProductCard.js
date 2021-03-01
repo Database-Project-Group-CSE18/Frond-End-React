@@ -2,39 +2,44 @@ import { StarIcon } from "@chakra-ui/icons";
 import {
   Box,
   Text,
-  useColorMode,
-  Avatar,
-  AvatarBadge,
-  HStack,
-  VStack,
-  Heading,
   Image,
   Badge,
-  Img,
-  Tr,
-  Td,
+  Link,
+  ReactRouterLink
 } from "@chakra-ui/react";
+import { arrayBufferToBinaryString } from "blob-util";
 import React, { useState } from "react";
+
 
 function ProductCard(props) {
   return (
     <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden">
-      <Img src={props.imageUrl} alt={props.imageAlt} w='230px' h='250px' />
-
+      <Image
+        src={`data:image/png;base64,${arrayBufferToBinaryString(props.imageUrl ? props.imageUrl.data : '')}`}
+        alt="product image"
+        w="200px"
+        h="200px"
+      />
       <Box p="6">
-      <Badge
-            borderRadius="full"
-            px="2"
-            colorScheme='yellow'
-            variant="outline" 
-            fontSize='9px'
-          >
-            {props.category}
-          </Badge>
-        <Box fontWeight="semibold" as="h4" lineHeight="tight" fontSize='xl' isTruncated>
-          {props.title}
+        <Badge
+          borderRadius="full"
+          px="2"
+          colorScheme="yellow"
+          variant="outline"
+          fontSize="9px"
+        >
+          {props.category}
+        </Badge>
+        <Box
+          fontWeight="semibold"
+          as="h4"
+          lineHeight="tight"
+          fontSize="xl"
+          isTruncated
+        >
+          <Link href={`/productpage/${props.item_id}`}>{props.title}</Link>
         </Box>
-       
+
         <Box>
           <Text color="gray.600" fontSize="3xl">
             Rs. {props.price}
@@ -61,7 +66,6 @@ function ProductCard(props) {
           </Box>
         </Box>
 
-       
         <Box d="flex" mt="2" alignItems="center">
           {Array(5)
             .fill("")
