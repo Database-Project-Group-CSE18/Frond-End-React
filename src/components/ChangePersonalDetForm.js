@@ -11,21 +11,21 @@ import { useState,useEffect } from 'react';
 import Axios from "axios";
 
 const ChangePersonalDetForm = () => {
-    const [UserID,setUserID] = useState('')
-    const [firstname,setFirstName] = useState('')
-    const [lastname,setLastName] = useState('')
-    const [telephone,setTelephone] = useState('')
-    const [Email,setEmail] = useState('')
+    const [user_id,setUserID] = useState('')
+    const [first_name,setFirstName] = useState('')
+    const [last_name,setLastName] = useState('')
+    const [phone_number,setTelephone] = useState('')
+    const [email,setEmail] = useState('')
    
     useEffect(() => {
         Axios.get("http://localhost:5000/customer/user")
         .then((Response)=>{
             console.log(Response.data);
-            setFirstName(Response.data.user[0].First_name);
-            setLastName(Response.data.user[0].Last_name);
-            setTelephone(Response.data.user[0].Phone_No);
-            setEmail(Response.data.user[0].Email);
-            setUserID(Response.data.user[0].UserID);
+            setFirstName(Response.data.user[0].first_name);
+            setLastName(Response.data.user[0].last_name);
+            setTelephone(Response.data.user[0].phone_number);
+            setEmail(Response.data.user[0].email);
+            setUserID(Response.data.user[0].user_id);
             
         })
         .catch((err) => {
@@ -45,13 +45,12 @@ const ChangePersonalDetForm = () => {
     const onSubmit = (e)=>{
         e.preventDefault()
 
-        if(telephone.length!==10){
+        if(phone_number.length!==10){
             alert("Invalid Mobile Number")
             return
         }
 
-
-        Axios.put('http://localhost:5000/customer/user',{UserID,firstname,lastname,telephone,Email})
+        Axios.put('http://localhost:5000/customer/user',{user_id,first_name,last_name,phone_number,email})
         .then((Response)=>{
             toast({
                 position: "bottom-right",    
@@ -72,7 +71,7 @@ const ChangePersonalDetForm = () => {
           });  
     }
 
-    console.log(firstname,lastname,telephone,Email)
+    // console.log(firstname,lastname,telephone,Email)
 
 
     return (
@@ -85,7 +84,7 @@ const ChangePersonalDetForm = () => {
                         <Input   
                             type='text'  
                             placeholder='First Name'       
-                            defaultValue={firstname}
+                            defaultValue={first_name}
                             name='firstname'
                             onChange={(e)=>setFirstName(e.target.value)}
                             required
@@ -98,7 +97,7 @@ const ChangePersonalDetForm = () => {
                         <Input 
                             type='text'  
                             placeholder='Last Name'  
-                            defaultValue={lastname} 
+                            defaultValue={last_name} 
                             name='lastname'
                             onChange={(e)=>setLastName(e.target.value)}
                             required
@@ -111,7 +110,7 @@ const ChangePersonalDetForm = () => {
                         <Input   
                             type='email'
                             placeholder='Email'  
-                            defaultValue={Email} 
+                            defaultValue={email} 
                             name='Email'
                             onChange={(e)=>setEmail(e.target.value)}
                             required
@@ -124,7 +123,7 @@ const ChangePersonalDetForm = () => {
                         <Input   
                             type='number'
                             placeholder='Telephone Number'       
-                            defaultValue={telephone}
+                            defaultValue={phone_number}
                             name='telephone'
                             onChange={(e)=>setTelephone(e.target.value)}
                             required

@@ -4,10 +4,11 @@ import useForm from "./useForm";
 import "./Register.css";
 // Promise based HTTP client for the node.js
 import Axios from "axios";
+import { Badge, Box, Center } from "@chakra-ui/react";
 
 const FormSignup = ({ submitForm }) => {
 
-  const { handleChange, handleSubmit, values, errors } = useForm(
+  const { handleChange, handleSubmit, values, errors, backEndErrors } = useForm(
     submitForm,
     validate
   );
@@ -20,6 +21,17 @@ const FormSignup = ({ submitForm }) => {
           <br />
           Create your account by filling out the information below.
         </h1>
+        {backEndErrors.error === "" ? (
+          ""
+        ) : (
+          <Box w="80%" h="40px" bg="red.500" borderRadius="5px">
+            <Center>
+              <Badge variant="solid" m="2%" colorScheme="red">
+                {backEndErrors.error}
+              </Badge>
+            </Center>
+          </Box>
+        )}
         <div className="form-inputs">
           <label className="form-label">First Name</label>
           <input
@@ -94,6 +106,15 @@ const FormSignup = ({ submitForm }) => {
           />
           {errors.password2 && <p>{errors.password2}</p>}
         </div>
+        {backEndErrors.error == "" ? (
+          ""
+        ) : (
+          <Box  mt='20px'>
+            <Badge variant="outline" colorScheme="red">
+              Sign Up Failed
+            </Badge>
+          </Box>
+        )}
         <button className="form-input-btn" type="submit" >
           Sign up
         </button>

@@ -1,17 +1,17 @@
 import {
-  Box,
-  Grid,
-  GridItem,
-  Avatar,
-  Divider,
-  Heading,
-  SimpleGrid,
-  Text,
-  useColorMode,
-  useToast,
-} from "@chakra-ui/react";
+    Box,
+    Grid,
+    GridItem, 
+    Avatar,
+    Divider,
+    Heading,
+    SimpleGrid,
+    Text,
+    useColorMode,
+    useToast
+  } from "@chakra-ui/react";
 
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, withRouter } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import CustomerDashSideBar from "../components/CustomerDashSideBar";
@@ -52,15 +52,15 @@ const CustomerDashboard = () => {
       Delivered: 0,
     };
     for (var i = 0; i < data.length; i++) {
-      if (data[i].Order_status === "Shipped") {
+      if (data[i].Order_status === "shipped") {
         newdata.Shipped += 1;
-      } else if (data[i].Order_status === "Preparing") {
+      } else if (data[i].Order_status === "preparing") {
         newdata.Preparing += 1;
-      } else if (data[i].Order_status === "Awaiting_Cancel") {
+      } else if (data[i].Order_status === "awaiting_Cancel") {
         newdata.Awaiting_Cancel += 1;
-      } else if (data[i].Order_status === "Cancelled") {
+      } else if (data[i].Order_status === "cancelled") {
         newdata.Cancelled += 1;
-      } else if (data[i].Order_status === "Delivered") {
+      } else if (data[i].Order_status === "delivered") {
         newdata.Delivered += 1;
       }
     }
@@ -106,9 +106,9 @@ const CustomerDashboard = () => {
                   <Box>
                     <Heading size="lg">
                       {" "}
-                      Hello, {userdata.First_name +
+                      Hello, {userdata.first_name +
                         " " +
-                        userdata.Last_name}{" "}
+                        userdata.last_name}{" "}
                     </Heading>
                   </Box>
                 </SimpleGrid>

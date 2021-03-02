@@ -26,14 +26,18 @@ function ShopNow() {
 
       <p>What are you waiting for?</p>
       <div>
-        <a href="#">
-          <Box
+        <a href="/categorypage">
+        <Box
             as="button"
             p={4}
             color={colorMode === "light" ? "white" : "black"}
             fontWeight="bold"
             borderRadius="15px"
-            bgGradient={colorMode === "light" ? "linear(to-r, black, blue.600)" : "linear(to-r, white, blue.600)"}
+            bgGradient={
+              colorMode === "light"
+                ? "linear(to-r, black, blue.600)"
+                : "linear(to-r, white, blue.600)"
+            }
             _hover={{
               bgGradient: "linear(to-r, red, white)",
             }}
@@ -41,6 +45,9 @@ function ShopNow() {
             SHOP NOW
           </Box>
         </a>
+          
+        
+
         <GiShoppingCart
           className="cart-icon"
           size="100px"

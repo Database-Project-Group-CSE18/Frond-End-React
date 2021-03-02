@@ -11,7 +11,6 @@ const Register = () => {
 
   function submitForm() {
     setIsSubmitted(true);
-    console.log("Hello")
   }
   
   return (

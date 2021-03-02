@@ -74,7 +74,7 @@ const ShipAddress = ({address,deleteAddress,updateAddress}) => {
                         fontSize="lg"       
                         ml="2"
                     >
-                        { address.First_Name +" " +  address.Last_Name }
+                        { address.first_Name +" " +  address.last_Name }
                     </Box>
                 </Box> 
                 {/* <Box d="flex" alignItems="baseline" m='2'>
@@ -99,10 +99,10 @@ const ShipAddress = ({address,deleteAddress,updateAddress}) => {
                         fontSize="md"       
                         ml="2"
                     >
-                        <Box>{ address.Street }</Box>
-                        <Box>{ address.City }</Box>
-                        <Box>{ address.State }</Box>
-                        <Box>{ address.ZIP }</Box>
+                        <Box>{ address.street }</Box>
+                        <Box>{ address.city }</Box>
+                        <Box>{ address.state }</Box>
+                        <Box>{ address.zip }</Box>
                     </Box>
                 </Box> 
                
@@ -123,7 +123,7 @@ const ShipAddress = ({address,deleteAddress,updateAddress}) => {
                             </PopoverBody>
                             <PopoverFooter d="flex" justifyContent="flex-end">
                                 <ButtonGroup size="sm">
-                                    <Button colorScheme="red" onClick={()=>{deleteAddress(address.Address_ID)}}>Delete</Button>
+                                    <Button colorScheme="red" onClick={()=>{deleteAddress(address.address_id)}}>Delete</Button>
                                 </ButtonGroup>
                             </PopoverFooter>
                             </PopoverContent>
