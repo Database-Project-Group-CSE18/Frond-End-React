@@ -21,29 +21,51 @@ import {
   Text,
   useColorMode,
   useDisclosure,
-  Modal
+  Modal,
+  useToast,
+  MenuButton,
+  Menu,
+  MenuList,
+  MenuItem,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { Redirect, useParams } from "react-router-dom";
+import { Redirect, useHistory, useParams } from "react-router-dom";
 
-import { AddIcon, MinusIcon, StarIcon } from "@chakra-ui/icons";
+import {
+  AddIcon,
+  ChevronDownIcon,
+  Icon,
+  MinusIcon,
+  StarIcon,
+} from "@chakra-ui/icons";
 import CategorizedReviewPreview from "../components/CategorizedReviewPreview";
 import ReviewCountPreview from "../components/ReviewCountPreview";
 import SearchBar from "../components/SearchBar";
 import axios from "axios";
 import { arrayBufferToBinaryString } from "blob-util";
 
-import ErrorModel from "../components/ErrorModel";
-import { render } from "@testing-library/react";
-
 function SpecificProductPage() {
   let { id } = useParams();
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  let history = useHistory();
   const { colorMode, toggleColorMode } = useColorMode();
 
-  const [serverResponse, setServerResponse] = useState("");
+  const toast = useToast();
 
-  const [currentOrder, setCurrentOrder] = useState({ varient: 0, quantity: 0 });
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const [currentUser, setCurrentUser] = useState({
+    isLoggedIn: false,
+    user: 0,
+  });
+
+  const [serverResponse, setServerResponse] = useState({
+    success: false,
+    message: "",
+  });
+
+  const [currentOrder, setCurrentOrder] = useState({ varient: 0, quantity: 0});
+
+  const [isMainCity, setIsMainCity] = useState(0);
 
   const quantity_inc = () => {
     setCurrentOrder({ ...currentOrder, quantity: currentOrder.quantity + 1 });
@@ -52,6 +74,28 @@ function SpecificProductPage() {
     if (currentOrder.quantity > 0)
       setCurrentOrder({ ...currentOrder, quantity: currentOrder.quantity - 1 });
   };
+
+  const calculateDeliveryTime = () =>{
+    let time = 0
+    if(data.variants[currentOrder.varient].quantity === 0){time = time + 3}
+    if(isMainCity === 1){
+      time = time + 5
+    }else if (isMainCity === 2){
+      time = time + 7
+    }
+    return time
+  }
+
+  var toast_type1 = (success, message) =>
+    toast({
+      position: "bottom-right",
+      title: success ? "Success" : "Failed",
+      description: message,
+      status: success ? "success" : "error",
+      duration: 5000,
+      isClosable: true,
+    });
+
   const [data, setData] = useState({
     item_ID: "",
     item_name: "",
@@ -81,6 +125,12 @@ function SpecificProductPage() {
   });
 
   useEffect(() => {
+    axios.defaults.withCredentials = true;
+    axios.get(`http://localhost:5000/customer/login`).then((response) => {
+      console.log(response);
+      if (response.data.LoggedIn)
+        setCurrentUser({ isLoggedIn: true, user: response.data.user.user_id });
+    });
     axios
       .get(`http://localhost:5000/items/specificitem/${id}`)
       .then((response) => {
@@ -94,53 +144,66 @@ function SpecificProductPage() {
       });
   }, []);
 
-  const HandleClickAddtoCart = () => {
-    if(currentOrder.quantity <= 0){
-      setServerResponse("Select the Quntitiy");
-      onOpen();
-    }else{
-      axios
-      .post(`http://localhost:5000/items/specificitem/addtocart`, {
-        cart_id: "3",
-        varient_id: currentOrder.varient_id,
-        quantity: currentOrder.quantity,
-      })
-      .then((response) => {
-        console.log(response);
-        setServerResponse("Item added to cart");
-        onOpen();
-      })
-      .catch((error) => {
-        console.log(error.response.data.message);
-        setServerResponse(error.response.data.message.sqlMessage);
-        onOpen();
-      });
+  const validateData = () => {
+    if (currentOrder.quantity <= 0) {
+      toast_type1(false, "Please Select the Quantity")
+      return false;
+    } else if (isMainCity === 0) {
+      toast_type1(false, "Please select the city");
+      return false;
+    }else if (!currentUser.isLoggedIn) {
+      toast_type1(false, "Please Log in to your account");
+      return false;
+    }  
+    else {
+      return true;
     }
-    
+  }
+
+  const HandleClickAddtoCart = () => {
+    if(validateData()){
+      axios
+        .post(`http://localhost:5000/items/specificitem/addtocart`, {
+          cart_id: currentUser.user,
+          varient_id: currentOrder.varient_id,
+          quantity: currentOrder.quantity,
+          delivery_time:calculateDeliveryTime()
+        })
+        .then((response) => {
+          console.log(response);
+          toast_type1(true, "Item Added to the cart successfully");
+        })
+        .catch((error) => {
+          console.log(
+            "Add to cart server error : " + error.response.data.message
+          );
+          setServerResponse({ success: false, message: "Server error" });
+          toast_type1(false, "Server error");
+        });
+    }
   };
 
   const HandleClickBuyNow = () => {
-    if(currentOrder.quantity <= 0){
-      setServerResponse("Select the Quntitiy");
-      onOpen();
-    }else{
+    if(validateData()){
       axios
-      .post(`http://localhost:5000/items/specificitem/addtocart`, {
-        cart_id: "3",
-        varient_id: currentOrder.varient_id,
-        quantity: currentOrder.quantity,
-      })
-      .then((response) => {
-        console.log(response);
-        setServerResponse("Item added to cart");
-      })
-      .catch((error) => {
-        console.log(error.response.data.message);
-        setServerResponse(error.response.data.message.sqlMessage);
-      });
-
+        .post(`http://localhost:5000/items/specificitem/addtocart`, {
+          cart_id: currentUser.user,
+          varient_id: currentOrder.varient_id,
+          quantity: currentOrder.quantity,
+          delivery_time:calculateDeliveryTime()
+        })
+        .then((response) => {
+          console.log(response);
+          history.push("/cart");
+        })
+        .catch((error) => {
+          console.log(
+            "Add to cart server error : " + JSON.stringify(error.response.data.message)
+          );
+          setServerResponse({ success: false, message: "Server error" });
+          toast_type1(false, "Server error");
+        });
     }
-    
   };
 
   var imageStack = new Array(data.variants.length)
@@ -179,7 +242,6 @@ function SpecificProductPage() {
         <SearchBar text="I'm shopping for" />
       </Center>
 
-
       <SimpleGrid
         columns={2}
         spacing={5}
@@ -188,7 +250,6 @@ function SpecificProductPage() {
         borderRadius="lg"
         borderColor="gray.300"
       >
-
         <Box width="auto" h="auto" overflow="hidden" p="5px">
           <Image
             src={`data:image/png;base64,${arrayBufferToBinaryString(
@@ -279,6 +340,37 @@ function SpecificProductPage() {
               items are available
             </Text>
           </HStack>
+          <Heading as="h4" size="md" mt="20px">
+            Delivery to
+          </Heading>
+          <Menu>
+            <MenuButton mt='10px' mb="10px" as={Button} rightIcon={<ChevronDownIcon />}>
+              {isMainCity === 0 ? <Text>Select option</Text> : null}
+              {isMainCity === 1 ? <Text>Main city</Text> : null}
+              {isMainCity === 2 ? <Text>Not a main city</Text> : null}
+            </MenuButton>
+            <MenuList>
+              <MenuItem onClick={() => setIsMainCity(1)}>Main City</MenuItem>
+              <MenuItem onClick={() => setIsMainCity(2)}>
+                Not a main city
+              </MenuItem>
+            </MenuList>
+          </Menu>
+          {isMainCity === 1 ?
+          <Box bg={colorMode === 'light' ? 'gray.100' : 'gray.800'} p = '10px'> 
+          <Text fontSize="sm">Main cities are : </Text> 
+          <Text fontSize='xs'>Colombo, Gampaha, Moratuwa, Kelaniya</Text>
+          <Text fontSize='xl'>Estimated delivery time : {data.variants[currentOrder.varient].quantity === 0 ? 8 : 5} days</Text> 
+          </Box>
+          : null}
+
+          {isMainCity === 2 ?
+          <Box bg={colorMode === 'light' ? 'gray.100' : 'gray.800'} p = '10px'> 
+          <Text fontSize="sm">Cities excluding : </Text> 
+          <Text fontSize='xs'>Colombo, Gampaha, Moratuwa, Kelaniya</Text>
+          <Text fontSize='xl'>Estimated delivery time : {data.variants[currentOrder.varient].quantity === 0 ? 10 : 7} days</Text> 
+          </Box>
+          : null}
           <Heading as="h4" size="xl" mt="20px">
             Price
           </Heading>
@@ -286,7 +378,12 @@ function SpecificProductPage() {
             Rs. {data.variants[currentOrder.varient].price}
           </Text>
           <HStack mt="20px">
-            <Button onClick={HandleClickBuyNow} colorScheme="cyan" color="white" size="lg">
+            <Button
+              onClick={HandleClickBuyNow}
+              colorScheme="cyan"
+              color="white"
+              size="lg"
+            >
               Buy now
             </Button>
             <Button
@@ -382,14 +479,19 @@ function SpecificProductPage() {
         </Tabs>
       </Box>
 
-
       <Modal onClose={onClose} isOpen={isOpen} isCentered>
         <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
+        <ModalContent bg={serverResponse.success ? "green.300" : "red.300"}>
+          <ModalHeader>
+            {serverResponse.success ? (
+              <Text color="white">Success</Text>
+            ) : (
+              <Text color="white">Failed</Text>
+            )}
+          </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            {serverResponse}
+            <Text color="white">{serverResponse.message}</Text>
           </ModalBody>
           <ModalFooter>
             <Button onClick={onClose}>Close</Button>

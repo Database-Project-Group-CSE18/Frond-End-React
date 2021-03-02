@@ -16,13 +16,6 @@ function LogIn(props) {
   function submitForm() {
     setIsSubmitted(true);
   }
-  // Axios.defaults.withCredentials = true;
-  // useEffect(() => {
-  //   Axios.get("http://localhost:5000/customer/login").then((response) => {
-  //     console.log(response);
-  //   })
-  // }, [])
-
   return (
     <>
       {/**background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../img/Midwife.jpg') !important;
