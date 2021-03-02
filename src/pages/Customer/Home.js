@@ -8,21 +8,18 @@ import SearchBarHome from "../../components/SearchBarHome";
 import ImageSlider from "../../components/Slider/ImageSlider";
 import { SliderData } from "../../components/Slider/SliderData";
 // import checkLogin from "./checkLogin";
-import { useHistory } from 'react-router'
+import { useHistory } from "react-router";
 function Home() {
-console.log("Home page")
+  console.log("Home page");
   return (
     <>
-    <SearchBarHome />
-    <ShopNow />
-    
-      
+      <SearchBarHome />
+      <ShopNow />
       <ImageSlider slides={SliderData} />;
-      <Pricing heading=''/>
+      <Pricing heading="" />
       <BottomItems />
       <Footer />
-      <BottomFooter shopName="Electrica"/>
-      
+      <BottomFooter shopName="Electrica" />
     </>
   );
 }

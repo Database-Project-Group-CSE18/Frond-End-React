@@ -8,13 +8,18 @@ import {
     VStack,
   } from "@chakra-ui/react";
   import React, { useState } from "react";
-  
+  import axios from "axios";
   import SearchBar from "../components/SearchBar";
   import ShipmentCard from "../components/ShipmentCard";
   
   function AwaitingShipment() {
-    
-    const [orderlist, setActiveCategoryProducts] = useState([ 
+
+
+axios.get("http://localhost:5000/orders/").then((response) => {
+      console.log(response)
+     
+    });
+   const [orderlist, setActiveCategoryProducts] = useState([ 
       {
         Order_ID: "233-5145-789a",
         Varient_ID: "1111",

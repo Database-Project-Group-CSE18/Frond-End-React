@@ -106,7 +106,7 @@ function NewItem(){
 
 
 
-    <b><>Discription:</></b><Input backgroundColor="yellow.100" placeholder="Enter Discription here" size="md" />
+    <b><>Discription:</></b><textarea width="100%" height="4000px" backgroundColor="yellow.100" placeholder="Enter Discription here" size="md" />
 
   </Stack>
 
