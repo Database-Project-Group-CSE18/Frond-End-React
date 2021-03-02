@@ -10,6 +10,7 @@ import ChangePersonalDet from "./pages/ChangePersonalDet";
 import CategoryPage from "./pages/CategoryPage";
 import Navbar from "./components/Navbar";
 import AwaitingDelivery from "./pages/AwaitingDelivery";
+import SellerAllOrders from "./pages/SellerAllOrders";
 import AwaitingShipment from "./pages/AwaitingShipment";
 import NewItem from "./pages/NewItem";
 import OrderView from "./pages/OrderView";
@@ -66,6 +67,7 @@ function App() {
               <Route path="/sellerHome" exact component={SellerHome} />
               <Route path="/awaitingshipment" exact component={AwaitingShipment} />
               <Route path="/awaitingdelivery" exact component={AwaitingDelivery} />
+              <Route path="/sellerallorders" exact component={SellerAllOrders} />
               <Route path="/orderview/:id" exact component={OrderView} />
 
               <Route path="/"  component={Home} />
