@@ -21,6 +21,7 @@ import {
   Thead,
   Tr,
   useColorMode,
+  useToast,
   VStack,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
@@ -38,6 +39,16 @@ import axios from "axios";
 
 function CartPage() {
   const { colorMode, toggleColorMode } = useColorMode();
+  const toast = useToast();
+  var toast_type1 = (success, message) =>
+    toast({
+      position: "bottom-right",
+      title: success ? "Success" : "Failed",
+      description: message,
+      status: success ? "success" : "error",
+      duration: 5000,
+      isClosable: true,
+    });
 
   const [cartItems, setCartItems] = useState([
     {
@@ -73,7 +84,7 @@ function CartPage() {
 
   const [currentShippingAddress, setCurrentShippingAddress] = useState(0);
 
-  const [paymentMethod, setPaymentMethod] = useState(0);
+  const [paymentMethod, setPaymentMethod] = useState("cash");
 
   var TotalPrice = 0;
 
@@ -82,7 +93,7 @@ function CartPage() {
       return <Img src={visa} w={12} h={12} />;
     } else if (type === "mastercard") {
       return <Img src={mastercard} w={12} h={12} />;
-    }else if (type === "amex") {
+    } else if (type === "amex") {
       return <Img src={amex} w={12} h={12} />;
     }
   };
@@ -92,13 +103,11 @@ function CartPage() {
   });
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:5000/items/cart`)
-      .then((response) => {
-        let data = response.data.items;
-        console.log(data);
-        setCartItems(data);
-      });
+    axios.get(`http://localhost:5000/items/cart`).then((response) => {
+      let data = response.data.items;
+      console.log(data);
+      setCartItems(data);
+    });
     axios.get(`http://localhost:5000/customer/addresses`).then((response) => {
       let data = response.data.addresses;
       console.log(data);
@@ -122,19 +131,37 @@ function CartPage() {
     });
   };
 
-  const HandlePlaceOrder = () =>{
-    axios.post(`http://localhost:5000/orders/placeorder`,{
-      payment_method: paymentMethod,
-      order_address:shippingAddress[currentShippingAddress].address_id,
-      order_total:TotalPrice,
-      order_status:"paid",
-      ordered_date: Date(),
-      tracking_number : "123123213"
-    })
-      .then((response)=>{
+  const validateData = () => {
+    if (cartItems.length <= 0) {
+      toast_type1(false, "Cart is empty");
+      return false;
+    } else if (paymentMethod === "card" && currentCard === "none") {
+      toast_type1(false, "Please select a card");
+      return false;
+    } else {
+      return true;
+    }
+  };
 
-      })
-  }
+  const HandlePlaceOrder = () => {
+    if (validateData()) {
+      axios
+        .post(`http://localhost:5000/orders/placeorder`, {
+          payment_method: paymentMethod,
+          order_address: shippingAddress[currentShippingAddress].address_id,
+          order_total: TotalPrice,
+          order_status: "paid",
+          tracking_number: "123123213",
+        })
+        .then((response) => {
+          toast_type1(true, "Order placed successfully");
+        })
+        .catch((err) =>{
+          toast_type1(false, "Server error");
+
+        })
+    }
+  };
 
   return (
     <Box
@@ -192,7 +219,9 @@ function CartPage() {
               <Th>-</Th>
               <Th>-</Th>
               <Th isNumeric>-</Th>
-              <Th isNumeric fontSize="2xl">Rs. </Th>
+              <Th isNumeric fontSize="2xl">
+                Rs.{" "}
+              </Th>
               <Th isNumeric fontSize="2xl">
                 {TotalPrice}
               </Th>
@@ -206,56 +235,59 @@ function CartPage() {
               Shipping address
             </Heading>
 
-            {shippingAddress.length !==0 ?
-            <>
-            <Box
-              p="10px"
-              borderWidth="1px"
-              bg={colorMode === "light" ? "gray.50" : "gray.700"}
-            >
-              <Heading as="h5" size="sm">
-                {shippingAddress[currentShippingAddress].first_Name}{" "}
-                {shippingAddress[currentShippingAddress].last_Name}
-              </Heading>
+            {shippingAddress.length !== 0 ? (
+              <>
+                <Box
+                  p="10px"
+                  borderWidth="1px"
+                  bg={colorMode === "light" ? "gray.50" : "gray.700"}
+                >
+                  <Heading as="h5" size="sm">
+                    {shippingAddress[currentShippingAddress].first_Name}{" "}
+                    {shippingAddress[currentShippingAddress].last_Name}
+                  </Heading>
 
-              <Text>{shippingAddress[currentShippingAddress].street}</Text>
-              <Text>{shippingAddress[currentShippingAddress].city}</Text>
-              <Text>{shippingAddress[currentShippingAddress].state}</Text>
-              <Text>{shippingAddress[currentShippingAddress].zip}</Text>
-            </Box>
-            <Box ml="10px" pt="10px">
-              <Menu>
-                <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
-                  Address No. {currentShippingAddress + 1}
-                </MenuButton>
-                <MenuList>
-                  {Array(shippingAddress.length)
-                    .fill("")
-                    .map((_, i) => (
-                      <MenuItem onClick={() => setCurrentShippingAddress(i)}>
-                        {"Address No. " +
-                          (i + 1) +
-                          " - " +
-                          shippingAddress[i].first_Name +
-                          " " +
-                          shippingAddress[i].last_Name +
-                          ", " +
-                          shippingAddress[i].street +
-                          ", " +
-                          shippingAddress[i].city +
-                          ", " +
-                          shippingAddress[i].state +
-                          ", " +
-                          shippingAddress[i].zip}
-                      </MenuItem>
-                    ))}
-                </MenuList>
-              </Menu>
-            </Box>
-            </>
-            : <Text color='red.300'>Please add a shipping address</Text>
-            }
-            
+                  <Text>{shippingAddress[currentShippingAddress].street}</Text>
+                  <Text>{shippingAddress[currentShippingAddress].city}</Text>
+                  <Text>{shippingAddress[currentShippingAddress].state}</Text>
+                  <Text>{shippingAddress[currentShippingAddress].zip}</Text>
+                </Box>
+                <Box ml="10px" pt="10px">
+                  <Menu>
+                    <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+                      Address No. {currentShippingAddress + 1}
+                    </MenuButton>
+                    <MenuList>
+                      {Array(shippingAddress.length)
+                        .fill("")
+                        .map((_, i) => (
+                          <MenuItem
+                            onClick={() => setCurrentShippingAddress(i)}
+                          >
+                            {"Address No. " +
+                              (i + 1) +
+                              " - " +
+                              shippingAddress[i].first_Name +
+                              " " +
+                              shippingAddress[i].last_Name +
+                              ", " +
+                              shippingAddress[i].street +
+                              ", " +
+                              shippingAddress[i].city +
+                              ", " +
+                              shippingAddress[i].state +
+                              ", " +
+                              shippingAddress[i].zip}
+                          </MenuItem>
+                        ))}
+                    </MenuList>
+                  </Menu>
+                </Box>
+              </>
+            ) : (
+              <Text color="red.300">Please add a shipping address</Text>
+            )}
+
             <Heading as="h2" size="xl" mb="20px" mt="50px">
               Payment method
             </Heading>
@@ -267,12 +299,18 @@ function CartPage() {
                 bg={colorMode === "light" ? "gray.50" : "gray.700"}
               >
                 <HStack>
-                  {card.length !==0 ? cardIcon(card[currentCard].card_type):"No cards added"}
+                  {card.length !== 0
+                    ? cardIcon(card[currentCard].card_type)
+                    : "No cards added"}
                   <Box>
-                    <Text>{card.length !==0 ? card[currentCard].owner:null}</Text>
+                    <Text>
+                      {card.length !== 0 ? card[currentCard].owner : null}
+                    </Text>
                     <Text>
                       XXXX XXXX XXXX{" "}
-                      {card.length !==0 ? card[currentCard].card_number.substr(12, 15):null}
+                      {card.length !== 0
+                        ? card[currentCard].card_number.substr(12, 15)
+                        : null}
                     </Text>
                   </Box>
                 </HStack>
@@ -284,7 +322,9 @@ function CartPage() {
                 <Menu>
                   <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
                     {paymentMethod === 0 ? <Text>Select method</Text> : null}
-                    {paymentMethod === "cash" ? <Text>Cash on delivery</Text> : null}
+                    {paymentMethod === "cash" ? (
+                      <Text>Cash on delivery</Text>
+                    ) : null}
                     {paymentMethod === "card" ? <Text>Card</Text> : null}
                   </MenuButton>
                   <MenuList>
@@ -382,7 +422,12 @@ function CartPage() {
                   </Tr>
                 </Tbody>
               </Table>
-              <Button onClick={HandlePlaceOrder} mt="20px" colorScheme="cyan" w="100%">
+              <Button
+                onClick={HandlePlaceOrder}
+                mt="20px"
+                colorScheme="cyan"
+                w="100%"
+              >
                 Checkout
               </Button>
             </Box>
