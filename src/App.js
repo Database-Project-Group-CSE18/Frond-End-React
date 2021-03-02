@@ -66,6 +66,7 @@ function App() {
               <Route path="/sellerHome" exact component={SellerHome} />
               <Route path="/awaitingshipment" exact component={AwaitingShipment} />
               <Route path="/awaitingdelivery" exact component={AwaitingDelivery} />
+              <Route path="/orderview/:id" exact component={OrderView} />
 
               <Route path="/"  component={Home} />
             </Switch>
