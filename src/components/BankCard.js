@@ -69,7 +69,7 @@ const BankCard = ({bankcard,deleteBankCard}) => {
                         fontSize="lg"       
                         ml="2"
                     >
-                       <Heading size='lg'> x x x x  x x x x  x x x x {bankcard.card_number.toString().substr(12,15)} </Heading>
+                       <Heading size='lg'> x x x x  x x x x {bankcard.Card_Number.toString().substr(8,13)} </Heading>
                     </Box>
                 </Box> 
                 <Box d="flex" alignItems="baseline" m='2'>
@@ -82,7 +82,7 @@ const BankCard = ({bankcard,deleteBankCard}) => {
                         ml="2"
                        
                     >
-                        { bankcard.owner }
+                        { bankcard.Owner }
                     </Box>
                 </Box> 
                
@@ -95,14 +95,14 @@ const BankCard = ({bankcard,deleteBankCard}) => {
                         fontSize="md"       
                         ml="2"
                     >
-                        {bankcard.exp_date}
+                        {bankcard.Exp_Date}
                     </Box>
                 </Box> 
                 <Spacer />
                 <Box d="flex" alignItems="baseline" m='2'>
                 <Image
                     width='70px'
-                    src={`../${bankcard.card_type}.png`}
+                    src="../visa.png"
                     />
                 </Box> 
                 </HStack>
@@ -125,7 +125,7 @@ const BankCard = ({bankcard,deleteBankCard}) => {
                             </PopoverBody>
                             <PopoverFooter d="flex" justifyContent="flex-end">
                                 <ButtonGroup size="sm">
-                                    <Button colorScheme="red" onClick={()=>{deleteBankCard(bankcard.card_id)}}>Delete</Button>
+                                    <Button colorScheme="red" onClick={()=>{deleteBankCard(bankcard.Card_Number)}}>Delete</Button>
                                 </ButtonGroup>
                             </PopoverFooter>
                             </PopoverContent>
