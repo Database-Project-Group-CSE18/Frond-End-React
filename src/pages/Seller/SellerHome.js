@@ -5,7 +5,7 @@ import Footer from "../../components/Footer/Footer";
 import SearchBarHome from "../../components/SearchBarHome";
 import Middle from "../../components/Seller/Middle";
 import Card from "../../components/Seller/Card";
-import { Box, Flex, Skeleton, Stack } from "@chakra-ui/react";
+import { Box, Flex, Heading, Skeleton, Stack } from "@chakra-ui/react";
 import Axios from "axios";
 import { Redirect, useHistory } from "react-router-dom";
 function SellerHome() {
@@ -26,9 +26,10 @@ function SellerHome() {
       });
     });
     Axios.post("http://localhost:5000/seller/overview").then((response) => {
-      if(response.data.auth === false) {
-        Axios.get("http://localhost:5000/customer/logout").then((response) => {
-    })
+      if (response.data.auth === false) {
+        Axios.get(
+          "http://localhost:5000/customer/logout"
+        ).then((response) => {});
       } else {
         setOverview({
           userCount: response.data.result.userCount,
@@ -36,17 +37,15 @@ function SellerHome() {
           totalRevenue: response.data.result.totalRevenue,
           awaitingShipment: response.data.result.awaitingShipment,
           awaitingDelivery: response.data.result.awaitingDelivery,
-        })
+        });
       }
-      
-      
     });
   }, []);
   // console.log("SellerHome");
 
   return (
     <>
-      <Middle user={user} overview={overview}/>
+      <Middle user={user} overview={overview} />
       <Stack mb="25px" p="10px" pt="90px">
         {/* <Skeleton height="20px" />
                 <Skeleton height="10px" /> */}
@@ -76,15 +75,44 @@ function SellerHome() {
         <Card
           imageUrl="./img/svg-8.svg"
           imageAlt="User"
-          url="/sellerhome"
+          url="/categorypage"
           type="My Items"
           count="You have listed 20 items"
         />
         <Card
           imageUrl="./img/svg-6.svg"
           imageAlt="User"
-          url="/"
+          url="/newitem"
           type="List New Item"
+          count=""
+        />
+        <Heading ml='20px' mb='20px' mt='30px' fontSize = "6xl">Reports</Heading>
+        <Card
+          imageUrl="./img/svg-7.svg"
+          imageAlt="User"
+          url="/quarterreport"
+          type="Quarterly sales report"
+          count=""
+        />
+        <Card
+          imageUrl="./img/svg-8.svg"
+          imageAlt="User"
+          url="/newitem"
+          type="Product category with most orders"
+          count=""
+        />
+        <Card
+          imageUrl="./img/svg-7.svg"
+          imageAlt="user"
+          url="/newitem"
+          type="Products with most number of sales in a given period"
+          count=""
+        />
+        <Card
+          imageUrl="./img/svg-8.svg"
+          imageAlt="user"
+          url="/newitem"
+          type="Given a product, time period with most interest to it"
           count=""
         />
       </div>
