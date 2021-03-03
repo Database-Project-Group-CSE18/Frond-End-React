@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import {
   ChakraProvider,
   Box,
@@ -28,13 +29,14 @@ import {
   Tbody,
   Td,
   Tfoot,
-  toast,
+  useToast,
 } from "@chakra-ui/react";
 
 import { Money, MoneyOff, Search } from "@material-ui/icons";
 import Axios from "axios";
 function ReportProduct() {
   const { colorMode, toggleColorMode } = useColorMode();
+  const toast = useToast();
   const [formStartDate, setFormStartDate] = useState("");
   const [formEndDate, setFormEndDate] = useState("");
   const [orderTotal, setOrderTotal] = useState(0)
@@ -62,24 +64,26 @@ function ReportProduct() {
       }
       setOrderTotal(total);
       setProductReports(response.data.result)
-      // if(response.data.result.length===0){
-      //   toast({
-      //       position: "bottom-right",
-      //       description: "No any orders in this time period",
-      //       status: "error",
-      //       duration: 5000,
-      //       isClosable: true,
-      //     })
-      //  }
-      //  else{
-      //   toast({
-      //       position: "bottom-right",
-      //       description: "Customer Report Generated Successfully",
-      //       status: "success",
-      //       duration: 5000,
-      //       isClosable: true,
-      //     })
-      //   }
+      if(response.data.result.length===0){
+        toast({
+            title: "Error",
+            position: "bottom",
+            description: "No any product orders within the given time period",
+            status: "error",
+            duration: 5000,
+            isClosable: true,
+          })
+       }
+       else{
+        toast({
+            title: "Success",
+            position: "bottom",
+            description: "Product report has successfully generated",
+            status: "success",
+            duration: 5000,
+            isClosable: true,
+          })
+        }
     });
   };
   return (
