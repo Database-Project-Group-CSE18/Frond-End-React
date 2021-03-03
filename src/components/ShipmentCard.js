@@ -30,7 +30,6 @@ function ShipmentCard(props) {
         <HStack>  
         <Box width="50%" fontWeight="semibold"  height="80px"    > 
         
-        <Box><Img src={props.imageUrl ? arrayBufferToBinaryString(props.imageUrl.data):null} alt={props.imageAlt} w='80px' h='80px' /></Box>
         <Box  fontWeight="bold">
           <Text  mt="20px" ml="20px" color="red.600"   fontSize="lg">
             <a href={`/orderview/${props.order_id}`}>{props.order_id}</a>
