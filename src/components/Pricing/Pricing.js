@@ -58,14 +58,14 @@ function Pricing(props) {
         <PricingWrapper>
           <PricingHeading>{props.heading} </PricingHeading>
           <PricingContainer>
-            <PricingCard to="/">
+            <PricingCard to="/categorypage">
               <PricingCardInfo>
                 <PricingCardIcon>
                   <GiShoppingBag
                     color={colorMode === "light" ? "#CCCCCC" : "white"}
                   />
                 </PricingCardIcon>
-
+  
                 <PricingCardPlan>All Categories</PricingCardPlan>
                 <PricingCardCost>6+</PricingCardCost>
                 <PricingCardLength>categories</PricingCardLength>
@@ -82,7 +82,7 @@ function Pricing(props) {
               </PricingCardInfo>
             </PricingCard>
 
-            <PricingCard to="/">
+            <PricingCard to="/categorypage">
               <PricingCardInfo>
                 <PricingCardIcon>
                   <GiNewBorn
@@ -103,14 +103,14 @@ function Pricing(props) {
               </PricingCardInfo>
             </PricingCard>
 
-            <PricingCard to="/">
+            <PricingCard to="/categorypage">
               <PricingCardInfo>
                 <PricingCardIcon>
                   <GiCutDiamond
                     color={colorMode === "light" ? "#CCCCCC" : "white"}
                   />
                 </PricingCardIcon>
-                <PricingCardPlan>Most Ordered Items</PricingCardPlan>
+                <PricingCardPlan>Orders</PricingCardPlan>
                 <PricingCardCost>500+</PricingCardCost>
                 <PricingCardLength>orders per day</PricingCardLength>
                 <PricingCardFeatures>
