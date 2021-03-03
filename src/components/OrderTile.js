@@ -34,17 +34,14 @@ const OrderTile = ({order,cancelOrder,confirmOrder}) => {
         if(status==='shipped'){
             return (<Badge colorScheme="green">Shipped</Badge>)
         }
-        else if (status==='preparing'){
-            return (<Badge colorScheme="yellow">Preparing</Badge>)
+        else if (status==='paid'){
+            return (<Badge colorScheme="yellow">Paid</Badge>)
         }
         else if (status==='cancelled'){
             return (<Badge colorScheme="red">Cancelled</Badge>)
         }
         else if (status==='delivered'){
             return (<Badge colorScheme="green">Delivered</Badge>)
-        }
-        else if (status==='awaiting_cancel'){
-            return  (<Badge colorScheme="yellow">Await Cancel</Badge>)
         }
         else{
             return <div></div>
@@ -70,12 +67,13 @@ const OrderTile = ({order,cancelOrder,confirmOrder}) => {
             return (<VStack>
                 <Link href={"https://parcelsapp.com/en/tracking/"+order.Track} isExternal><Button colorScheme='teal' size='xs'>Track Order</Button></Link>
                 <Button colorScheme='teal' size='xs' onClick={()=>{confirmOrder(order.order_id)}}>Confirm Received</Button>
+                
             </VStack>)
         }
-        else if (status=='preparing'){
+        else if (status=='paid'){
             return (
             <Box>
-                
+                   
                 <Popover>
                         <PopoverTrigger>
                         <Button colorScheme='teal' size='xs'  >Cancel Order</Button>
@@ -105,9 +103,11 @@ const OrderTile = ({order,cancelOrder,confirmOrder}) => {
 
     const mapOrderItems = (order)=>{
         var finalList = []
-        // var itemIDList= order.item_id
-        // itemIDList = itemIDList.substring(1,itemIDList.length-1)
-        // itemIDList = itemIDList.split(",")
+        // console.log("order",order)
+        var itemIDList= order.Item_ID
+        // console.log("item ids",itemIDList)
+        itemIDList = itemIDList.substring(1,itemIDList.length-1)
+        itemIDList = itemIDList.split(",")
 
         var nameList = order.Name
         nameList = nameList.substring(1,nameList.length-1)
@@ -117,15 +117,17 @@ const OrderTile = ({order,cancelOrder,confirmOrder}) => {
         imageList = imageList.substring(1,imageList.length-1)
         imageList = imageList.split(",")
 
+
         for(var i=0;i<nameList.length;i++){
             var a = {
                 "ID":i,
+                "Item_ID":itemIDList[i].replace(/\s/g, ''),    // to get the item id for feedbacks
                 "Name":nameList[i].replace(/\s/g, ''),
                 "Image":imageList[i].replace(/\s/g, '')
             }
             finalList.push(a);
         }
-        console.log(finalList)
+        // console.log("final",finalList)
         return finalList;
     }
 
@@ -140,7 +142,7 @@ const OrderTile = ({order,cancelOrder,confirmOrder}) => {
                {    
                     
                    orders.map((ord)=>(
-                       <OrderItem key={ord.ID}   Name={ord.Name} > </OrderItem>
+                       <OrderItem key={ord.ID} Item_ID={ord.Item_ID}  Name={ord.Name} Image={ord.Image} Order_ID={order.order_id}> </OrderItem>
                        )
                 )}
             </>
