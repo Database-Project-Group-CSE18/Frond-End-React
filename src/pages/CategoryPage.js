@@ -69,7 +69,6 @@ function CategoryPage() {
       let data = response.data.items;
       setActiveCategoryProducts(data);
     });
-  
   };
 
 
