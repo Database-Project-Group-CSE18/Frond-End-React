@@ -30,11 +30,14 @@ function NewItem(){
   }
   const Varientmaker=()=>{
 
+
   }
     
-
+  
  
     return(
+
+      
         
 <Box
         pt="150px"
@@ -42,7 +45,7 @@ function NewItem(){
         pr={{ base: "10px", sm: "100px" }}
         
       >
-<form method="POST" >
+<form>
  <Heading as="h3" size="xl" color="gray.600" mb="10px" bg="gray.300" p="10px">
               List a New Item
 </Heading>
@@ -61,11 +64,11 @@ function NewItem(){
   <option w="40%"value="Cameras & Photos">Cameras & Photos</option>
   <option w="40%"value="Other Consumer Electronics">Other Consumer Electronics</option>
             </Select>
-<b><>Varient :</></b>
+<b><>Variant :</></b>
 
 <Box bg="yellow.100" w="33%" borderRadius="2xl" borderColor="yellow.300" borderWidth="5px">
     <Box w="96%" ml="2%" borderColor="yellow.300" mr="2%"> 
-    <b><>Varient Name :</></b>
+    <b><>Variant Name :</></b>
   <Input name="varientname" backgroundColor="yellow.100" placeholder="Enter Varient Here" placeholderColor="red" size="md" />
            
     </Box>
@@ -106,7 +109,7 @@ function NewItem(){
 
 
 
-    <b><>Discription:</></b><Input backgroundColor="yellow.100" placeholder="Enter Discription here" size="md" />
+    <b><>Discription:</></b><textarea width="100%" height="400px" backgroundColor="yellow.100" placeholder="Enter Discription here" size="md" />
 
   </Stack>
 

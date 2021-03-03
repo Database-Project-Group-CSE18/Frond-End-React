@@ -10,6 +10,7 @@ import ChangePersonalDet from "./pages/ChangePersonalDet";
 import CategoryPage from "./pages/CategoryPage";
 import Navbar from "./components/Navbar";
 import AwaitingDelivery from "./pages/AwaitingDelivery";
+import SellerAllOrders from "./pages/SellerAllOrders";
 import AwaitingShipment from "./pages/AwaitingShipment";
 import NewItem from "./pages/NewItem";
 import OrderView from "./pages/OrderView";
@@ -61,7 +62,7 @@ function App() {
 
 
               {/* Seller Routes */}
-              <Route path="/SellerDashboard/:id" exact component={SellerDashboard} />
+              <Route path="/SellerDashboard/:user_id" exact component={SellerDashboard} />
               <Route path="/sellerHome" exact component={SellerHome} />
               <Route path="/awaitingshipment" exact component={AwaitingShipment} />
               <Route path="/awaitingdelivery" exact component={AwaitingDelivery} />
@@ -89,7 +90,7 @@ function App() {
               <Route path="/shippingaddress" exact  component={CustomerAddress} />
               <Route path="/changepersonaldet" exact component={ChangePersonalDet} />
               <Route path="/orderview" exact component={OrderView} />
-              <Route path="/feedbackpage/:id" exact component={FeedbackPage} />
+              <Route path="/feedbackpage/:item_id/:order_id" exact component={FeedbackPage} />
               <Route path="/carddetails" exact component={CardDetails} />
               <Route path="/trackorder/:id" exact component={TrackOrder} />
               <Route path="/allorders" exact component={AllOrders} />

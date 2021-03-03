@@ -11,20 +11,19 @@ import {
   Image,
   Badge,
   Img,
+  Button,
+  useToast
 } from "@chakra-ui/react";
+import axios from "axios";
 import React, { useState } from "react";
 
-/*                  Order_ID={orderlist[i].Order_ID}
-                    Varient_ID= {orderlist[i].Varient_ID}
-                    imageUrl={orderlist[i].image}
-                    item_name= {orderlist[i].item_name}
-                    payment= {orderlist[i].payment}
-                    Date_paid={orderlist[i].Date_paid}
-                    Quantity={orderlist[i].Quantity}
-                    F_name= {orderlist[i].F_name}
-                    L_name= {orderlist[i].L_name}*/
+
 
 function ShipmentCard(props) {
+ 
+  
+ 
+ 
   return (
  
     <Box w="100%"   _hover={{ bg: "yellow.100" ,transform: "scale(1.01)" }} borderRadius="lg" overflow="hidden" mb="5px" borderWidth="1px">
@@ -35,8 +34,8 @@ function ShipmentCard(props) {
         </Box>
 
         <Box width="100%" fontWeight="semibold"  height="80px"   > 
-        <Box fontWeight="bold"><Text color="red.600"   fontSize="lg">
-            {props.Order_ID}
+        <Box  fontWeight="bold"><Text  color="red.600"   fontSize="lg">
+            <a href={`/orderview/${props.Order_ID}`}>{props.Order_ID}</a>
           </Text></Box>
         <Box><Text color="black.600" fontSize="2lg">
             {props.F_name} {props.L_name}
@@ -51,7 +50,7 @@ function ShipmentCard(props) {
         Quantity: <b>{props.Quantity}</b>
           </Text></Box>
         <Box><Text color="gray.600" fontSize="lg" >
-        Varient: <b>{props.Varient_ID} </b>
+        Variant: <b>{props.Variant_Name} </b>
           </Text></Box>
         </Box>
        
@@ -59,6 +58,8 @@ function ShipmentCard(props) {
         <Text color="blue.700" fontSize="2lg">
             Rs. {props.payment}
           </Text>
+          <Button  mt="10px" padding="5px" horizontalAlign="true" textColor="Black" bg="blue.100"  _hover={{ bg: "yellow.300" }} onClick={()=>props.MarkasShipped(props.Order_ID)} >Dispatch</Button>
+
         </Box>
 
         <Box width="80%" fontWeight="semibold"   height="80px"   > 

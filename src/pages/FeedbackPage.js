@@ -12,9 +12,10 @@ import {
 } from "@chakra-ui/react";
 import { Button, ButtonGroup } from "@chakra-ui/react";
 import { Stack, HStack, VStack } from "@chakra-ui/react";
-import React, { useState } from "react";
-import { useParams } from "react-router-dom";
-import Axios from "axios";
+import React, { useEffect, useState } from "react";import { useParams } from "react-router-dom";
+import axios from "axios";
+import { arrayBufferToBinaryString } from "blob-util";
+
 
 import {
   AddIcon,
@@ -28,87 +29,59 @@ import ReviewCountPreview from "../components/ReviewCountPreview";
 import SearchBar from "../components/SearchBar";
 
 function FeedbackPage(props) {
-  let { id } = useParams();
+  let { item_id } = useParams();
+  let { order_id } = useParams();
 
   const toast = useToast()
 
-  var Order_ID = 1;
-  var Item_ID = 1;
+  // var Order_ID = 1;
+  // var Item_ID = 1;
 
   const [data, setData] = useState({
-    item_ID: "233d",
-    item_name: "Electric tooth brush",
-    category: "electronic",
-    price: 200.0,
-    orders: 345,
-    description:
-      "dqdasd a sadasd asdasdafsfrgs gsgsg sd gsgsgsdg sdgsdgsdg sdg",
-    status: "Available",
+    item_ID: "",
+    item_name: "",
+    category_name: "",
+    price: 0,
+    num_of_orders: 0,
+    description: "",
+    status: "",
+    image: "",
     feedbacks: [
       {
-        customer_name: "jof hagi",
-        customer_dp: "jof hagi",
-        comment: "asdasds asdasd sad",
-        rating: 4,
-        reply: ["sfsdfsd", "Thank you"],
-      },
-      {
-        customer_name: "den kali",
-        customer_dp: "jof hagi",
-        comment: "axasxas asdasd sad",
-        rating: 5,
-        reply: ["sfsdsddfsd", "asdassadasd sadssadasd sadasad"],
-      },
-      {
-        customer_name: "gendi gahnadi",
-        customer_dp: "jof hagi",
-        comment: "hgfhf dghhdgf dfgshssdd",
-        rating: 2,
-        reply: ["sfsdsddfsd", "asdassadasd sadssadasd sadasad"],
-      },
-      {
-        customer_name: "den kali",
-        customer_dp: "jof hagi",
-        comment: "axasxas asdasd sad",
-        rating: 2,
-        reply: ["sfsdsddfsd", "asdassadasd sadssadasd sadasad"],
+        feedback_ID: "",
+        user_ID: "",
       },
     ],
     variants: [
       {
-        varient_name: "white 2 brushes",
-        image:
-          "../images/White.jpg",
-        color: "green",
-        details: "",
-        Quantity: 450,
-      },
-      {
-        varient_name: "pink 2 brushes with bateries",
-        image:
-          "../images/Pink.jpg",
-        color: "pink",
-        details: "",
-        Quantity: 230,
-      },
-      {
-        varient_name: "two heads only",
-        image:
-          "../images/blue.jpg",
-        color: "blue",
-        details: "",
-        Quantity: 500,
+        variant_ID: "",
+        variant_name: "",
+        image: "",
+        color: "",
+        size: "",
+        specificDetail: "",
+        quantity: "",
       },
     ],
   });
+
+  //get item details from DB
+  useEffect(() => {
+    axios.get(`http://localhost:5000/items/specificitem/${item_id}`)
+      .then((response) => {
+        let data = response.data.items;
+        console.log(data);
+        setData(data);
+      });
+  }, []);
 
   const [Rating, setRating] = useState('')
   const [Comment, setComment] = useState('')
 
   //add feedback
   const addFeedback = (Order_ID, Item_ID, Rating, Comment) => {
-    console.log(Rating);
-    Axios.post("http://localhost:5000/orders/feedback", {Order_ID: Order_ID, Item_ID: Item_ID, Rating: Rating, Comment: Comment })
+    console.log(Item_ID, Order_ID);
+    axios.post("http://localhost:5000/orders/feedback", {Order_ID: Order_ID, Item_ID: Item_ID, Rating: Rating, Comment: Comment })
       .then((Response) => {
         toast({
           position: "bottom-right",
@@ -138,7 +111,7 @@ function FeedbackPage(props) {
         return
     }
     
-    addFeedback(Order_ID, Item_ID, Rating, Comment)
+    addFeedback(order_id, item_id, Rating, Comment)
 
     
 }
@@ -164,7 +137,9 @@ function FeedbackPage(props) {
       >
         <Box width="auto" h="auto" overflow="hidden" p="5px">
           <Image
-            src={data.variants[0].image}
+            src={`data:image/png;base64,${arrayBufferToBinaryString(
+              data.image ? data.image.data : null
+            )}`}
             w="auto"
             h="auto"
             alt="image"
