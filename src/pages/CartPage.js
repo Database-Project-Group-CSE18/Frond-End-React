@@ -33,6 +33,7 @@ import { RiVisaLine } from "react-icons/ri";
 import visa from "payment-icons/min/flat/visa.svg";
 import mastercard from "payment-icons/min/flat/mastercard-old.svg";
 import amex from "payment-icons/min/flat/amex.svg";
+import { arrayBufferToBinaryString } from "blob-util";
 
 import { useParams } from "react-router-dom";
 import axios from "axios";
@@ -191,7 +192,7 @@ function CartPage() {
               .map((_, i) => (
                 <Tr>
                   <Td>
-                    <Img src={cartItems[i].image} w="50px" h="50px" />
+                    <Img src={arrayBufferToBinaryString(cartItems[i].image.data)} w="50px" h="50px" />
                   </Td>
                   <Td>{cartItems[i].item_name}</Td>
                   <Td>{cartItems[i].variant}</Td>
