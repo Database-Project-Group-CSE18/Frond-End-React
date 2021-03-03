@@ -30,7 +30,8 @@ import CartPage from "./pages/CartPage";
 import FeedbackPage from "./pages/FeedbackPage";
 import SellerDashboard from "./pages/SellerDashboard";
 import QuarterReport from "./pages/QuarterReport";
-import ProductPopularityReport from "./pages/ProductPopularityReport";
+import ReportProducts from "./pages/ReportProduct";
+import ReportCategories from "./pages/ReportCategory";
 import Axios from "axios";
 
 import ChartForSpecificProduct from "./pages/ChartForSpecificProduct";
@@ -78,7 +79,8 @@ function App() {
 
               <Route path="/allorders" exact component={AllOrders} />
               <Route path="/orderview" exact component={OrderView} />
-              <Route path="/reportproductspopularity" exact component={ProductPopularityReport} />
+              <Route path="/reportproducts" exact component={ReportProducts} />
+              <Route path="/reportcategories" exact component={ReportCategories} />
 
               <Route path="/quarterreport" exact component={QuarterReport} /> 
 
