@@ -76,6 +76,7 @@ function Card(props) {
           rowSpan={{ base: 1, md: 3 }}
           pt="50px"
         >
+          <a href={props.url}>
           <Button
             rightIcon={<ArrowForwardIcon />}
             colorScheme="teal"
@@ -85,7 +86,7 @@ function Card(props) {
           >
             Check
           </Button>
-          
+          </a>
         </GridItem>
       </Grid>
     </Box>

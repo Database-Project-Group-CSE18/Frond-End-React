@@ -29,25 +29,6 @@ const BankCard = ({bankcard,deleteBankCard}) => {
 
     const { colorMode, toggleColorMode } = useColorMode();
 
-    
-
-    // const [data, setData] = useState({
-    //     cardNumber:bankcard.card_number,
-    //     owner:bankcard.owner,
-    //     cvv:bankcard.cvv,
-    //     expDate:bankcard.expDate
-    // })
-    
-
-    // const handleChange =  (event) => {
-    //     var value = event.target.value;
-    //     var name = event.target.name;
-
-    //     setData({ ...data, [event.target.name]: value })
-    //     // console.log(data)
-    // };
-
-
     return(
         <GridItem>
         <Box  
@@ -69,7 +50,7 @@ const BankCard = ({bankcard,deleteBankCard}) => {
                         fontSize="lg"       
                         ml="2"
                     >
-                       <Heading size='lg'> x x x x  x x x x  x x x x {bankcard.card_number.toString().substr(12,15)} </Heading>
+                       <Heading size='lg'> x x x x x x x x {bankcard.card_number.toString().substr(12,15)} </Heading>
                     </Box>
                 </Box> 
                 <Box d="flex" alignItems="baseline" m='2'>
