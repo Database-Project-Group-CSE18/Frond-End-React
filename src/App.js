@@ -10,6 +10,7 @@ import ChangePersonalDet from "./pages/ChangePersonalDet";
 import CategoryPage from "./pages/CategoryPage";
 import Navbar from "./components/Navbar";
 import AwaitingDelivery from "./pages/AwaitingDelivery";
+import SellerAllOrders from "./pages/SellerAllOrders";
 import AwaitingShipment from "./pages/AwaitingShipment";
 import NewItem from "./pages/NewItem";
 import OrderView from "./pages/OrderView";
@@ -26,6 +27,7 @@ import AllOrders from "./pages/AllOrders";
 import CartPage from "./pages/CartPage";
 import FeedbackPage from "./pages/FeedbackPage";
 import SellerDashboard from "./pages/SellerDashboard";
+import ProductPopularityReport from "./pages/ProductPopularityReport";
 import Axios from "axios";
 
 function App() {
@@ -33,11 +35,9 @@ function App() {
   const [signInClicked, setSignInClicked] = useState(false);
   Axios.defaults.withCredentials = true;
 
-  console.log("App js");
   useEffect(() => {
     Axios.defaults.withCredentials = true;
     Axios.get("http://localhost:5000/customer/login").then((response) => {
-      console.log(response.data)
       if (response.data.LoggedIn === true) {
         setAuth({ isLoggedIn: true, userID: response.data.user.user_id });
       } else {
@@ -62,10 +62,13 @@ function App() {
 
 
               {/* Seller Routes */}
-              <Route path="/SellerDashboard/:id" exact component={SellerDashboard} />
+              <Route path="/SellerDashboard/:user_id" exact component={SellerDashboard} />
               <Route path="/sellerHome" exact component={SellerHome} />
               <Route path="/awaitingshipment" exact component={AwaitingShipment} />
               <Route path="/awaitingdelivery" exact component={AwaitingDelivery} />
+              <Route path="/allorders" exact component={AllOrders} />
+              <Route path="/orderview" exact component={OrderView} />
+              <Route path="/reportproductspopularity" exact component={ProductPopularityReport} />
 
               <Route path="/"  component={Home} />
             </Switch>
@@ -87,7 +90,7 @@ function App() {
               <Route path="/shippingaddress" exact  component={CustomerAddress} />
               <Route path="/changepersonaldet" exact component={ChangePersonalDet} />
               <Route path="/orderview" exact component={OrderView} />
-              <Route path="/feedbackpage/:id" exact component={FeedbackPage} />
+              <Route path="/feedbackpage/:item_id/:order_id" exact component={FeedbackPage} />
               <Route path="/carddetails" exact component={CardDetails} />
               <Route path="/trackorder/:id" exact component={TrackOrder} />
               <Route path="/allorders" exact component={AllOrders} />

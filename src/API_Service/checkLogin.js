@@ -5,7 +5,6 @@ function checkAuthorization (callback) {
     Axios.get("http://localhost:5000/customer/login")
     .then((response) => {
       if(response.data.LoggedIn === true) {
-        console.log(response.data);
         callback(response.data.LoggedIn);
       }else{
         callback(false)
@@ -28,9 +27,7 @@ function checkAuthentication (callback) {
 function isAuthenticated(){
   Axios.get("http://localhost:5000/customer/login")
     .then((response) => {
-      console.log('is authenticated')
       if(response.data.LoggedIn == true) {
-        console.log(response.data)
         return true;
       }else{
         return false;

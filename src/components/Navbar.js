@@ -34,8 +34,6 @@ function Navbar(props) {
   const handleToggle = () => setShow(!show);
   
   const { colorMode, toggleColorMode } = useColorMode();
-  console.log("Navigation bar")
-  console.log(props)
   
   function handleLogOut() {
     Axios.get("http://localhost:5000/customer/logout").then((response) => {
@@ -56,7 +54,8 @@ function Navbar(props) {
       top="0"
       width="100%"
       zIndex="10000"
-    >
+    > 
+      
       <Flex align="center" mr={5}>
         <Img ml="1.5rem" src="../logo.png" alt="logo" h="80px" w="80px" />
       </Flex>
