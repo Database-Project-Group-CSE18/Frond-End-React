@@ -23,12 +23,13 @@ import SellerHome from "./pages/Seller/SellerHome";
 import CardDetails from "./pages/CardDetails";
 import TrackOrder from "./pages/TrackOrder";
 import AllOrders from "./pages/AllOrders";
-
 import CartPage from "./pages/CartPage";
 import FeedbackPage from "./pages/FeedbackPage";
 import SellerDashboard from "./pages/SellerDashboard";
 import ProductPopularityReport from "./pages/ProductPopularityReport";
 import Axios from "axios";
+
+import ChartForSpecificProduct from "./pages/ChartForSpecificProduct";
 
 function App() {
   const [auth, setAuth] = useState({ isLoggedIn: false, userID: 0 });
@@ -66,6 +67,11 @@ function App() {
               <Route path="/sellerHome" exact component={SellerHome} />
               <Route path="/awaitingshipment" exact component={AwaitingShipment} />
               <Route path="/awaitingdelivery" exact component={AwaitingDelivery} />
+              <Route path="/sellerallorders" exact component={SellerAllOrders} />
+              <Route path="/orderview/:id" exact component={OrderView} />
+              {/* chart*/}
+              <Route path="/chartforspecificproduct" exact component={ChartForSpecificProduct} />
+
               <Route path="/allorders" exact component={AllOrders} />
               <Route path="/orderview" exact component={OrderView} />
               <Route path="/reportproductspopularity" exact component={ProductPopularityReport} />
