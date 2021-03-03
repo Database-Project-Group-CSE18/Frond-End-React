@@ -46,6 +46,7 @@ const CustomerAddress = () => {
         .then((Response)=>{
             // console.log(Response.data.addresses);
             setAddress(Response.data.addresses);
+            
         })
         .catch((err) => {
             toast({
@@ -58,6 +59,7 @@ const CustomerAddress = () => {
           }); 
     }, [])
 
+    console.log("rendered addresses",address)
     
 
     //delete an addresss
@@ -95,10 +97,10 @@ const CustomerAddress = () => {
         // console.log(Address);
         Axios.post("http://localhost:5000/customer/addresses",{Address:Address})
         .then((Response)=>{
-            console.log("add address response",Response)
-            var Address_ID = Response.data.insertId;
-            // console.log(Response.json());
-            var newAddress = {Address_ID,...Address}
+            // console.log("add address response",Response)
+            var address_id = Response.data.insertId;
+            // console.log("address_id",address_id);
+            var newAddress = {address_id,...Address}
             // console.log(newAddress);
             setAddress([...address,newAddress]);
            

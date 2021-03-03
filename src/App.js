@@ -23,9 +23,13 @@ import SellerHome from "./pages/Seller/SellerHome";
 import CardDetails from "./pages/CardDetails";
 import TrackOrder from "./pages/TrackOrder";
 import AllOrders from "./pages/AllOrders";
+
+import CustomerStats from './pages/CustomerStats';
+
 import CartPage from "./pages/CartPage";
 import FeedbackPage from "./pages/FeedbackPage";
 import SellerDashboard from "./pages/SellerDashboard";
+import QuarterReport from "./pages/QuarterReport";
 import ProductPopularityReport from "./pages/ProductPopularityReport";
 import Axios from "axios";
 
@@ -76,6 +80,8 @@ function App() {
               <Route path="/orderview" exact component={OrderView} />
               <Route path="/reportproductspopularity" exact component={ProductPopularityReport} />
 
+              <Route path="/quarterreport" exact component={QuarterReport} /> 
+
               <Route path="/"  component={Home} />
             </Switch>
           </Router>
@@ -100,6 +106,8 @@ function App() {
               <Route path="/carddetails" exact component={CardDetails} />
               <Route path="/trackorder/:id" exact component={TrackOrder} />
               <Route path="/allorders" exact component={AllOrders} />
+              <Route path="/customerstats" exact component={CustomerStats} />
+              
               <Route path="/"  component={Home} />
             </Switch>
           </Router>
