@@ -26,18 +26,6 @@ const AllOrders = () => {
 
     const [orders,setOrders] = useState([])
 
-    // {
-    //     orderID:1,
-    //     orderStatus:'preparing',
-    //     orderedDate:'21/01',
-    //     orderItemTitle:'Purple Rose Jewelry Water Transfer Tattoo',
-    //     orderItemImage:'https://images.unsplash.com/photo-1562962230-16e4623d36e6?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80',
-    //     quantity:5,
-    //     orderAmount:35.47,
-    //     trackingNumber:'23232323232323'
-              
-    // }
-
     useEffect(() => {
         Axios.get("http://localhost:5000/customer/allorders")
         .then((Response)=>{
@@ -59,11 +47,10 @@ const AllOrders = () => {
         var prep = 0
         var shipped = 0
         var cancelled = 0
-        var await_cancel  = 0
         var delivered = 0
-       
+         
         for (var i=0;i<list.length;i++){
-            if(list[i].order_status==='preparing'){
+            if(list[i].order_status==='paid'){
                 prep= list[i].Count
             }
             else if (list[i].order_status==='shipped'){
@@ -72,15 +59,12 @@ const AllOrders = () => {
             else if (list[i].order_status==='cancelled'){
                 cancelled= list[i].Count
             }
-            else if (list[i].order_status==='awaiting_cancel'){
-                await_cancel= list[i].Count
-            }
             else if (list[i].order_status==='delivered'){
                 delivered= list[i].Count
             }
         }
        
-        return [prep,shipped,cancelled,await_cancel,delivered]
+        return [prep,shipped,cancelled,delivered]
     }
 
     useEffect(() => {
@@ -106,12 +90,19 @@ const AllOrders = () => {
 
 
     const cancelOrder = (order_id)=>{
-        Axios.put("http://localhost:5000/customer/allorders",{Order_ID:order_id, Order_status:'awaiting_cancel'})
+        Axios.put("http://localhost:5000/customer/allorders",{Order_ID:order_id, Order_status:'cancelled'})
         .then((Response)=>{
             // console.log("Orders",orders)
             setOrders(orders.map(
-                (order)=>order.order_id===order_id?{...order,order_status:'awaiting_cancel'}:order
+                (order)=>order.order_id===order_id?{...order,order_status:'cancelled'}:order
               ))
+              toast({
+                position: "bottom-right",    
+                description: "Successfully cancelled the order ",
+                status: "success",
+                duration: 5000,
+                isClosable: true,
+              })
         })
         .catch((err) => {
             toast({
@@ -132,6 +123,13 @@ const AllOrders = () => {
             setOrders(orders.map(
                 (order)=>order.order_id===order_id?{...order,order_status:'delivered'}:order
               ))
+              toast({
+                position: "bottom-right",    
+                description: "Succesfully marked as received",
+                status: "success",
+                duration: 5000,
+                isClosable: true,
+              })
         })
         .catch((err) => {
             toast({
@@ -214,11 +212,7 @@ const AllOrders = () => {
                                             <Spacer />
                                             <Box mr='3'>{orderStats[2]}</Box>
                                         </HStack>
-                                        <HStack>
-                                            <Box ml='3'>Received </Box>
-                                            <Spacer />
-                                            <Box mr='3'>{orderStats[4]}</Box>
-                                        </HStack>
+                    
                                     </Box>
 
                                 </GridItem>

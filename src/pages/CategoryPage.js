@@ -6,6 +6,7 @@ import {
   GridItem,
   Heading,
   useColorMode,
+  useToast,
   VStack,
 } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
@@ -17,13 +18,30 @@ import axios from "axios";
 function CategoryPage() {
   const [categories, setCategories] = useState([]);
 
+  const toast = useToast();
+
+  
+  var toast_type1 = (success, message) =>
+    toast({
+      position: "bottom-right",
+      title: success ? "Success" : "Failed",
+      description: message,
+      status: success ? "success" : "error",
+      duration: 5000,
+      isClosable: true,
+    });
+    
   useEffect(() => {
     axios.get("http://localhost:5000/items/categories").then((response) => {
       let data = response.data.items;
       data.push("All Categories");
       setCategories(data);
       setActiveCategory("All Categories")
-    });
+      
+    }).catch((err)=>{
+      toast_type1(false, "Server error")
+    }
+    )
 
     axios
     .get(`http://localhost:5000/items`)
@@ -31,7 +49,9 @@ function CategoryPage() {
       let data = response.data.items;
       setActiveCategoryProducts(data);
 
-    });
+    }).catch((err)=>{
+      toast_type1(false, "Server error")
+    })
   }, []);
 
   const { colorMode, toggleColorMode } = useColorMode();
@@ -69,7 +89,6 @@ function CategoryPage() {
       let data = response.data.items;
       setActiveCategoryProducts(data);
     });
-  
   };
 
 
@@ -139,8 +158,8 @@ function CategoryPage() {
             h="auto"
             templateColumns={{
               md: "repeat(1, 1fr)",
-              lg: "repeat(3, 1fr)",
-              xl: "repeat(4, 1fr)",
+              lg: "repeat(2, 1fr)",
+              xl: "repeat(3, 1fr)",
             }}
             gap={2}
           >

@@ -43,7 +43,9 @@ const CustomerDashSideBar = ({page}) => {
             
                 <Link href='/shippingaddress'><Button colorScheme="teal" bg={colorMode === "light" ? "cyan.900" : "cyan.50"} size="md" style={sidebarButton}> Shipping Address </Button></Link>     
          
-                <Link href='/changepersonaldet'><Button colorScheme="teal" bg={colorMode === "light" ? "cyan.900" : "cyan.50"} size="md" style={sidebarButton}>Change Account Details </Button></Link>     
+                <Link href='/changepersonaldet'><Button colorScheme="teal" bg={colorMode === "light" ? "cyan.900" : "cyan.50"} size="md" style={sidebarButton}>Change Account Details </Button></Link>   
+
+                <Link href='/customerstats'><Button colorScheme="teal" bg={colorMode === "light" ? "cyan.900" : "cyan.50"} size="md" style={sidebarButton}>Order Report </Button></Link>   
            
         </Box>
     )

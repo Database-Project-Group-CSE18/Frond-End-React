@@ -24,11 +24,17 @@ import CardDetails from "./pages/CardDetails";
 import TrackOrder from "./pages/TrackOrder";
 import AllOrders from "./pages/AllOrders";
 
+import CustomerStats from './pages/CustomerStats';
+
 import CartPage from "./pages/CartPage";
 import FeedbackPage from "./pages/FeedbackPage";
 import SellerDashboard from "./pages/SellerDashboard";
-import ProductPopularityReport from "./pages/ProductPopularityReport";
+import QuarterReport from "./pages/QuarterReport";
+import ReportProducts from "./pages/ReportProduct";
+import ReportCategories from "./pages/ReportCategory";
 import Axios from "axios";
+
+import ChartForSpecificProduct from "./pages/ChartForSpecificProduct";
 
 function App() {
   const [auth, setAuth] = useState({ isLoggedIn: false, userID: 0 });
@@ -66,9 +72,17 @@ function App() {
               <Route path="/sellerHome" exact component={SellerHome} />
               <Route path="/awaitingshipment" exact component={AwaitingShipment} />
               <Route path="/awaitingdelivery" exact component={AwaitingDelivery} />
+              <Route path="/sellerallorders" exact component={SellerAllOrders} />
+              <Route path="/orderview/:id" exact component={OrderView} />
+              {/* chart*/}
+              <Route path="/chartforspecificproduct" exact component={ChartForSpecificProduct} />
+
               <Route path="/allorders" exact component={AllOrders} />
               <Route path="/orderview" exact component={OrderView} />
-              <Route path="/reportproductspopularity" exact component={ProductPopularityReport} />
+              <Route path="/reportproducts" exact component={ReportProducts} />
+              <Route path="/reportcategories" exact component={ReportCategories} />
+
+              <Route path="/quarterreport" exact component={QuarterReport} /> 
 
               <Route path="/"  component={Home} />
             </Switch>
@@ -94,6 +108,8 @@ function App() {
               <Route path="/carddetails" exact component={CardDetails} />
               <Route path="/trackorder/:id" exact component={TrackOrder} />
               <Route path="/allorders" exact component={AllOrders} />
+              <Route path="/customerstats" exact component={CustomerStats} />
+              
               <Route path="/"  component={Home} />
             </Switch>
           </Router>

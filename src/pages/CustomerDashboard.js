@@ -54,9 +54,9 @@ const CustomerDashboard = () => {
     for (var i = 0; i < data.length; i++) {
       if (data[i].Order_status === "shipped") {
         newdata.Shipped += 1;
-      } else if (data[i].Order_status === "preparing") {
+      } else if (data[i].Order_status === "paid") {
         newdata.Preparing += 1;
-      } else if (data[i].Order_status === "awaiting_Cancel") {
+      } else if (data[i].Order_status === "returned") {
         newdata.Awaiting_Cancel += 1;
       } else if (data[i].Order_status === "cancelled") {
         newdata.Cancelled += 1;
@@ -179,7 +179,7 @@ const CustomerDashboard = () => {
                           colorMode === "light" ? "cyan.50" : "cyan.900"
                         }
                       >
-                        Awaiting Cancel
+                        Returned
                       </Text>
                     </Box>
                     <Box textAlign="center">
