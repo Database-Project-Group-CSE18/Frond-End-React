@@ -81,7 +81,7 @@ const AddBankCard = ({addBankCard,trigger}) => {
             </FormControl>
             <FormControl>
                 <FormLabel>Exp Date</FormLabel>
-                <Input type="month" placeholder='Exp Date' value={exp_date} onChange={(e)=>setExpDate(e.target.value)} />
+                <Input type="date" placeholder='Exp Date' value={exp_date} onChange={(e)=>setExpDate(e.target.value)} />
             </FormControl>
             <Input mt='5' mb='5'  type="submit" value='Save Card Details' className='btn btn-block' bg="teal.400" color='white' onClick={trigger} />
             

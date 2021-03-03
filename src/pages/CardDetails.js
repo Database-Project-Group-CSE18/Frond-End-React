@@ -26,22 +26,6 @@ import Axios from "axios";
 const CardDetails = () => {
 
     const [bankCards,setBankCards] = useState([])
-
-    // {
-    //     Card_Number:323446453434,
-    //     Owner:'pasan madushan',
-    //     cvv:'123',
-    //     Exp_Date:'10/12',
-              
-    // },
-    // {
-    //     Card_Number:323446453435,
-    //     Owner:'vimukthi madushan',
-    //     cvv:'123',
-    //     Exp_Date:'10/12',
-              
-    // },
-
     const { isOpen, onOpen, onClose } = useDisclosure()
     const toast = useToast()
 
@@ -96,10 +80,12 @@ const CardDetails = () => {
 
         Axios.post("http://localhost:5000/customer/bankCards",{CardDetails:CardDetails})
         .then((Response)=>{
-            console.log("response",Response);
-            // console.log(newAddress);
+            
             if (Response.data.success===true){
-                setBankCards([...bankCards,CardDetails]);
+                
+                var card_id = Response.data.insertId;
+                var newCard = {card_id,...CardDetails}
+                setBankCards([...bankCards,newCard]);
            
                 toast({
                     position: "bottom-right",    
