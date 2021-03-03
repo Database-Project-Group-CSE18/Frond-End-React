@@ -28,13 +28,14 @@ import {
   Tbody,
   Td,
   Tfoot,
-  toast,
+  useToast,
 } from "@chakra-ui/react";
 
 import { Money, MoneyOff, Search } from "@material-ui/icons";
 import Axios from "axios";
 function ReportCategory() {
   const { colorMode, toggleColorMode } = useColorMode();
+  const toast = useToast();
   const [orderTotal, setOrderTotal] = useState(0);
   const [productReports, setProductReports] = useState([
     {
@@ -52,6 +53,26 @@ function ReportCategory() {
         }
         setOrderTotal(total);
         setProductReports(response.data.result);
+        if(response.data.result.length===0){
+          toast({
+              title: "Error",
+              position: "bottom",
+              description: "No any categories with orders",
+              status: "error",
+              duration: 5000,
+              isClosable: true,
+            })
+         }
+         else{
+          toast({
+              title: "Success",
+              position: "bottom",
+              description: "Category report has successfully generated",
+              status: "success",
+              duration: 5000,
+              isClosable: true,
+            })
+          }
       }
     );
   }, []);

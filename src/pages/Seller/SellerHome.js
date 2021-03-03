@@ -5,7 +5,7 @@ import Footer from "../../components/Footer/Footer";
 import SearchBarHome from "../../components/SearchBarHome";
 import Middle from "../../components/Seller/Middle";
 import Card from "../../components/Seller/Card";
-import { Box, Flex, Heading, Skeleton, Stack } from "@chakra-ui/react";
+import { Box, Center, Flex, Heading, Skeleton, Stack } from "@chakra-ui/react";
 import Axios from "axios";
 import { Redirect, useHistory } from "react-router-dom";
 function SellerHome() {
@@ -50,34 +50,35 @@ function SellerHome() {
         {/* <Skeleton height="20px" />
                 <Skeleton height="10px" /> */}
       </Stack>
+      <Center><Heading ml='20px' mb='20px' mt='30px' fontSize = "6xl" as="ins">Menu</Heading></Center>
       <div className="buttons" p="10px">
         <Card
           imageUrl="./img/svg-1.svg"
           imageAlt="User"
           url="/awaitingshipment"
           type="Awaiting Shipment Orders"
-          count="34 new orders received today"
+          count= ""
         />
         <Card
           imageUrl="./img/svg-5.svg"
           imageAlt="User"
           url="/awaitingdelivery"
           type="Awaiting Delivery Orders "
-          count="20 orders waiting for delivery"
+          count=""
         />
         <Card
           imageUrl="./img/svg-2.svg"
           imageAlt="User"
           url="/allorders"
           type="All Orders"
-          count="5100 total orders"
+          count=""
         />
         <Card
           imageUrl="./img/svg-8.svg"
           imageAlt="User"
           url="/categorypage"
           type="My Items"
-          count="You have listed 20 items"
+          count=""
         />
         <Card
           imageUrl="./img/svg-6.svg"
@@ -86,7 +87,7 @@ function SellerHome() {
           type="List New Item"
           count=""
         />
-        <Heading ml='20px' mb='20px' mt='30px' fontSize = "6xl">Reports</Heading>
+        <Center><Heading ml='20px' mb='20px' mt='30px' fontSize = "6xl" as="ins">Reports</Heading></Center>
         <Card
           imageUrl="./img/svg-7.svg"
           imageAlt="User"
@@ -97,14 +98,14 @@ function SellerHome() {
         <Card
           imageUrl="./img/svg-8.svg"
           imageAlt="User"
-          url="/newitem"
+          url="/reportcategories"
           type="Product category with most orders"
           count=""
         />
         <Card
           imageUrl="./img/svg-7.svg"
           imageAlt="user"
-          url="/newitem"
+          url="/reportproducts"
           type="Products with most number of sales in a given period"
           count=""
         />
