@@ -33,6 +33,8 @@ import QuarterReport from "./pages/QuarterReport";
 import ProductPopularityReport from "./pages/ProductPopularityReport";
 import Axios from "axios";
 
+import ChartForSpecificProduct from "./pages/ChartForSpecificProduct";
+
 function App() {
   const [auth, setAuth] = useState({ isLoggedIn: false, userID: 0 });
   const [signInClicked, setSignInClicked] = useState(false);
@@ -69,6 +71,11 @@ function App() {
               <Route path="/sellerHome" exact component={SellerHome} />
               <Route path="/awaitingshipment" exact component={AwaitingShipment} />
               <Route path="/awaitingdelivery" exact component={AwaitingDelivery} />
+              <Route path="/sellerallorders" exact component={SellerAllOrders} />
+              <Route path="/orderview/:id" exact component={OrderView} />
+              {/* chart*/}
+              <Route path="/chartforspecificproduct" exact component={ChartForSpecificProduct} />
+
               <Route path="/allorders" exact component={AllOrders} />
               <Route path="/orderview" exact component={OrderView} />
               <Route path="/reportproductspopularity" exact component={ProductPopularityReport} />
