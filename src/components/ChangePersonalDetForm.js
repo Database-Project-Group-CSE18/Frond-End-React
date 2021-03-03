@@ -20,7 +20,6 @@ const ChangePersonalDetForm = () => {
     useEffect(() => {
         Axios.get("http://localhost:5000/customer/user")
         .then((Response)=>{
-            console.log(Response.data);
             setFirstName(Response.data.user[0].first_name);
             setLastName(Response.data.user[0].last_name);
             setTelephone(Response.data.user[0].phone_number);

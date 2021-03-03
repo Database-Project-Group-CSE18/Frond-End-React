@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import BottomFooter from "../../components/Footer/BottomFooter";
 import BottomItems from "../../components/Footer/BottomItems";
 import Footer from "../../components/Footer/Footer";
@@ -6,47 +6,84 @@ import SearchBarHome from "../../components/SearchBarHome";
 import Middle from "../../components/Seller/Middle";
 import Card from "../../components/Seller/Card";
 import { Box, Flex, Skeleton, Stack } from "@chakra-ui/react";
-import { AiFillExperiment } from "react-icons/ai";
-
+import Axios from "axios";
+import { Redirect, useHistory } from "react-router-dom";
 function SellerHome() {
-  console.log("SellerHome")
+  const [user, setUser] = useState({ firstName: "", lastName: "" });
+  const [overview, setOverview] = useState({
+    userCount: 0,
+    todayRevenue: 0,
+    totalRevenue: 0,
+    awaitingShipment: 0,
+    awaitingDelivery: 0,
+  });
+  const history = useHistory();
+  useEffect(() => {
+    Axios.get("http://localhost:5000/customer/login").then((response) => {
+      setUser({
+        firstName: response.data.user.first_name,
+        lastName: response.data.user.last_name,
+      });
+    });
+    Axios.post("http://localhost:5000/seller/overview").then((response) => {
+      if(response.data.auth === false) {
+        Axios.get("http://localhost:5000/customer/logout").then((response) => {
+    })
+      } else {
+        setOverview({
+          userCount: response.data.result.userCount,
+          todayRevenue: response.data.result.todayRevenue,
+          totalRevenue: response.data.result.totalRevenue,
+          awaitingShipment: response.data.result.awaitingShipment,
+          awaitingDelivery: response.data.result.awaitingDelivery,
+        })
+      }
+      
+      
+    });
+  }, []);
+  // console.log("SellerHome");
+
   return (
     <>
-    <SearchBarHome />
-      <Middle />
-      <Stack mb='25px' p='10px'>
-                <Skeleton height="40px" />
-                <Skeleton height="20px" />
-                <Skeleton height="10px" />
-              </Stack>
+      <Middle user={user} overview={overview}/>
+      <Stack mb="25px" p="10px" pt="90px">
+        {/* <Skeleton height="20px" />
+                <Skeleton height="10px" /> */}
+      </Stack>
       <div className="buttons" p="10px">
         <Card
           imageUrl="./img/svg-1.svg"
           imageAlt="User"
+          url="/awaitingshipment"
           type="Awaiting Shipment Orders"
           count="34 new orders received today"
         />
         <Card
           imageUrl="./img/svg-5.svg"
           imageAlt="User"
+          url="/awaitingdelivery"
           type="Awaiting Delivery Orders "
           count="20 orders waiting for delivery"
         />
         <Card
           imageUrl="./img/svg-2.svg"
           imageAlt="User"
+          url="/allorders"
           type="All Orders"
           count="5100 total orders"
         />
         <Card
           imageUrl="./img/svg-8.svg"
           imageAlt="User"
+          url="/sellerhome"
           type="My Items"
           count="You have listed 20 items"
         />
         <Card
           imageUrl="./img/svg-6.svg"
           imageAlt="User"
+          url="/"
           type="List New Item"
           count=""
         />

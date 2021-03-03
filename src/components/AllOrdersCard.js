@@ -11,14 +11,15 @@ import {
   Image,
   Badge,
   Img,
-  Button
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 
-function Deliverycard(props) {
+
+
+function ShipmentCard(props) {
   return (
  
-    <Box maxW="parent"  _hover={{ bg: "yellow.100" ,transform: "scale(1.01)" }}  borderRadius="lg" overflow="hidden" mb="5px" borderWidth="1px">
+    <Box w="100%"   _hover={{ bg: "yellow.100" ,transform: "scale(1.01)" }} borderRadius="lg" overflow="hidden" mb="5px" borderWidth="1px">
         < HStack>  
         <Box width="50%" fontWeight="semibold"  height="80px"    > 
         
@@ -26,7 +27,6 @@ function Deliverycard(props) {
         </Box>
 
         <Box width="100%" fontWeight="semibold"  height="80px"   > 
-       
         <Box  fontWeight="bold"><Text  color="red.600"   fontSize="lg">
             <a href={`/orderview/${props.Order_ID}`}>{props.Order_ID}</a>
           </Text></Box>
@@ -54,18 +54,17 @@ function Deliverycard(props) {
 
         </Box>
 
-        <Box width="80%" fontWeight="semibold"   height="80px"   >
-            <Box>
+        <Box width="80%" fontWeight="semibold"   height="80px"   > 
         <Text color="gray.600" fontSize="lg">
-           Paid On: {props.Date_paid}
-          </Text></Box> 
-          <Box> <Text color="gray.600" fontSize="lg">
-           Shipped On: {props.Date_shipped}
-          </Text></Box> 
+            Paid On: {props.Date_paid}
+          </Text>
+        <Box> <Text color="gray.600" fontSize="lg">
+        {props.Order_status==="shipped" ?'Shipped On :' + props.Date_shipped: 'Not Yet Shipped'+" | Status :" +props.Order_status}
+        </Text></Box> 
         </Box>
         </HStack>
     </Box>
   );
 }
 
-export default Deliverycard;
+export default ShipmentCard;
