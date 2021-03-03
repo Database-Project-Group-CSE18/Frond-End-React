@@ -17,7 +17,7 @@ import {
 import axios from "axios";
 import React, { useState } from "react";
 
-
+import { arrayBufferToBinaryString } from "blob-util";
 
 function ShipmentCard(props) {
  
@@ -30,7 +30,7 @@ function ShipmentCard(props) {
         < HStack>  
         <Box width="50%" fontWeight="semibold"  height="80px"    > 
         
-        <Box><Img src={props.imageUrl} alt={props.imageAlt} w='80px' h='80px' /></Box>
+        <Box><Img src={props.imageUrl ? arrayBufferToBinaryString(props.imageUrl.data):null} alt={props.imageAlt} w='80px' h='80px' /></Box>
         </Box>
 
         <Box width="100%" fontWeight="semibold"  height="80px"   > 

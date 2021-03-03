@@ -5,20 +5,21 @@ import {
     Divider,
     Box,
     Link,
-    Button
+    Button,
+    Img
 }
 from "@chakra-ui/react";
 
-
-const OrderItemTile = ({Name,Item_ID,Order_ID}) => {
+import { arrayBufferToBinaryString } from "blob-util";
+const OrderItemTile = ({Name,Item_ID,Order_ID, Image}) => {
+    console.log(Image)
     return (
         <Box>
         <HStack p='2'>
-            <Image
+            <Img
                 boxSize="80px"
                 objectFit="cover"   
-                src={"https://images.unsplash.com/photo-1505156868547-9b49f4df4e04?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=959&q=80"}
-            />
+                src='./img/svg-2.svg'/>
             <Heading as='h6' size='xs'>{Name.substring(1,Name.length-1)}</Heading>
             <Link href={`http://localhost:3000/feedbackpage/${Item_ID}/${Order_ID}`} ><Button colorScheme='teal' size='xs'>Leave Feedback</Button></Link>
         </HStack>

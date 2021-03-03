@@ -188,7 +188,7 @@ const CustomerAddress = () => {
                                         </Button>
                     
                                             <Modal onClose={onClose} isOpen={isOpen} isCentered>
-                                            <ModalOverlay />
+                                            <ModalOverlay/>
                                                 <ModalContent>
                                                     <ModalHeader>Add New Shipping Address</ModalHeader>
                                                     <ModalCloseButton />
