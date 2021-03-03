@@ -75,17 +75,15 @@ import {
                   <Deliverycard 
                     
 
-                    Order_ID={orderlist[i].order_id}
-                    Variant_Name= {orderlist[i].variant_name}
-                    imageUrl={orderlist[i].image}
-                    item_name= {orderlist[i].item_name}
-                    payment= {orderlist[i].price*orderlist[i].quantity}
-                    Date_paid={orderlist[i].ordered_date}
-                    Date_shipped={orderlist[i].ordered_date}
-                    Quantity={orderlist[i].quantity}
-                    F_name= {orderlist[i].first_name}
-                    L_name= {orderlist[i].last_name}
-                    Order_status={orderlist[i].order_status}
+                  order_id={orderlist[i].order_id}
+                  payment_method={orderlist[i].payment_method}
+                  customer_id={orderlist[i].customer_id}
+                  date_paid={orderlist[i].ordered_date}
+                  first_name= {orderlist[i].first_name}
+                  last_name= {orderlist[i].last_name}
+                  order_status={orderlist[i].order_status}
+                  shipped_date={orderlist[i].shipped_date}
+
                     
                   />
                 ))}
