@@ -60,9 +60,9 @@ import {
   
     return (
       <Box
-        pt="150px"
-        pl={{ base: "10px", sm: "100px" }}
-        pr={{ base: "10px", sm: "100px" }}
+      pt="150px"
+      pl={{ base: "10px", sm: "100px" }}
+      pr={{ base: "10px", sm: "100px" }}
       >
         
         <Grid
