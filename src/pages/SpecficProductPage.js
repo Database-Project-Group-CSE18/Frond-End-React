@@ -222,9 +222,9 @@ function SpecificProductPage() {
         }
       >
         <Image
-          src={`data:image/png;base64,${arrayBufferToBinaryString(
+          src={arrayBufferToBinaryString(
             data.variants[index].image ? data.variants[index].image.data : null
-          )}`}
+          )}
           w="100px"
           h="100px"
           alt="image"
@@ -252,9 +252,9 @@ function SpecificProductPage() {
       >
         <Box width="auto" h="auto" overflow="hidden" p="5px">
           <Image
-            src={`data:image/png;base64,${arrayBufferToBinaryString(
+            src={arrayBufferToBinaryString(
               data.image ? data.image.data : null
-            )}`}
+            )}
             w="400px"
             h="400px"
             alt="image"

@@ -15,7 +15,7 @@ function ProductCard(props) {
   return (
     <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden">
       <Image
-        src={`data:image/png;base64,${arrayBufferToBinaryString(props.imageUrl ? props.imageUrl.data : '')}`}
+        src={arrayBufferToBinaryString(props.imageUrl ? props.imageUrl.data : '')}
         alt="product image"
         w="200px"
         h="200px"
