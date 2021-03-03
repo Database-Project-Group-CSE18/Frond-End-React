@@ -33,7 +33,6 @@ const useForm = (callback, validate, setSignInClicked) => {
         password: password,
       }).then((response) => {
         if (!response.data.auth) {
-          console.log(response);
           setBackEndErrors(response.data.message);
         } else {
           localStorage.setItem("token", response.data.token);
