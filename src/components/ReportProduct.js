@@ -81,6 +81,8 @@ function ReportProduct() {
                   value={endDate}
                   onChange={(e) => setEndDate(e.target.value)}
                 />
+                <Box bg="tomato" height="80px"></Box>
+  <Box bg="tomato" height="80px"></Box>
 </SimpleGrid>
 
               </FormControl>
