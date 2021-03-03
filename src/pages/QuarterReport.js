@@ -16,7 +16,8 @@ import {
     Tr,
     Th,
     Td,
-    TableCaption
+    TableCaption,
+    Select
 
   } from "@chakra-ui/react";
 
@@ -59,8 +60,13 @@ const QuarterReport = () => {
     const toast = useToast()
   
     const { colorMode, toggleColorMode } = useColorMode();
-    // const [startDate, setStartDate] = useState([]);
+    const [year, setYear] = useState([]);
     
+
+    const onSubmit  = ()=>{
+
+    }
+
 
 
   return (
@@ -68,15 +74,40 @@ const QuarterReport = () => {
       pt="100px"
     >
       <Grid templateColumns="repeat(2, 1fr)">
-       
-      <GridItem colSpan={2} background='cyan.900' height='60px'>
-            <Flex textAlign='center'> 
-                <Box  p="5">
-                    <Heading as='h3' size='md' color='white'> Quarterly Sales Report for the Business Year 2020 (2020/01/01 - 2020/12/31) </Heading> 
-                </Box>         
-            </Flex>  
-         
-        </GridItem>                 
+      <Box 
+        width="auto"
+        h="auto"                   
+        overflow="hidden"                    
+        pb="5px"                      
+        >        
+    </Box>
+
+      <GridItem colSpan={2} bg='cyan.900' p='10px'>
+                                <Flex> 
+                                    <Box  p="3">
+                                    <Heading as='h3' size='md' color='white'>  Quarterly Sales Report </Heading> 
+                                    </Box>
+                                    <Spacer />
+                                    <form onSubmit={onSubmit}>  
+                                    <Flex>  
+                                    
+                                    <FormControl>
+                                            <Select color='white' placeholder="Select Year" onChange={(e)=>setYear(e.target.value)}>
+                                                <option value='2018'>2018</option>
+                                                <option value='2019'>2019</option>
+                                                <option value='2020'>2020</option>
+                                                <option value='2021'>2021</option>
+                                            </Select>
+                                        </FormControl>
+                    
+                                    <Input ml='2' type="submit" value='Generate'  className='btn btn-block' bg="teal" color='white' />
+                                   
+                                    </Flex>
+                                    </form>
+                                 </Flex>
+                            </GridItem>
+
+
 
         {/* stats view */}
         <GridItem>
