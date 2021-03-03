@@ -10,7 +10,7 @@ import { SliderData } from "../../components/Slider/SliderData";
 // import checkLogin from "./checkLogin";
 import { useHistory } from "react-router";
 function Home() {
-  console.log("Home page");
+  // console.log("Home page");
   return (
     <>
       <SearchBarHome />

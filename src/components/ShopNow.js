@@ -27,7 +27,7 @@ function ShopNow() {
       <p>What are you waiting for?</p>
       <div>
         <a href="/categorypage">
-        <Box
+          <Box
             as="button"
             p={4}
             color={colorMode === "light" ? "white" : "black"}
