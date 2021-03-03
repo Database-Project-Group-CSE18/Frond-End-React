@@ -26,6 +26,7 @@ import AllOrders from "./pages/AllOrders";
 import CartPage from "./pages/CartPage";
 import FeedbackPage from "./pages/FeedbackPage";
 import SellerDashboard from "./pages/SellerDashboard";
+import ProductPopularityReport from "./pages/ProductPopularityReport";
 import Axios from "axios";
 
 import ChartForSpecificProduct from "./pages/ChartForSpecificProduct";
@@ -35,11 +36,9 @@ function App() {
   const [signInClicked, setSignInClicked] = useState(false);
   Axios.defaults.withCredentials = true;
 
-  console.log("App js");
   useEffect(() => {
     Axios.defaults.withCredentials = true;
     Axios.get("http://localhost:5000/customer/login").then((response) => {
-      console.log(response.data)
       if (response.data.LoggedIn === true) {
         setAuth({ isLoggedIn: true, userID: response.data.user.user_id });
       } else {
@@ -73,6 +72,9 @@ function App() {
               {/* chart*/}
               <Route path="/chartforspecificproduct" exact component={ChartForSpecificProduct} />
 
+              <Route path="/allorders" exact component={AllOrders} />
+              <Route path="/orderview" exact component={OrderView} />
+              <Route path="/reportproductspopularity" exact component={ProductPopularityReport} />
 
               <Route path="/"  component={Home} />
             </Switch>
