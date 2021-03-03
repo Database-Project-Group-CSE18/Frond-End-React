@@ -90,7 +90,7 @@ export default function BottomItems() {
           </Center>
         </Box>
         <Box padding="5%" textAlign="center">
-          Pay with the world’s most popular and secure payment methods.
+        With sites in 5 languages, we ship to over 200 countries & regions.
         </Box>
       </Box>
     </SimpleGrid>
