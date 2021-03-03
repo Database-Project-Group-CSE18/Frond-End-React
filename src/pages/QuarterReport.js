@@ -83,18 +83,6 @@ const QuarterReport = () => {
 
     }
 
-    // all_items: Array(6)
-    // 0: {item_id: 1, item_name: "iPhone 8"}
-    // 1: {item_id: 2, item_name: "PunnkFunnk Wireless Headphones Bluetooth"}
-    // 2: {item_id: 3, item_name: "Wireless Charger Stand"}
-    // 3: {item_id: 4, item_name: "Philips Usb Speaker"}
-    // 4: {item_id: 5, item_name: "Apple Watch Series 6"}
-    // 5: {item_id: 6, item_name: "Canon EOS Rebel T5i DSLR"}
-    // length: 6
-    // __proto__: Array(0)
-    // first_quart_det: Array(1)
-    // 0: {item_id: 1, sales: 220.6999969482422}
-
     const calculateTotal = (data)=>{
         let q1=0
         let q2=0
