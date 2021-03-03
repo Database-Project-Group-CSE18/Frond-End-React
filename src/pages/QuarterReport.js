@@ -27,32 +27,34 @@ import Navbar from "../components/Navbar";
 import Axios from "axios";
 
 
-// const ReportItems  = ({stats})=>{
-//     return (
-//         <>
-//            {    
-//                stats.map((stat)=>(
-//                    <ReportItem key={stat.order_id} stat={stat}>  </ReportItem>
-//                    )
-//             )}
-//         </>
-//     )
-// }
+const TableItems  = ({tableDetails})=>{
+    return (
+        <>
+           {    
+
+               tableDetails.map((detail)=>(
+                   <TableItem key={detail.item_id} detail={detail} > </TableItem>
+                   )
+            )}
+        </>
+    )
+}
 
 
-// const ReportItem = ({stat}) =>{
-//     return(
-//         <Tbody>                            
-//             <Tr>
-//                 <Td>{stat.order_id}</Td>
-//                 <Td>{stat.description.substring(1,stat.description.length-1)}</Td>
-//                 <Td>{stat.ordered_date}</Td>
-//                 <Td>{stat.nb_of_items}</Td>
-//                 <Td>{stat.price}</Td>
-//             </Tr>                             
-//         </Tbody>   
-//     )
-// }
+const TableItem = ({detail}) =>{
+    return(
+        <Tbody>                            
+            <Tr>
+                <Td>{detail.item_id}</Td>
+                <Td>{detail.item_name}</Td>
+                <Td>{detail.firstQT}</Td>
+                <Td>{detail.secondQT}</Td>
+                <Td>{detail.thirdQT}</Td>
+                <Td>{detail.fourthQT}</Td>
+            </Tr>                             
+        </Tbody>   
+    )
+}
 
 
 
@@ -62,7 +64,7 @@ const QuarterReport = () => {
     const { colorMode, toggleColorMode } = useColorMode();
     const [year, setYear] = useState([]);
     const [tableDetails, setTableDetails] = useState([]);
-    
+    const [tableTotal,setTableTotal] = useState([]); 
 
     const onSubmit  = (e)=>{
         e.preventDefault()
@@ -72,17 +74,81 @@ const QuarterReport = () => {
             return
         }
 
-        
-
-
-
-
-
-
-
+        Axios.post("http://localhost:5000/orders/generatequaterreport",{year:year})
+        .then((Response)=>{
+            console.log(Response.data)
+            refractorResponse(Response.data) 
+            calculateTotal(Response.data)
+        })
 
     }
 
+    const calculateTotal = (data)=>{
+        let q1=0
+        let q2=0
+        let q3=0
+        let q4=0
+        for (var b=0;b<data.first_quart_det.length;b++){
+            q1+=parseFloat(data.first_quart_det[b].sales)
+        }
+        for (var b=0;b<data.second_quart_det.length;b++){
+            q2+=parseFloat(data.second_quart_det[b].sales)
+        }
+        for (var b=0;b<data.third_quart_det.length;b++){
+            q3+=parseFloat(data.third_quart_det[b].sales)
+        }
+        for (var b=0;b<data.fourth_quart_det.length;b++){
+            q4+=parseFloat(data.fourth_quart_det[b].sales)
+        }
+
+        q1 = parseFloat(q1.toFixed(2))
+        q2 = parseFloat(q2.toFixed(2))
+        q3 = parseFloat(q3.toFixed(2))
+        q4 = parseFloat(q4.toFixed(2))
+
+        setTableTotal({q1,q2,q3,q4})
+        console.log({q1,q2,q3,q4})
+    }
+
+    const refractorResponse= (data)=>{
+        let final = []
+        let all = data.all_items
+        for (var i=0;i<data.all_items.length;i++){
+            let obj={
+                item_id:data.all_items[i].item_id,
+                item_name:data.all_items[i].item_name,
+                firstQT:0,
+                secondQT:0,
+                thirdQT:0,
+                fourthQT:0
+            }
+
+            for (var a=0;a<data.first_quart_det.length;a++){
+                if(data.all_items[i].item_id===data.first_quart_det[a].item_id){
+                    obj.firstQT=parseFloat(data.first_quart_det[a].sales).toFixed(2)
+                }
+            }
+            for (var a=0;a<data.second_quart_det.length;a++){
+                if(data.all_items[i].item_id===data.second_quart_det[a].item_id){
+                    obj.secondQT=parseFloat(data.second_quart_det[a].sales).toFixed(2)
+                }
+            }
+            for (var a=0;a<data.third_quart_det.length;a++){
+                if(data.all_items[i].item_id===data.third_quart_det[a].item_id){
+                    obj.thirdQT=parseFloat(data.third_quart_det[a].sales).toFixed(2)
+                }
+            }
+            for (var a=0;a<data.fourth_quart_det.length;a++){
+                if(data.all_items[i].item_id===data.fourth_quart_det[a].item_id){
+                    obj.fourthQT=parseFloat(data.fourth_quart_det[a].sales).toFixed(2)
+                }
+            }
+
+            final.push(obj)
+        }
+        setTableDetails(final)
+        // console.log("final",final)
+    }
 
 
   return (
@@ -137,7 +203,7 @@ const QuarterReport = () => {
         
 
         <Table variant="simple">
-            <TableCaption>Sales reports of specific products of 2020 Business Year (2020/01/01-2020/12/31)</TableCaption>
+            <TableCaption>Sales reports of specific products of {year} Business Year {year+'/01/01-'+year+"/12/31"}</TableCaption>
                 <Thead backgroundColor='cyan.100'>
                     <Tr color='white'>
                             <Th>Item ID</Th>
@@ -148,15 +214,17 @@ const QuarterReport = () => {
                             <Th>Q4</Th>
                     </Tr>
                 </Thead>
+
+            <TableItems  tableDetails={tableDetails} />
                                     
             <Tfoot backgroundColor='cyan.100'>
                     <Tr>
                         <Th>Total</Th>
                         <Th></Th>
-                        <Th> Q1 total</Th>
-                        <Th> Q2 total </Th> 
-                        <Th> Q3 total </Th> 
-                        <Th> Q4 total </Th> 
+                        <Th> {tableTotal.q1}</Th>
+                        <Th>{tableTotal.q2} </Th> 
+                        <Th>{tableTotal.q3} </Th> 
+                        <Th> {tableTotal.q4} </Th> 
                        
                                             
                     </Tr>
