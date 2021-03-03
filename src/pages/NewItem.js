@@ -21,6 +21,7 @@ import {
   NumberInput,
   Text,
   Textarea,
+  useToast,
 } from "@chakra-ui/react";
 import { Grid } from "@material-ui/core";
 import axios from "axios";
@@ -28,6 +29,17 @@ import React, { useState } from "react";
 
 function NewItem() {
   const [value, setValue] = React.useState(0);
+  const toast = useToast();
+
+  var toast_type1 = (success, message) =>
+    toast({
+      position: "bottom-right",
+      title: success ? "Success" : "Failed",
+      description: message,
+      status: success ? "success" : "error",
+      duration: 5000,
+      isClosable: true,
+    });
 
   const handleChangeQuantity = (value) => {
     setValue(value);
@@ -56,9 +68,15 @@ function NewItem() {
 
   const addVariant = () => {
     var newVariantsList = data.variants;
-    newVariantsList.push(variantData);
+    if(isNaN(variantData.price) || variantData.price === ''){
+      toast_type1(false, "Price should be a number");
+    }else{
+      newVariantsList.push(variantData);
 
-    setData({ ...data, variants: newVariantsList });
+      setData({ ...data, variants: newVariantsList });
+
+    }
+   
   };
 
   const handleChangeVariant = (event) => {
@@ -110,16 +128,31 @@ function NewItem() {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    console.log(data)
-    axios
-      .post(`http://localhost:5000/items/newitem`, data)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    e.preventDefault();
+    console.log(data);
+    if (data.variants.length !== 0) {
+      axios
+        .post(`http://localhost:5000/items/newitem`, data)
+        .then((response) => {
+          setData({
+            item_name: "",
+            catagory: "",
+            description: "",
+            status: "Available",
+            price: 0,
+            image: "",
+            variants: [],
+          });
+          toast_type1(true, "Listing created successfully");
+          console.log(response);
+        })
+        .catch((err) => {
+          toast_type1(false, "Server Error");
+          console.log(err);
+        });
+    } else {
+      toast_type1(false, "Please Add atleast one variant");
+    }
   };
 
   return (
@@ -452,7 +485,7 @@ function NewItem() {
           textColor="Black"
           bg="blue.100"
           _hover={{ bg: "blue.300", transform: "scale(1.01)" }}
-          onClick={(e)=>handleSubmit(e)}
+          onClick={(e) => handleSubmit(e)}
         >
           Submit & Create Listing
         </Button>

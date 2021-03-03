@@ -5,6 +5,7 @@ import {
     Grid,
     GridItem,
     Heading,
+    useToast,
     VStack,
   } from "@chakra-ui/react";
   import React, { useState,useEffect } from "react";
@@ -17,7 +18,17 @@ import {
     
     var [orderlist, setorderlist] = useState([{}])
   
-
+    const toast = useToast();
+    var toast_type1 = (success, message) =>
+    toast({
+      position: "bottom-right",
+      title: success ? "Success" : "Failed",
+      description: message,
+      status: success ? "success" : "error",
+      duration: 5000,
+      isClosable: true,
+  
+    });
 
   
     useEffect(() => {
@@ -29,8 +40,23 @@ import {
         });
   
     }, []);
+
+    const MarknotasShipped=(id)=>{
+      axios
+        .post(`http://localhost:5000/orders/marknotasshipped`,{order_id:id})
+        .then((response) => {
+          toast_type1(true,"Mark as not dispatched")
+          setorderlist(orderlist.filter(
+            (order)=>order.order_id!==id
+          ))
+          console.log("Dsfsdgfnfjbn",orderlist)
+        }
+        ).catch((err)=>{
+          toast_type1(false,"server error")
+        });
+    } 
+      
   
-    const searchBarText = `Search in Awaiting Deliveries`;
     
     return (
       <Box
@@ -59,17 +85,16 @@ import {
                   <Deliverycard 
                     
 
-                    Order_ID={orderlist[i].order_id}
-                    Variant_Name= {orderlist[i].variant_name}
-                    imageUrl={orderlist[i].image}
-                    item_name= {orderlist[i].item_name}
-                    payment= {orderlist[i].price*orderlist[i].quantity}
-                    Date_paid={orderlist[i].ordered_date}
-                    Date_shipped={orderlist[i].ordered_date}
-                    Quantity={orderlist[i].quantity}
-                    F_name= {orderlist[i].first_name}
-                    L_name= {orderlist[i].last_name}
-                    Order_status={orderlist[i].order_status}
+                  order_id={orderlist[i].order_id}
+                  payment_method={orderlist[i].payment_method}
+                  customer_id={orderlist[i].customer_id}
+                  date_paid={orderlist[i].ordered_date}
+                  shipped_date={orderlist[i].shipped_date}
+                  first_name= {orderlist[i].first_name}
+                  last_name= {orderlist[i].last_name}
+                  order_status={orderlist[i].order_status}
+                  MarknotasShipped={MarknotasShipped}
+
                     
                   />
                 ))}
