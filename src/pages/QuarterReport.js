@@ -61,9 +61,25 @@ const QuarterReport = () => {
   
     const { colorMode, toggleColorMode } = useColorMode();
     const [year, setYear] = useState([]);
+    const [tableDetails, setTableDetails] = useState([]);
     
 
-    const onSubmit  = ()=>{
+    const onSubmit  = (e)=>{
+        e.preventDefault()
+
+        if(year.length===0){
+            alert('Select an year')
+            return
+        }
+
+        
+
+
+
+
+
+
+
 
     }
 

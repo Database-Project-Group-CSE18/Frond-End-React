@@ -29,11 +29,8 @@ import CustomerStats from './pages/CustomerStats';
 import CartPage from "./pages/CartPage";
 import FeedbackPage from "./pages/FeedbackPage";
 import SellerDashboard from "./pages/SellerDashboard";
-<<<<<<< HEAD
 import QuarterReport from "./pages/QuarterReport";
-=======
 import ProductPopularityReport from "./pages/ProductPopularityReport";
->>>>>>> master
 import Axios from "axios";
 
 function App() {
