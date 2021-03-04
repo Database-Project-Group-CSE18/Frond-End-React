@@ -293,7 +293,7 @@ function CartPage() {
               Payment method
             </Heading>
 
-            {currentCard !== "none" && paymentMethod === 2 ? (
+            {currentCard !== "none" && paymentMethod === "card" ? (
               <Box
                 p="10px"
                 borderWidth="1px"
@@ -381,7 +381,7 @@ function CartPage() {
                           .fill("")
                           .map((_, i) => (
                             <MenuItem
-                              icon={cardIcon("visa")}
+                              icon={cardIcon(card[i].card_type)}
                               onClick={() => setCurrentCard(i)}
                             >
                               <Text>{card[i].owner}</Text>

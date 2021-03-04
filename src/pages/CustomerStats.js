@@ -71,10 +71,8 @@ const CustomerStats = () => {
             return
         }
 
-        var formStartDate = startDate.replace(/-/g, "/");
-        var formEndDate = endDate.replace(/-/g, "/");
 
-        Axios.post("http://localhost:5000/customer/generatereport",{start_date:formStartDate, end_date:formEndDate})
+        Axios.post("http://localhost:5000/customer/generatereport",{start_date:startDate, end_date:endDate})
         .then((Response)=>{
             
             // console.log("came",Response.data.stats)

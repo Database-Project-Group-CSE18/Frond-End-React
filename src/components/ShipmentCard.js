@@ -17,7 +17,7 @@ import {
 import axios from "axios";
 import React, { useState } from "react";
 
-
+import { arrayBufferToBinaryString } from "blob-util";
 
 function ShipmentCard(props) {
  
@@ -27,8 +27,9 @@ function ShipmentCard(props) {
   return (
  
     <Box w="100%"   _hover={{ bg: "yellow.100" ,transform: "scale(1.01)" }} borderRadius="lg" overflow="hidden" mb="5px" borderWidth="1px">
-        < HStack>  
+        <HStack>  
         <Box width="50%" fontWeight="semibold"  height="80px"    > 
+        
         <Box  fontWeight="bold">
           <Text  mt="20px" ml="20px" color="red.600"   fontSize="lg">
             <a href={`/orderview/${props.order_id}`}>{props.order_id}</a>
