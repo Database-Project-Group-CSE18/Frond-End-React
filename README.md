@@ -1,5 +1,4 @@
-# Front-End-React
-### finish before feb 10
+# Front-End-ReactJS
 
 ## How to setup the enviroment?
 
@@ -28,62 +27,3 @@
 10. It will ask you to create a pull request to master branch. 
 11. Create a pull request with some comments about the new features that you added to the code.
 12. If there is no confilcts you also can merge it to master branch. Otherwise leave it to me as a pull request to resovle coflicts.
- 
-
-# Pages
-After finishing each part put a tik on front of it by editing readme file.
-
-# Chalindu
-
-- [X] Home page (Landing Page)
-   - [X] Navigation bar
-   - [X] Footer
-   - [X] Sign in
-   - [X] Sign up
-- [X] Placing an order page
-   - [X] Successfully placed an order page
-- [X] Seller Home page (Different from the landing page) - (This includes summary of the seller. Read the page detail below) 
-   - [X] All orders page
-
-# Chandima
-
-- [X] Specific product page
-   - [X] Photos
-   - [X] Item description
-   - [X] Item specification
-   - [x] Reviews
-- [X] Category page (Search Page)
-- [X] Cart Page
-
-# Pasan
-- [X] All Orders page
-   - [X] Include options - Track an order, Confirm received item, cancel if the item is in pay success stage
-- [X] Add bank card details page
-- [X] Shipping address page
-- [X] Customer Dashboard page
-   - [X] Change password page
-   - [X] Change other details page
-- [ ] Track an order page	
-
-# Rahal
-
-- [ ] Seller footer
-- [ ] Awaiting shipment orders page
-- [ ] Awaiting delivery orders page
-- [ ] My listed items page
-- [ ] Change a listed item details page
-- [ ] List new item page
-- [ ] Successfully listed new item page
-
-# Shehan
-- [ ] Money back guarantee page
-- [ ] Help center page
-- [X] Feedback page
-   - [X] Feedback successful page
-- [X] Seller Dashboard
-   - [X] Change password
-   - [X] Change Details
-
-
-
-
